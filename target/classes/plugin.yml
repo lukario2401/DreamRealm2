@@ -1,0 +1,24 @@
+name: DreamRealm2
+version: '1.0-SNAPSHOT'
+main: me.lukario.dreamRealm2.DreamRealm2
+api-version: '1.21'
+depend: [ProtocolLib]
+commands:
+  get:
+    description: "Gives items to the player."
+    usage: "/get <type> [item]"
+    aliases: [get]
+    permission: get.command
+    permission-message: "You do not have permission to use this command."
+  sum:
+    description: "Summon large amounts of mobs"
+    usage: "/sum <amount> [mob]"
+    aliases: [sum]
+    permission: sum.command
+    permission-message: "You do not have permission to use this command."
+  damagetest:
+    description: Summon mobs in a square shape without AI
+    usage: /damagetest <mob> <size> <spacing>
+    aliases: [ damagetest ]
+    permission: damagetest.command
+    permission-message: "You do not have permission to use this command."
