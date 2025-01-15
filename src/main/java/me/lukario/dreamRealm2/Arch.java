@@ -29,7 +29,7 @@ public class Arch implements Listener {
     private final Map<Player, Long> sneakRightClickCooldownMap = new HashMap<>();
     private final Map<Player, Long> leftClickCooldownMap = new HashMap<>();
     private final int COOLDOWN_MILLISECONDS = 100; // 3-second cooldown
-    private final int SNEAK_RIGHT_CLICK_COOLDOWN_MS = 225; // 3-second cooldown
+    private final int SNEAK_RIGHT_CLICK_COOLDOWN_MS = 200; // 3-second cooldown
     private final int LEFT_CLICK_COOLDOWN_MAP = 300; // 3-second cooldown
 
     public Arch(Plugin plugin) {
