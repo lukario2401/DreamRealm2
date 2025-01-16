@@ -238,7 +238,7 @@ public class RayCast {
             }
         }.runTaskTimer(plugin, 0, 2); // Run every tick
     }
-    static void rayCastWithIntervalsAndParticleSpread(Plugin plugin, Player player, double fromStart, double speed, double maxDistance, Particle particle, float offset, float particleSpread, int particleAmount, double rayCastHitbox) {
+    public static void rayCastWithIntervalsAndParticleSpread(Plugin plugin, Player player, double fromStart, double speed, double maxDistance, Particle particle, float offset, float particleSpread, int particleAmount, double rayCastHitbox) {
         Location startLocation = player.getEyeLocation().add(player.getLocation().getDirection().normalize().multiply(fromStart)); // Start from two blocks in front of the player
         Vector direction = startLocation.getDirection().normalize(); // Ray direction
         direction.add(applyOffset(player, offset)); // Apply any side offset if needed
