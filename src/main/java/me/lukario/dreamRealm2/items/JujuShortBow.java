@@ -1,4 +1,4 @@
-package me.lukario.dreamRealm2;
+package me.lukario.dreamRealm2.items;
 
 import org.bukkit.*;
 import org.bukkit.entity.*;

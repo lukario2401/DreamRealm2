@@ -1,4 +1,4 @@
-package me.lukario.dreamRealm2;
+package me.lukario.dreamRealm2.items;
 
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -15,7 +15,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
 

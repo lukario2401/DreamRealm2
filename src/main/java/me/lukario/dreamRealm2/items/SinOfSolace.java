@@ -1,5 +1,6 @@
-package me.lukario.dreamRealm2;
+package me.lukario.dreamRealm2.items;
 
+import me.lukario.dreamRealm2.RayCast;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;

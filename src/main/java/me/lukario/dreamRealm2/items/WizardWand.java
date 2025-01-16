@@ -1,7 +1,6 @@
-package me.lukario.dreamRealm2;
+package me.lukario.dreamRealm2.items;
 
 import org.bukkit.*;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.LivingEntity;

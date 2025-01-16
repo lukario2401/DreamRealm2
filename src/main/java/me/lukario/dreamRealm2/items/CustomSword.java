@@ -1,4 +1,4 @@
-package me.lukario.dreamRealm2;
+package me.lukario.dreamRealm2.items;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -10,8 +10,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;

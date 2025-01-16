@@ -1,14 +1,11 @@
-package me.lukario.dreamRealm2;
+package me.lukario.dreamRealm2.items;
 
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.*;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
@@ -29,8 +26,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import net.md_5.bungee.api.ChatColor;
-
-import static org.bukkit.Bukkit.getServer;
 
 public class Pyromancer implements Listener {
 

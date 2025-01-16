@@ -2,6 +2,10 @@ package me.lukario.dreamRealm2;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
+import me.lukario.dreamRealm2.commands.DamageTest;
+import me.lukario.dreamRealm2.commands.GetCommand;
+import me.lukario.dreamRealm2.commands.SumCommand;
+import me.lukario.dreamRealm2.items.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class DreamRealm2 extends JavaPlugin {
