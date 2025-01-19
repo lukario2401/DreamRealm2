@@ -1,9 +1,8 @@
 package me.lukario.dreamRealm2.items;
 
 import net.md_5.bungee.api.ChatColor;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -42,7 +41,13 @@ public class Rapier implements Listener {
             meta.setDisplayName(ITEM_NAME);
             meta.setLore(Arrays.asList(ITEM_LORE));
             meta.setUnbreakable(true);
+            meta.setCustomModelData(16);
+            meta.addEnchant(Enchantment.SHARPNESS,10,true);
+            meta.addEnchant(Enchantment.LOOTING,5,true);
+            meta.addEnchant(Enchantment.SWEEPING_EDGE,5,true);
+            meta.addEnchant(Enchantment.FIRE_ASPECT,5,true);
             item.setItemMeta(meta);
+
         }
         return item;
     }
@@ -63,8 +68,22 @@ public class Rapier implements Listener {
                 // Summon the armor stand
                 ArmorStand armorStand = spawnLocation.getWorld().spawn(spawnLocation, ArmorStand.class);
 
+
+                ItemStack customItem = new ItemStack(Material.IRON_SWORD); // Replace with your desired material
+
+                // Set the custom model data
+                ItemMeta meta = customItem.getItemMeta();
+                if (meta != null) {
+                    meta.setCustomModelData(16); // Set the custom model data to 16
+                    meta.addEnchant(Enchantment.SHARPNESS,16,false); // Set the custom model data to 16
+                    customItem.setItemMeta(meta);
+                }
+
+                // Set the item on the armor stand's head
+                armorStand.getEquipment().setHelmet(customItem);
+
                 // Customize the armor stand
-                armorStand.setVisible(true);
+                armorStand.setVisible(false);
                 armorStand.setMarker(true);
                 armorStand.setGravity(false);
                 armorStand.setSmall(false);
@@ -77,12 +96,10 @@ public class Rapier implements Listener {
                 startTrackingArmorStands(player);
 
                 // Notify the player
-                player.sendMessage("You have summoned a Rapier armor stand!");
             }
 
             // Handle left-click actions
                 else if (action == Action.LEFT_CLICK_AIR || action == Action.LEFT_CLICK_BLOCK) {
-    player.sendMessage("Left click detected!");
 
     for (ArmorStand armorStand : player.getWorld().getEntitiesByClass(ArmorStand.class)) {
         if (armorStand.getScoreboardTags().contains("Rapier_" + playerUUID)) {
@@ -110,19 +127,29 @@ public class Rapier implements Listener {
 
                     // Check if the armor stand has hit a block
                     if (isCollidingWithBlock(armorStand)) {
+
+                        armorStand.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER,currentLocation,1,0,0,0,0);
+                        armorStand.getWorld().spawnParticle(Particle.EXPLOSION,currentLocation,10,2,2,2,0);
+
+                        Location soundLocation = armorStand.getLocation();
+                        armorStand.getWorld().playSound(soundLocation, Sound.ENTITY_GENERIC_EXPLODE, 3, 1);
+                        armorStand.getWorld().playSound(soundLocation, Sound.ENTITY_GENERIC_EXPLODE, 3, 0);
+
+
                         for (LivingEntity livingEntity : currentLocation.getNearbyLivingEntities(6)) {
                             // Check if the entity is not the player who triggered the event
-                            if (!livingEntity.equals(player)) {
+                            if (!livingEntity.equals(player) & !livingEntity.equals(armorStand)) {
                                 livingEntity.damage(21, player);
                             }
                         }
+                        armorStand.remove();
                     }
-                    if (isCollidingWithBlock(armorStand)) {
-                        // Create an explosion at the armor stand's location
-                        newLocation.getWorld().createExplosion(newLocation.add(0,1,0), 11.5F, false, false);
-                        armorStand.remove(); // Remove the armor stand after explosion
-                        this.cancel(); // Stop the task
-                    }
+//                    if (isCollidingWithBlock(armorStand)) {
+//                        // Create an explosion at the armor stand's location
+//                        newLocation.getWorld().createExplosion(newLocation.add(0,1,0), 11.5F, false, false);
+//                        armorStand.remove(); // Remove the armor stand after explosion
+//                        this.cancel(); // Stop the task
+//                    }
                 }
             }.runTaskTimer(plugin, 0L, 1L); // Schedule task to run every tick
         }
@@ -192,6 +219,8 @@ public class Rapier implements Listener {
     }
     private boolean isCollidingWithBlock(ArmorStand armorStand) {
         Location location = armorStand.getLocation();
-        return location.getBlock().getType().isSolid(); // Check if the block is solid
+        return location.getBlock().getType().isSolid() || // Check block at current level
+               location.add(0, 1, 0).getBlock().getType().isSolid() || // Check block above
+               location.add(0, 2, 0).getBlock().getType().isSolid();  // Check two blocks above
     }
 }
