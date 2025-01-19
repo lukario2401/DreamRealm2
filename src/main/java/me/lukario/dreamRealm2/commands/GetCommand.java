@@ -90,6 +90,11 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Sin Of Solace!");
             return true;
         }
+        if (args.length == 1 && args[0].equalsIgnoreCase("Rapier")) {
+            player.getInventory().addItem(Rapier.createRapier());
+            player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Rapier");
+            return true;
+        }
 
         // Invalid argument
         player.sendMessage(ChatColor.RED + "Unknown item type. Use /get <launch sword|cat>");
@@ -102,7 +107,7 @@ public class GetCommand implements CommandExecutor, TabExecutor {
 
         if (args.length == 1) {
             // Suggest main types
-            completions.addAll(Arrays.asList("launch", "cat", "wizard","SinOfSolace","Terminator","Shadow","Dual","Pyromancer","GiantSword"));
+            completions.addAll(Arrays.asList("launch", "cat","Rapier", "wizard","SinOfSolace","Terminator","Shadow","Dual","Pyromancer","GiantSword"));
         } else if (args.length == 2 && args[0].equalsIgnoreCase("launch")) {
             // Suggest items for "launch"
             completions.add("sword");

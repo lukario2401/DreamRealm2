@@ -18,7 +18,7 @@ import java.util.Arrays;
 
 public class GiantSword implements Listener {
 
-    private static final String ITEM_NAME = net.md_5.bungee.api.ChatColor.of("#D88F07") + "GiantSword";
+    private static final String ITEM_NAME = net.md_5.bungee.api.ChatColor.of("#D88F07") + "Giant Sword";
     private static final String ITEM_LORE = ChatColor.YELLOW + "Crafted after defeating a protector of Wither";
     private static final Material MATERIAL_TYPE = Material.GOLDEN_SWORD;
 

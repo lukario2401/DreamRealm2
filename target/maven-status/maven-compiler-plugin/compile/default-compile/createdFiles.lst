@@ -6,6 +6,7 @@ me\lukario\dreamRealm2\DreamRealm2.class
 me\lukario\dreamRealm2\items\ShadowDance.class
 me\lukario\dreamRealm2\items\Arch.class
 me\lukario\dreamRealm2\items\JujuShortBow$2.class
+me\lukario\dreamRealm2\items\Rapier$1.class
 me\lukario\dreamRealm2\items\WizardWand$1.class
 me\lukario\dreamRealm2\items\ShadowDance$4.class
 me\lukario\dreamRealm2\items\JujuShortBow.class
@@ -13,6 +14,7 @@ me\lukario\dreamRealm2\items\GiantSword.class
 me\lukario\dreamRealm2\RayCast$1.class
 me\lukario\dreamRealm2\CookWithSneak.class
 me\lukario\dreamRealm2\items\Pyromancer$4.class
+me\lukario\dreamRealm2\items\Rapier.class
 me\lukario\dreamRealm2\RayCast.class
 me\lukario\dreamRealm2\items\DualWield$2.class
 me\lukario\dreamRealm2\items\Arch$2.class
@@ -26,6 +28,7 @@ me\lukario\dreamRealm2\items\Pyromancer$5.class
 me\lukario\dreamRealm2\items\SinOfSolace$1.class
 me\lukario\dreamRealm2\commands\GetCommand.class
 me\lukario\dreamRealm2\items\CustomSword.class
+me\lukario\dreamRealm2\items\Rapier$2.class
 me\lukario\dreamRealm2\items\ShadowDance$3.class
 me\lukario\dreamRealm2\items\Arch$1.class
 me\lukario\dreamRealm2\items\Pyromancer$6.class
