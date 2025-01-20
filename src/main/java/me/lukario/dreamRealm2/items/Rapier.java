@@ -34,7 +34,7 @@ public class Rapier implements Listener {
     private static final String ITEM_LORE = ChatColor.YELLOW + "Crafted after defeating sword cultivator";
     private static final Material ITEM_MATERIAL = Material.IRON_SWORD;
 
-    public static ItemStack createRapier() {
+    public static ItemStack createItem() {
         ItemStack item = new ItemStack(ITEM_MATERIAL);
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {

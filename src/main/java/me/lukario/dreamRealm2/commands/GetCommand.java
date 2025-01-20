@@ -91,8 +91,13 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             return true;
         }
         if (args.length == 1 && args[0].equalsIgnoreCase("Rapier")) {
-            player.getInventory().addItem(Rapier.createRapier());
+            player.getInventory().addItem(Rapier.createItem());
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Rapier");
+            return true;
+        }
+        if (args.length == 1 && args[0].equalsIgnoreCase("Scythe")) {
+            player.getInventory().addItem(Scythe.createItem());
+            player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Scythe");
             return true;
         }
 
@@ -107,7 +112,7 @@ public class GetCommand implements CommandExecutor, TabExecutor {
 
         if (args.length == 1) {
             // Suggest main types
-            completions.addAll(Arrays.asList("launch", "cat","Rapier", "wizard","SinOfSolace","Terminator","Shadow","Dual","Pyromancer","GiantSword"));
+            completions.addAll(Arrays.asList("launch", "cat","Rapier", "wizard","SinOfSolace","Scythe","Terminator","Shadow","Dual","Pyromancer","GiantSword"));
         } else if (args.length == 2 && args[0].equalsIgnoreCase("launch")) {
             // Suggest items for "launch"
             completions.add("sword");
