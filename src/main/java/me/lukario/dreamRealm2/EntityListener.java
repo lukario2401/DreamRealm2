@@ -43,7 +43,7 @@ public class EntityListener implements Listener {
         }
     }
 
-    private static final double LIFE_STEAL_PERCENTAGE = 1.25; // 125% of the damage dealt is stolen as health
+    private static final double LIFE_STEAL_PERCENTAGE = 1; // 125% of the damage dealt is stolen as health
 
     @EventHandler
     private void onEntityDamage(EntityDamageByEntityEvent event) {
