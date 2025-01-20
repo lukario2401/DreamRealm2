@@ -96,8 +96,8 @@ public class Scythe implements Listener {
                 // Visualize the ray with particles
                 for (double i = 0; i <= distancee; i += 0.5) {
                     Location particleLocation = eyeLocation.clone().add(direction.clone().multiply(i));
-                    player.getWorld().spawnParticle(Particle.DUST,particleLocation.add(0, 1, 0),10,0.2, 0.5, 0.2,
-                        new Particle.DustOptions(Color.WHITE, 1.0f));
+                    player.getWorld().spawnParticle(Particle.DUST,particleLocation.add(0, 0, 0),10,0, 0, 0,
+                        new Particle.DustOptions(Color.RED, 1.0f));
                 }
 
             }

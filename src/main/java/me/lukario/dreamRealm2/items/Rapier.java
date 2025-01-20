@@ -135,7 +135,32 @@ public class Rapier implements Listener {
                         armorStand.getWorld().playSound(soundLocation, Sound.ENTITY_GENERIC_EXPLODE, 3, 1);
                         armorStand.getWorld().playSound(soundLocation, Sound.ENTITY_GENERIC_EXPLODE, 3, 0);
 
-
+                        for (LivingEntity livingEntity : currentLocation.getNearbyLivingEntities(1)) {
+                            // Check if the entity is not the player who triggered the event
+                            if (!livingEntity.equals(player) & !livingEntity.equals(armorStand)) {
+                                livingEntity.damage(60, player);
+                            }
+                        }   for (LivingEntity livingEntity : currentLocation.getNearbyLivingEntities(2)) {
+                            // Check if the entity is not the player who triggered the event
+                            if (!livingEntity.equals(player) & !livingEntity.equals(armorStand)) {
+                                livingEntity.damage(40, player);
+                            }
+                        }   for (LivingEntity livingEntity : currentLocation.getNearbyLivingEntities(3)) {
+                            // Check if the entity is not the player who triggered the event
+                            if (!livingEntity.equals(player) & !livingEntity.equals(armorStand)) {
+                                livingEntity.damage(30, player);
+                            }
+                        }   for (LivingEntity livingEntity : currentLocation.getNearbyLivingEntities(4)) {
+                            // Check if the entity is not the player who triggered the event
+                            if (!livingEntity.equals(player) & !livingEntity.equals(armorStand)) {
+                                livingEntity.damage(27, player);
+                            }
+                        }   for (LivingEntity livingEntity : currentLocation.getNearbyLivingEntities(5)) {
+                            // Check if the entity is not the player who triggered the event
+                            if (!livingEntity.equals(player) & !livingEntity.equals(armorStand)) {
+                                livingEntity.damage(21, player);
+                            }
+                        }
                         for (LivingEntity livingEntity : currentLocation.getNearbyLivingEntities(6)) {
                             // Check if the entity is not the player who triggered the event
                             if (!livingEntity.equals(player) & !livingEntity.equals(armorStand)) {
