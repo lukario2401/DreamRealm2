@@ -22,6 +22,7 @@ me\lukario\dreamRealm2\items\DualWield$1.class
 me\lukario\dreamRealm2\items\WizardWand.class
 me\lukario\dreamRealm2\RayCast$3.class
 me\lukario\dreamRealm2\items\Pyromancer$1.class
+me\lukario\dreamRealm2\items\Scythe.class
 me\lukario\dreamRealm2\items\ShadowDance$2.class
 me\lukario\dreamRealm2\items\JujuShortBow$1.class
 me\lukario\dreamRealm2\items\Pyromancer$5.class
@@ -42,3 +43,4 @@ me\lukario\dreamRealm2\items\SinOfSolace.class
 me\lukario\dreamRealm2\items\Pyromancer$3.class
 me\lukario\dreamRealm2\items\Hyperion.class
 me\lukario\dreamRealm2\commands\DamageTest.class
+me\lukario\dreamRealm2\items\Scythe$1.class
