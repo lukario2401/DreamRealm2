@@ -113,7 +113,7 @@ public class Dagger implements Listener {
                         Vector direction = armorStandDirection.clone().normalize().multiply(1);
                         armorStandLocation.add(direction);
                         armorStand.teleport(armorStandLocation);
-                        armorStand.getWorld().spawnParticle(Particle.SNOWFLAKE,armorStandLocation,1);
+                        armorStand.getWorld().spawnParticle(Particle.SNOWFLAKE,armorStandLocation.add(0,0.5,0),1,0,0,0,0);
 
                         for(LivingEntity livingEntity : armorStandLocation.getNearbyLivingEntities(2)){
                             if (!livingEntity.equals(player)){
@@ -124,14 +124,14 @@ public class Dagger implements Listener {
                     } else {
                         outOfBounds[0] = true;
 
-                        Vector direction = player.getLocation().toVector().subtract(armorStandLocation.toVector()).normalize();
+                        Vector direction = player.getLocation().add(0,1,0).toVector().subtract(armorStandLocation.toVector()).normalize();
                         // Move the armor stand in the direction
                         armorStandLocation.add(direction.multiply(1)); // Adjust the multiplier for desired movement speed
                         // Update the armor stand's direction to face the player
                         armorStandLocation.setDirection(direction);
                         // Teleport the armor stand to the new location
                         armorStand.teleport(armorStandLocation);
-                        armorStand.getWorld().spawnParticle(Particle.SNOWFLAKE,armorStandLocation,1);
+                        armorStand.getWorld().spawnParticle(Particle.SNOWFLAKE,armorStandLocation.add(0,0.5,0),1,0,0,0,0);
 
                         for(LivingEntity livingEntity : armorStandLocation.getNearbyLivingEntities(2)){
                             if (!livingEntity.equals(player)){
@@ -140,8 +140,9 @@ public class Dagger implements Listener {
                         }
                     }
 
+                    double distanceForArmorStandRemove = playerLocation.add(0,1.5,0).distance(armorStandLocation);
                     if (armorStandAliveTime[0] > 10) {
-                        if (distance <= 0.5) {
+                        if (distanceForArmorStandRemove <= 0.5) {
                             canShoot[0] = true;
                             armorStand.remove();
                             this.cancel();
