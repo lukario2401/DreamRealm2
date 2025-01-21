@@ -109,7 +109,7 @@ public class Dagger implements Listener {
 
                     double distance = playerLocation.distance(armorStandLocation);
 
-                    if (distance < 12 && !outOfBounds[0]) {
+                    if (distance < 16 && !outOfBounds[0]) {
                         Vector direction = armorStandDirection.clone().normalize().multiply(1);
                         armorStandLocation.add(direction);
                         armorStand.teleport(armorStandLocation);

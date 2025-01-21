@@ -185,7 +185,20 @@ public class Rapier implements Listener {
 
 
     private static boolean isHoldingTheCorrectItem(Player player) {
-        ItemStack item = player.getInventory().getItemInMainHand();
+        ItemStack mainHandItem = player.getInventory().getItemInMainHand();
+        ItemStack offHandItem = player.getInventory().getItemInOffHand();
+
+        // Check if either hand holds the correct item
+        if (isCorrectItem(mainHandItem)) {
+            return true; // Correct item in main hand
+        } else if (isCorrectItem(offHandItem)) {
+            return true; // Correct item in of
+        }
+
+        return false; // No correct item in either hand
+    }
+
+    private static boolean isCorrectItem(ItemStack item) {
         if (item == null || item.getType() != ITEM_MATERIAL) return false;
 
         ItemMeta meta = item.getItemMeta();
