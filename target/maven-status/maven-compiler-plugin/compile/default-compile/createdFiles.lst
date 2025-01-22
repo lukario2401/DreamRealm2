@@ -20,6 +20,7 @@ me\lukario\dreamRealm2\items\ShadowDance$2.class
 me\lukario\dreamRealm2\items\Pyromancer$5.class
 me\lukario\dreamRealm2\items\SinOfSolace$1.class
 me\lukario\dreamRealm2\items\CustomSword.class
+me\lukario\dreamRealm2\items\Clock$1.class
 me\lukario\dreamRealm2\items\Rapier$2.class
 me\lukario\dreamRealm2\items\Arch$1.class
 me\lukario\dreamRealm2\commands\SumCommand.class
@@ -34,7 +35,9 @@ me\lukario\dreamRealm2\items\Pyromancer$4.class
 me\lukario\dreamRealm2\items\Rapier.class
 me\lukario\dreamRealm2\items\DualWield$2.class
 me\lukario\dreamRealm2\items\Arch$2.class
+me\lukario\dreamRealm2\items\Clock.class
 me\lukario\dreamRealm2\RayCast$3.class
+me\lukario\dreamRealm2\items\Clock$2.class
 me\lukario\dreamRealm2\items\Scythe.class
 me\lukario\dreamRealm2\items\JujuShortBow$1.class
 me\lukario\dreamRealm2\commands\GetCommand.class
