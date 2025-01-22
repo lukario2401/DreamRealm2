@@ -43,10 +43,10 @@ public class Dagger implements Listener {
             meta.setLore(Arrays.asList(ITEM_LORE));
             meta.setUnbreakable(true);
             meta.setCustomModelData(10);
-            meta.addEnchant(Enchantment.SHARPNESS,10,true);
-            meta.addEnchant(Enchantment.LOOTING,5,true);
-            meta.addEnchant(Enchantment.SWEEPING_EDGE,5,true);
-            meta.addEnchant(Enchantment.FIRE_ASPECT,5,true);
+            meta.addEnchant(Enchantment.SHARPNESS, 10, true);
+            meta.addEnchant(Enchantment.LOOTING, 5, true);
+            meta.addEnchant(Enchantment.SWEEPING_EDGE, 5, true);
+            meta.addEnchant(Enchantment.FIRE_ASPECT, 5, true);
             item.setItemMeta(meta);
 
         }
@@ -62,7 +62,7 @@ public class Dagger implements Listener {
         if (!isHoldingTheCorrectItem(player)) {
             return;
         }
-        if(!canShoot[0]){
+        if (!canShoot[0]) {
             player.sendMessage("wait for the dagger to come back");
             return;
         }
@@ -77,7 +77,7 @@ public class Dagger implements Listener {
             meta.setCustomModelData(10);
             item.setItemMeta(meta);
 
-            armorStand.setItem(EquipmentSlot.HEAD,item);
+            armorStand.setItem(EquipmentSlot.HEAD, item);
             armorStand.setMarker(true);
             armorStand.setSmall(true);
             armorStand.setInvisible(true);
@@ -113,34 +113,34 @@ public class Dagger implements Listener {
                         Vector direction = armorStandDirection.clone().normalize().multiply(1);
                         armorStandLocation.add(direction);
                         armorStand.teleport(armorStandLocation);
-                        armorStand.getWorld().spawnParticle(Particle.SNOWFLAKE,armorStandLocation.add(0,0.5,0),1,0,0,0,0);
+                        armorStand.getWorld().spawnParticle(Particle.SNOWFLAKE, armorStandLocation.add(0, 0.5, 0), 1, 0, 0, 0, 0);
 
-                        for(LivingEntity livingEntity : armorStandLocation.getNearbyLivingEntities(2)){
-                            if (!livingEntity.equals(player)){
-                                livingEntity.damage(12,player);
+                        for (LivingEntity livingEntity : armorStandLocation.getNearbyLivingEntities(2)) {
+                            if (!livingEntity.equals(player)) {
+                                livingEntity.damage(12, player);
                             }
                         }
 
                     } else {
                         outOfBounds[0] = true;
 
-                        Vector direction = player.getLocation().add(0,1,0).toVector().subtract(armorStandLocation.toVector()).normalize();
+                        Vector direction = player.getLocation().add(0, 1, 0).toVector().subtract(armorStandLocation.toVector()).normalize();
                         // Move the armor stand in the direction
                         armorStandLocation.add(direction.multiply(1)); // Adjust the multiplier for desired movement speed
                         // Update the armor stand's direction to face the player
                         armorStandLocation.setDirection(direction);
                         // Teleport the armor stand to the new location
                         armorStand.teleport(armorStandLocation);
-                        armorStand.getWorld().spawnParticle(Particle.SNOWFLAKE,armorStandLocation.add(0,0.5,0),1,0,0,0,0);
+                        armorStand.getWorld().spawnParticle(Particle.SNOWFLAKE, armorStandLocation.add(0, 0.5, 0), 1, 0, 0, 0, 0);
 
-                        for(LivingEntity livingEntity : armorStandLocation.getNearbyLivingEntities(2)){
-                            if (!livingEntity.equals(player)){
-                                livingEntity.damage(21,player);
+                        for (LivingEntity livingEntity : armorStandLocation.getNearbyLivingEntities(2)) {
+                            if (!livingEntity.equals(player)) {
+                                livingEntity.damage(21, player);
                             }
                         }
                     }
 
-                    double distanceForArmorStandRemove = playerLocation.add(0,1.5,0).distance(armorStandLocation);
+                    double distanceForArmorStandRemove = playerLocation.add(0, 1.5, 0).distance(armorStandLocation);
                     if (armorStandAliveTime[0] > 10) {
                         if (distanceForArmorStandRemove <= 0.5) {
                             canShoot[0] = true;
@@ -152,7 +152,6 @@ public class Dagger implements Listener {
             }.runTaskTimer(plugin, 0L, 1L);
         }
     }
-
 
 
     private static boolean isHoldingTheCorrectItem(Player player) {
