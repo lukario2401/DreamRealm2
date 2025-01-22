@@ -110,6 +110,11 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Clock");
             return true;
         }
+        if (args.length == 1 && args[0].equalsIgnoreCase("Card")) {
+            player.getInventory().addItem(Cards.createItem(11));
+            player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Card");
+            return true;
+        }
 
 
         // Invalid argument
@@ -123,7 +128,7 @@ public class GetCommand implements CommandExecutor, TabExecutor {
 
         if (args.length == 1) {
             // Suggest main types
-            completions.addAll(Arrays.asList("launch", "cat","Rapier", "wizard","Clock","Dagger","SinOfSolace","Scythe","Terminator","Shadow","Dual","Pyromancer","GiantSword"));
+            completions.addAll(Arrays.asList("launch", "cat","Rapier","Card", "wizard","Clock","Dagger","SinOfSolace","Scythe","Terminator","Shadow","Dual","Pyromancer","GiantSword"));
         } else if (args.length == 2 && args[0].equalsIgnoreCase("launch")) {
             // Suggest items for "launch"
             completions.add("sword");
