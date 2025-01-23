@@ -163,7 +163,7 @@ public class Scythe implements Listener {
                 if (entity2 instanceof LivingEntity){
                     LivingEntity livingEntity = (LivingEntity) entity2;
 
-                    livingEntity.damage(1,entity1);
+                    livingEntity.setHealth(livingEntity.getHealth()-0.25);
                 }
 
                 // Spawn particles along the ray
