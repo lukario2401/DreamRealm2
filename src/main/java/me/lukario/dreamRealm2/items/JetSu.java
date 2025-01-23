@@ -119,7 +119,7 @@ public class JetSu implements Listener {
 
                 player.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE,1,255));
                     // Create an explosion at the hit location
-                hitLocation.getWorld().createExplosion(hitLocation.add(0,1,0), 12.0F, false, false); // Power of explosion: 4.0F, no fire, no block damage
+                hitLocation.getWorld().createExplosion(hitLocation.add(0,1,0), 17.0F, false, false); // Power of explosion: 4.0F, no fire, no block damage
                 hitLocation.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, hitLocation,1,0,0,0,0);
                 hitLocation.getWorld().spawnParticle(Particle.EXPLOSION, hitLocation,10,2,2,2,0);
 
