@@ -1,4 +1,4 @@
-package me.lukario.dreamRealm2.items;
+package me.lukario.dreamRealm2.items.misc;
 
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.FluidCollisionMode;

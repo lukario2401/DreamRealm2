@@ -1,4 +1,4 @@
-package me.lukario.dreamRealm2.items;
+package me.lukario.dreamRealm2.items.bow;
 
 import me.lukario.dreamRealm2.RayCast;
 import org.bukkit.*;

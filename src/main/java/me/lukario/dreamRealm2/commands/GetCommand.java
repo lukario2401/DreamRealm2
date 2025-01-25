@@ -1,6 +1,12 @@
 package me.lukario.dreamRealm2.commands;
 
-import me.lukario.dreamRealm2.items.*;
+import me.lukario.dreamRealm2.items.bow.Arch;
+import me.lukario.dreamRealm2.items.bow.JujuShortBow;
+import me.lukario.dreamRealm2.items.misc.Cards;
+import me.lukario.dreamRealm2.items.misc.Clock;
+import me.lukario.dreamRealm2.items.misc.JetSu;
+import me.lukario.dreamRealm2.items.misc.Pyromancer;
+import me.lukario.dreamRealm2.items.swords.*;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -14,8 +20,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static me.lukario.dreamRealm2.items.CustomSword.createCustomSword;
-import static me.lukario.dreamRealm2.items.WizardWand.createCustomWizardWand;
+import static me.lukario.dreamRealm2.items.swords.CustomSword.createCustomSword;
+import static me.lukario.dreamRealm2.items.ranged.WizardWand.createCustomWizardWand;
 
 public class GetCommand implements CommandExecutor, TabExecutor {
     @Override

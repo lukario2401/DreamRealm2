@@ -1,6 +1,5 @@
-package me.lukario.dreamRealm2.items;
+package me.lukario.dreamRealm2.items.swords;
 
-import com.comphenix.protocol.PacketType;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;

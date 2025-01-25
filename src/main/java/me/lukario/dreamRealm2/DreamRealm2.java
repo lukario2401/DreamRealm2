@@ -5,7 +5,14 @@ import com.comphenix.protocol.ProtocolManager;
 import me.lukario.dreamRealm2.commands.DamageTest;
 import me.lukario.dreamRealm2.commands.GetCommand;
 import me.lukario.dreamRealm2.commands.SumCommand;
-import me.lukario.dreamRealm2.items.*;
+import me.lukario.dreamRealm2.items.bow.Arch;
+import me.lukario.dreamRealm2.items.bow.JujuShortBow;
+import me.lukario.dreamRealm2.items.misc.Cards;
+import me.lukario.dreamRealm2.items.misc.Clock;
+import me.lukario.dreamRealm2.items.misc.JetSu;
+import me.lukario.dreamRealm2.items.misc.Pyromancer;
+import me.lukario.dreamRealm2.items.ranged.WizardWand;
+import me.lukario.dreamRealm2.items.swords.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class DreamRealm2 extends JavaPlugin {

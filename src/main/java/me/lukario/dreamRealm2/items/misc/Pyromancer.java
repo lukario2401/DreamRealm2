@@ -1,4 +1,4 @@
-package me.lukario.dreamRealm2.items;
+package me.lukario.dreamRealm2.items.misc;
 
 import org.bukkit.Material;
 import org.bukkit.Particle;

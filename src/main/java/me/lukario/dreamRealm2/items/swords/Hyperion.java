@@ -1,4 +1,4 @@
-package me.lukario.dreamRealm2.items;
+package me.lukario.dreamRealm2.items.swords;
 
 import org.bukkit.*;
 import org.bukkit.block.Block;
