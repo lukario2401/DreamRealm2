@@ -11,6 +11,7 @@ import me.lukario.dreamRealm2.items.special.ranged.misc.Cards;
 import me.lukario.dreamRealm2.items.special.Clock;
 import me.lukario.dreamRealm2.items.special.JetSu;
 import me.lukario.dreamRealm2.items.special.ranged.misc.Pyromancer;
+import me.lukario.dreamRealm2.items.special.ranged.misc.Shuriken;
 import me.lukario.dreamRealm2.items.special.ranged.misc.WizardWand;
 import me.lukario.dreamRealm2.items.swords.*;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -37,6 +38,7 @@ public final class DreamRealm2 extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new CookWithSneak(), this);
         getServer().getPluginManager().registerEvents(new GiantSword(), this);
         getServer().getPluginManager().registerEvents(new Dagger(this), this);
+        getServer().getPluginManager().registerEvents(new Shuriken(this), this);
         getServer().getPluginManager().registerEvents(new JetSu(this), this);
         getServer().getPluginManager().registerEvents(new Cards(this), this);
         getServer().getPluginManager().registerEvents(new Clock(this), this);

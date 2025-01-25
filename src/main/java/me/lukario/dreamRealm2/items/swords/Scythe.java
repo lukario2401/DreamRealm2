@@ -21,6 +21,7 @@ import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Scythe implements Listener {
 
@@ -155,6 +156,10 @@ public class Scythe implements Listener {
                     LivingEntity livingEntity = (LivingEntity) entity2;
 
                     livingEntity.setHealth(livingEntity.getHealth()-0.25);
+                    livingEntity.playHurtAnimation(2);
+                    livingEntity.getWorld().playSound(livingEntity.getLocation(), Objects.requireNonNull(livingEntity.getHurtSound()),1,1);
+
+
                 }
 
                 // Spawn particles along the ray

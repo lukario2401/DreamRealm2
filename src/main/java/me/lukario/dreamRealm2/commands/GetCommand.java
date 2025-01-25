@@ -6,6 +6,7 @@ import me.lukario.dreamRealm2.items.special.ranged.misc.Cards;
 import me.lukario.dreamRealm2.items.special.Clock;
 import me.lukario.dreamRealm2.items.special.JetSu;
 import me.lukario.dreamRealm2.items.special.ranged.misc.Pyromancer;
+import me.lukario.dreamRealm2.items.special.ranged.misc.Shuriken;
 import me.lukario.dreamRealm2.items.swords.*;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -126,6 +127,11 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Jet");
             return true;
         }
+        if (args.length == 1 && args[0].equalsIgnoreCase("Shuriken")) {
+            player.getInventory().addItem(Shuriken.createItem());
+            player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Shuriken");
+            return true;
+        }
 
 
         // Invalid argument
@@ -139,7 +145,7 @@ public class GetCommand implements CommandExecutor, TabExecutor {
 
         if (args.length == 1) {
             // Suggest main types
-            completions.addAll(Arrays.asList("launch", "cat","Jet","Rapier","Card", "wizard","Clock","Dagger","SinOfSolace","Scythe","Terminator","Shadow","Dual","Pyromancer","GiantSword"));
+            completions.addAll(Arrays.asList("Launch","Shuriken","Cat","Jet","Rapier","Card", "Wizard","Clock","Dagger","SinOfSolace","Scythe","Terminator","Shadow","Dual","Pyromancer","GiantSword"));
         } else if (args.length == 2 && args[0].equalsIgnoreCase("launch")) {
             // Suggest items for "launch"
             completions.add("sword");
