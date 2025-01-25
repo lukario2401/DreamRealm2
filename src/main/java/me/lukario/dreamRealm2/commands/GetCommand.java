@@ -1,11 +1,11 @@
 package me.lukario.dreamRealm2.commands;
 
-import me.lukario.dreamRealm2.items.bow.Arch;
-import me.lukario.dreamRealm2.items.bow.JujuShortBow;
-import me.lukario.dreamRealm2.items.misc.Cards;
-import me.lukario.dreamRealm2.items.misc.Clock;
-import me.lukario.dreamRealm2.items.misc.JetSu;
-import me.lukario.dreamRealm2.items.misc.Pyromancer;
+import me.lukario.dreamRealm2.items.ranged.bow.Arch;
+import me.lukario.dreamRealm2.items.ranged.bow.JujuShortBow;
+import me.lukario.dreamRealm2.items.ranged.misc.Cards;
+import me.lukario.dreamRealm2.items.ranged.misc.Clock;
+import me.lukario.dreamRealm2.items.ranged.misc.JetSu;
+import me.lukario.dreamRealm2.items.ranged.misc.Pyromancer;
 import me.lukario.dreamRealm2.items.swords.*;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;

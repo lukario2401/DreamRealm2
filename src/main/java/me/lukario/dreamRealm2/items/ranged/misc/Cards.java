@@ -1,4 +1,4 @@
-package me.lukario.dreamRealm2.items.misc;
+package me.lukario.dreamRealm2.items.ranged.misc;
 
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
