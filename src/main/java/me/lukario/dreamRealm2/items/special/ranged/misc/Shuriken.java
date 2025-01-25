@@ -40,28 +40,35 @@ public class Shuriken implements Listener {
         return item;
     }
 
-    @EventHandler
-    public void throwShuriken(PlayerInteractEvent event) {
-        Player player = event.getPlayer();
-        if (!isHoldingTheCorrectItem(player)) return;
+@EventHandler
+public void throwShuriken(PlayerInteractEvent event) {
+    Player player = event.getPlayer();
+    if (!isHoldingTheCorrectItem(player)) return;
 
-        if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
-            // Start location (player's eye location)
-            Location currentLocation = player.getEyeLocation();
+    if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
+        // Start location (player's eye location)
+        Location currentLocation = player.getEyeLocation();
 
-            // Keep track of already targeted mobs to avoid re-targeting
-            int maxChains = 1000; // Limit the chaining to avoid infinite loops
-            for (int i = 0; i < maxChains; i++) {
-                LivingEntity nearestMob = findNearestMob(currentLocation, player);
+        // Keep track of already targeted mobs to avoid re-targeting
+        int maxChains = 1000; // Limit the chaining to avoid infinite loops
+        boolean isFirstRun = true;
+        for (int i = 0; i < maxChains; i++) {
 
-                // Stop if no more mobs are found
-                if (nearestMob == null) {
-                    player.sendMessage(ChatColor.RED + "No more mobs found!");
-                    break;
-                }
+            LivingEntity nearestMob = findNearestMob(currentLocation, player);
 
-                // Perform raycast to the nearest mob
-                Location mobLocation = nearestMob.getEyeLocation();
+            if (nearestMob == null && isFirstRun) {
+                // If no mob is found, perform the red raycast and exit
+                performRayCastRed(player, 24);
+                return; // Exit early since no mobs are found
+            }
+            if (nearestMob == null) {
+                // If no mob is found, perform the red raycast and exit
+                break; // Exit early since no mobs are found
+            }
+
+            // Perform raycast to the nearest mob only if the mob's location is valid
+            Location mobLocation = nearestMob.getEyeLocation();
+            if (mobLocation != null && Double.isFinite(mobLocation.getX()) && Double.isFinite(mobLocation.getY()) && Double.isFinite(mobLocation.getZ())) {
                 createRayCast(currentLocation, mobLocation, player);
 
                 // Damage the mob after the raycast
@@ -69,13 +76,23 @@ public class Shuriken implements Listener {
 
                 // Update current location for the next iteration
                 currentLocation = mobLocation.clone();
+            } else {
+                // Skip this mob if the location is invalid
+                continue;
+            }
+
+            if (isFirstRun){
+                isFirstRun = false;
             }
         }
-
-        if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            performRaycast(player, 24);
-        }
     }
+
+    // Right click behavior
+    if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+        performRaycast(player, 24);
+    }
+}
+
 
     private LivingEntity findNearestMob(Location startLocation, Player player) {
         return startLocation.getNearbyLivingEntities(24).stream()
@@ -187,7 +204,64 @@ public class Shuriken implements Listener {
         }
     }
 }
+public void performRayCastRed(Player player, double maxDistance) {
+    // Get the starting position (player's eye location)
+    Location start = player.getEyeLocation();
 
+    // Get the direction the player is looking
+    Vector direction = start.getDirection();
+
+    // Define the current position (start at the player's eye location)
+    Location current = start.clone();
+
+    // Define the maximum distance the ray should travel
+    double distanceTraveled = 0;
+
+    // Define the increment size (precision of the raycast)
+    double increment = 0.5;
+
+    // Loop through the ray's path
+    while (distanceTraveled < maxDistance) {
+        if (distanceTraveled+0.5==maxDistance){
+            if (current.getBlock().getType() == Material.AIR) {
+                // Do something when the ray hits a block
+                current.getWorld().createExplosion(current, 4F, false, false); // Small explosion
+                current.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER,current,1,0,0,0);
+                break;
+            }
+        }
+        // Move the current location along the direction vector
+        current.add(direction.clone().multiply(increment));
+        distanceTraveled += increment;
+
+        // Spawn particles for visualization (optional)
+        current.getWorld().spawnParticle(Particle.DUST,current.add(0, 0, 0),10,0, 0, 0,
+                        new Particle.DustOptions(Color.RED, 1.0f));
+
+        // Check if the current position hits a block
+        if (current.getBlock().getType() != Material.AIR) {
+            // Do something when the ray hits a block
+            current.getWorld().createExplosion(current, 4F, false, false); // Small explosion
+            current.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER,current,1,0,0,0);
+            break;
+        }
+
+        // Check if the ray hits an entity
+        for (Entity entity : current.getWorld().getNearbyEntities(current, 1.0, 1.0, 1.0)) {
+            if (entity instanceof LivingEntity && !entity.equals(player)) {
+                // Damage the entity (or any other interaction)
+//                entity.getWorld().createExplosion(entity,4.5F,false,false);
+                // Spawn a particle effect on the entity (optional)
+
+                entity.getWorld().spawnParticle(Particle.SWEEP_ATTACK, entity.getLocation(), 1);
+                entity.getWorld().playSound(entity.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 3, 1);
+                ((LivingEntity) entity).damage(23);
+
+                break;
+            }
+        }
+    }
+}
 
     private static boolean isHoldingTheCorrectItem(Player player) {
         ItemStack mainHandItem = player.getInventory().getItemInMainHand();
