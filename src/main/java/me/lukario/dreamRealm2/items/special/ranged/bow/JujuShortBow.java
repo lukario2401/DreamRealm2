@@ -1,4 +1,4 @@
-package me.lukario.dreamRealm2.items.ranged.bow;
+package me.lukario.dreamRealm2.items.special.ranged.bow;
 
 import org.bukkit.*;
 import org.bukkit.entity.*;

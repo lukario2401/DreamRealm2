@@ -1,4 +1,4 @@
-package me.lukario.dreamRealm2.items.ranged;
+package me.lukario.dreamRealm2.items.special.ranged.misc;
 
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
