@@ -72,7 +72,7 @@ public void throwShuriken(PlayerInteractEvent event) {
                 createRayCast(currentLocation, mobLocation, player);
 
                 // Damage the mob after the raycast
-                nearestMob.damage(24.0, player);
+                nearestMob.damage(48.0, player);
 
                 // Update current location for the next iteration
                 currentLocation = mobLocation.clone();
