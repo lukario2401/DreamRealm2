@@ -23,7 +23,6 @@ public class EntityListener implements Listener {
         }
     }
 
-    @EventHandler
     public void onEntityDie(EntityDeathEvent event) {
         // Check if the entity is a Cow before casting
         if (event.getEntity() instanceof Cow) {
@@ -33,7 +32,6 @@ public class EntityListener implements Listener {
         }
     }
 
-    @EventHandler
     public void onEntityDieCreeper(EntityDeathEvent event) {
         // Check if the entity is a Creeper before casting
         if (event.getEntity() instanceof Creeper) {
