@@ -85,13 +85,18 @@ public class Clock implements Listener {
         }
     }
 
-    boolean isAnimationRunning = false;
-    @EventHandler
-    public void startFlameAnimation(PlayerItemHeldEvent event) {
-        if(isAnimationRunning==true){return;}
-        isAnimationRunning=true;
+boolean isAnimationRunning = false;
+
+@EventHandler
+public void startFlameAnimation(PlayerItemHeldEvent event) {
+    if (isAnimationRunning) {
+        return;
+    }
+    isAnimationRunning = true;
+
     new BukkitRunnable() {
         double angle = 0; // Initialize rotation angle
+
         @Override
         public void run() {
             for (Player player : Bukkit.getOnlinePlayers()) {
@@ -110,7 +115,7 @@ public class Clock implements Listener {
                     Vector flatDirection = new Vector(headDirection.getX(), 0, headDirection.getZ()).normalize();
 
                     // Calculate the perpendicular vector in the horizontal plane
-                    Vector perpendicular = flatDirection.clone().rotateAroundY(Math.PI / 2); // Rotate by 90 degrees to get the axis of rotation
+                    Vector perpendicular = flatDirection.clone().rotateAroundY(Math.PI / 2); // 90 degrees rotation
 
                     // Center of rotation (adjusted for back and up offsets)
                     double centerX = playerLocation.getX() + flatDirection.getX() * backOffset;
@@ -119,7 +124,7 @@ public class Clock implements Listener {
 
                     // Calculate the rotating point in 3D space
                     double rotatingX = centerX + perpendicular.getX() * handLength * Math.cos(Math.toRadians(angle));
-                    double rotatingY = centerY + handHeight * Math.sin(Math.toRadians(angle)); // Use sine for vertical movement
+                    double rotatingY = centerY + handHeight * Math.sin(Math.toRadians(angle)); // Vertical oscillation
                     double rotatingZ = centerZ + perpendicular.getZ() * handLength * Math.cos(Math.toRadians(angle));
 
                     // Draw particles along the rotating path
@@ -129,21 +134,18 @@ public class Clock implements Listener {
                         double z = centerZ + t * (rotatingZ - centerZ);
 
                         // Spawn particles at this segment
-//                        player.getWorld().spawnParticle(Particle.SOUL, x, y, z, 1, 0, 0, 0, 0);
                         player.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, x, y, z, 1, 0, 0, 0, 0);
-//                        player.getWorld().spawnParticle(Particle.SCULK_SOUL, x, y, z, 1, 0, 0, 0, 0);
                     }
                 }
             }
-            angle +=4;
-            // Increment the angle for the next frame
-//            angle = Math.PI / 64; // Rotate by a small increment (1/64 of a circle per tick)
-//            if (angle >= 2 * Math.PI) {
-//                angle = 0; // Reset angle after a full rotation
-//            }
+            angle += 4; // Increment angle for rotation
+            if (angle >= 360) {
+                angle -= 360; // Keep the angle within 0-360 degrees
+            }
         }
     }.runTaskTimer(plugin, 0L, 1L); // Run every tick (20 times per second)
 }
+
     boolean isAnimationRunningg = false;
     @EventHandler
     public void startFlameAnimationn(PlayerItemHeldEvent event) {
@@ -187,83 +189,92 @@ public class Clock implements Listener {
                         double y = centerY + t * (rotatingY - centerY);
                         double z = centerZ + t * (rotatingZ - centerZ);
 
-                        // Spawn particles at this segment
-//                        player.getWorld().spawnParticle(Particle.SOUL, x, y, z, 1, 0, 0, 0, 0);
                         player.getWorld().spawnParticle(Particle.FLAME, x, y, z, 1, 0, 0, 0, 0);
-//                        player.getWorld().spawnParticle(Particle.SCULK_SOUL, x, y, z, 1, 0, 0, 0, 0);
                     }
                 }
             }
             angle +=0.25;
-            // Increment the angle for the next frame
-//            angle = Math.PI / 64; // Rotate by a small increment (1/64 of a circle per tick)
-//            if (angle >= 2 * Math.PI) {
-//                angle = 0; // Reset angle after a full rotation
-//            }
+
         }
     }.runTaskTimer(plugin, 0L, 1L); // Run every tick (20 times per second)
 }
 
+    boolean isAnimationRunninggg = false;
+    @EventHandler
+    public void startFlamingAnimation(PlayerItemHeldEvent event){
 
+        if(isAnimationRunninggg){return;}
+        isAnimationRunninggg=true;
 
-boolean isAnimationRunningggg = false;
+        startFlameAnimationCircle(0);
+        startFlameAnimationCircle(22);
+        startFlameAnimationCircle(45);
+        startFlameAnimationCircle(67);
+        startFlameAnimationCircle(90);
+        startFlameAnimationCircle(115);
+        startFlameAnimationCircle(135);
+        startFlameAnimationCircle(155);
+        startFlameAnimationCircle(180);
+        startFlameAnimationCircle(205);
+        startFlameAnimationCircle(225);
+        startFlameAnimationCircle(245);
+        startFlameAnimationCircle(270);
+        startFlameAnimationCircle(290);
+        startFlameAnimationCircle(315);
+        startFlameAnimationCircle(335);
 
-@EventHandler
-public void startFlameAnimationnnn(PlayerItemHeldEvent event) {
-    if (isAnimationRunningggg) {
-        return;
     }
-    isAnimationRunningggg = true;
 
+
+    public void startFlameAnimationCircle(double sine) {
     new BukkitRunnable() {
-        double angle = 0;
-
+        double angle = sine; // Initialize rotation angle
         @Override
         public void run() {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 if (isHoldingTheCorrectItem(player)) {
                     Location playerLocation = player.getEyeLocation();
-                    Vector headDirection = playerLocation.getDirection().normalize();
-                    double radius = 3.2; // Radius of the circle
+                    Vector headDirection = playerLocation.getDirection().normalize(); // Direction the player is looking
 
-                    // Circle center offset relative to the player
-                    double centerX = playerLocation.getX() + headDirection.getX() * -1.0;
-                    double centerY = playerLocation.getY() + 1.5;
-                    double centerZ = playerLocation.getZ() + headDirection.getZ() * -1.0;
+                    double handLength = 3.0; // Length of the clock hand
+                    double handHeight = 2.0; // Vertical height of the rotation
 
-                    // Calculate perpendicular vectors to define the rotation plane
-                    Vector horizontalDirection = new Vector(headDirection.getX(), 0, headDirection.getZ()).normalize();
-                    Vector verticalDirection = new Vector(0, 1, 0);
+                    // Define offsets to move the effect back and up
+                    double backOffset = -1.0; // Move particles backward along the player's view direction
+                    double upOffset = 1.5;   // Move particles upward from the player's eye level
 
-                    // **Change here: Calculate rotation axis for vertical circle**
-                    Vector rotationAxis1 = verticalDirection.clone(); // Use vertical direction as the primary axis
-                    Vector rotationAxis2 = rotationAxis1.clone().crossProduct(horizontalDirection).normalize();
+                    // Project head direction onto the horizontal plane (ignore Y-axis)
+                    Vector flatDirection = new Vector(headDirection.getX(), 0, headDirection.getZ()).normalize();
 
-                    // Spawn particles to create a rotating circle
-                    for (int i = 0; i < 4; i++) {
-                        double pointAngle = angle + i * (Math.PI / 2); // Offset each point by 90 degrees
-                        double offsetX = radius * (rotationAxis1.getX() * Math.cos(pointAngle) + rotationAxis2.getX() * Math.sin(pointAngle));
-                        double offsetY = radius * (rotationAxis1.getY() * Math.cos(pointAngle) + rotationAxis2.getY() * Math.sin(pointAngle));
-                        double offsetZ = radius * (rotationAxis1.getZ() * Math.cos(pointAngle) + rotationAxis2.getZ() * Math.sin(pointAngle));
+                    // Calculate the perpendicular vector in the horizontal plane
+                    Vector perpendicular = flatDirection.clone().rotateAroundY(Math.PI / 2); // Rotate by 90 degrees to get the axis of rotation
 
-                        // Calculate particle position
-                        double x = centerX + offsetX;
-                        double y = centerY + offsetY;
-                        double z = centerZ + offsetZ;
+                    // Center of rotation (adjusted for back and up offsets)
+                    double centerX = playerLocation.getX() + flatDirection.getX() * backOffset;
+                    double centerY = playerLocation.getY() + upOffset;
+                    double centerZ = playerLocation.getZ() + flatDirection.getZ() * backOffset;
 
-                        // Spawn the particle
+                    // Calculate the rotating point in 3D space
+                    double rotatingX = centerX + perpendicular.getX() * handLength * Math.cos(Math.toRadians(angle));
+                    double rotatingY = centerY + handHeight * Math.sin(Math.toRadians(angle)); // Use sine for vertical movement
+                    double rotatingZ = centerZ + perpendicular.getZ() * handLength * Math.cos(Math.toRadians(angle));
+
+                    // Draw particles along the rotating path
+                    for (double t = 1.0; t <= 1; t += 0.1) { // Divide the path into 10 segments
+                        double x = centerX + t * (rotatingX - centerX);
+                        double y = centerY + t * (rotatingY - centerY);
+                        double z = centerZ + t * (rotatingZ - centerZ);
+
+                        // Spawn particles at this segment
+//                        player.getWorld().spawnParticle(Particle.SOUL, x, y, z, 1, 0, 0, 0, 0);
                         player.getWorld().spawnParticle(Particle.SOUL, x, y, z, 1, 0, 0, 0, 0);
-                    }
-
-                    // Increment angle for rotation
-                    angle += 0.1; // Adjust the speed of rotation
-                    if (angle > Math.PI * 2) {
-                        angle = 0;
+//                        player.getWorld().spawnParticle(Particle.SCULK_SOUL, x, y, z, 1, 0, 0, 0, 0);
                     }
                 }
             }
+            angle +=2;
         }
-    }.runTaskTimer(plugin, 0L, 1L);
+    }.runTaskTimer(plugin, 0L, 1L); // Run every tick (20 times per second)
 }
 
     private static boolean isHoldingTheCorrectItem(Player player) {
