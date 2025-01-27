@@ -144,7 +144,7 @@ public class Clock implements Listener {
         }
     }.runTaskTimer(plugin, 0L, 1L); // Run every tick (20 times per second)
 }
-boolean isAnimationRunningg = false;
+    boolean isAnimationRunningg = false;
     @EventHandler
     public void startFlameAnimationn(PlayerItemHeldEvent event) {
         if(isAnimationRunningg==true){return;}
@@ -204,6 +204,67 @@ boolean isAnimationRunningg = false;
     }.runTaskTimer(plugin, 0L, 1L); // Run every tick (20 times per second)
 }
 
+
+
+boolean isAnimationRunningggg = false;
+
+@EventHandler
+public void startFlameAnimationnnn(PlayerItemHeldEvent event) {
+    if (isAnimationRunningggg) {
+        return;
+    }
+    isAnimationRunningggg = true;
+
+    new BukkitRunnable() {
+        double angle = 0;
+
+        @Override
+        public void run() {
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                if (isHoldingTheCorrectItem(player)) {
+                    Location playerLocation = player.getEyeLocation();
+                    Vector headDirection = playerLocation.getDirection().normalize();
+                    double radius = 3.2; // Radius of the circle
+
+                    // Circle center offset relative to the player
+                    double centerX = playerLocation.getX() + headDirection.getX() * -1.0;
+                    double centerY = playerLocation.getY() + 1.5;
+                    double centerZ = playerLocation.getZ() + headDirection.getZ() * -1.0;
+
+                    // Calculate perpendicular vectors to define the rotation plane
+                    Vector horizontalDirection = new Vector(headDirection.getX(), 0, headDirection.getZ()).normalize();
+                    Vector verticalDirection = new Vector(0, 1, 0);
+
+                    // **Change here: Calculate rotation axis for vertical circle**
+                    Vector rotationAxis1 = verticalDirection.clone(); // Use vertical direction as the primary axis
+                    Vector rotationAxis2 = rotationAxis1.clone().crossProduct(horizontalDirection).normalize();
+
+                    // Spawn particles to create a rotating circle
+                    for (int i = 0; i < 4; i++) {
+                        double pointAngle = angle + i * (Math.PI / 2); // Offset each point by 90 degrees
+                        double offsetX = radius * (rotationAxis1.getX() * Math.cos(pointAngle) + rotationAxis2.getX() * Math.sin(pointAngle));
+                        double offsetY = radius * (rotationAxis1.getY() * Math.cos(pointAngle) + rotationAxis2.getY() * Math.sin(pointAngle));
+                        double offsetZ = radius * (rotationAxis1.getZ() * Math.cos(pointAngle) + rotationAxis2.getZ() * Math.sin(pointAngle));
+
+                        // Calculate particle position
+                        double x = centerX + offsetX;
+                        double y = centerY + offsetY;
+                        double z = centerZ + offsetZ;
+
+                        // Spawn the particle
+                        player.getWorld().spawnParticle(Particle.SOUL, x, y, z, 1, 0, 0, 0, 0);
+                    }
+
+                    // Increment angle for rotation
+                    angle += 0.1; // Adjust the speed of rotation
+                    if (angle > Math.PI * 2) {
+                        angle = 0;
+                    }
+                }
+            }
+        }
+    }.runTaskTimer(plugin, 0L, 1L);
+}
 
     private static boolean isHoldingTheCorrectItem(Player player) {
         ItemStack mainHandItem = player.getInventory().getItemInMainHand();

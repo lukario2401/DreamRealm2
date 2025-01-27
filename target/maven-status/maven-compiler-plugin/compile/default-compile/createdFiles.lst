@@ -25,6 +25,7 @@ me\lukario\dreamRealm2\items\swords\DualWield$1.class
 me\lukario\dreamRealm2\RayCast$2.class
 me\lukario\dreamRealm2\items\swords\Rapier$2.class
 me\lukario\dreamRealm2\DoubleJump.class
+me\lukario\dreamRealm2\items\special\ranged\bow\TornadoBow.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Pyromancer$4.class
 me\lukario\dreamRealm2\commands\DamageTest.class
 me\lukario\dreamRealm2\items\swords\ShadowDance$2.class
@@ -40,6 +41,7 @@ me\lukario\dreamRealm2\items\special\ranged\misc\Pyromancer$5.class
 me\lukario\dreamRealm2\items\swords\SinOfSolace$1.class
 me\lukario\dreamRealm2\items\swords\DualWield.class
 me\lukario\dreamRealm2\items\swords\Hyperion.class
+me\lukario\dreamRealm2\items\special\Clock$4.class
 me\lukario\dreamRealm2\items\swords\Rapier$1.class
 me\lukario\dreamRealm2\RayCast$3.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Pyromancer.class

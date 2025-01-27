@@ -28,7 +28,7 @@ public class TornadoBow implements Listener {
 
     private static final String ITEM_NAME = ChatColor.of("#D88F07") + "Tornado Bow";//e668c6
     private static final String ITEM_LORE = ChatColor.YELLOW + "Crafted after defeating Wind";
-    private static final Material ITEM_MATERIAL = Material.NETHER_STAR;
+    private static final Material ITEM_MATERIAL = Material.IRON_HOE;
 
     public static ItemStack createItem() {
         ItemStack item = new ItemStack(ITEM_MATERIAL);
@@ -45,7 +45,7 @@ public class TornadoBow implements Listener {
     @EventHandler
     public void tornadoBowUsed(PlayerInteractEvent event){
         Player player = event.getPlayer();
-        if (!isHoldingTheCorrectItem(player));
+        if (!isHoldingTheCorrectItem(player)){return;}
         if (Action.LEFT_CLICK_AIR==event.getAction()||Action.LEFT_CLICK_BLOCK==event.getAction()){
             rayCastForTornadoBow(player);
         }
