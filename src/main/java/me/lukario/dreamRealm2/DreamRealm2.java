@@ -7,6 +7,7 @@ import me.lukario.dreamRealm2.commands.GetCommand;
 import me.lukario.dreamRealm2.commands.SumCommand;
 import me.lukario.dreamRealm2.items.special.ranged.bow.Arch;
 import me.lukario.dreamRealm2.items.special.ranged.bow.JujuShortBow;
+import me.lukario.dreamRealm2.items.special.ranged.bow.TornadoBow;
 import me.lukario.dreamRealm2.items.special.ranged.misc.Cards;
 import me.lukario.dreamRealm2.items.special.Clock;
 import me.lukario.dreamRealm2.items.special.JetSu;
@@ -38,6 +39,7 @@ public final class DreamRealm2 extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new CookWithSneak(), this);
         getServer().getPluginManager().registerEvents(new GiantSword(), this);
         getServer().getPluginManager().registerEvents(new Dagger(this), this);
+        getServer().getPluginManager().registerEvents(new TornadoBow(this), this);
         getServer().getPluginManager().registerEvents(new Shuriken(this), this);
         getServer().getPluginManager().registerEvents(new JetSu(this), this);
         getServer().getPluginManager().registerEvents(new Cards(this), this);

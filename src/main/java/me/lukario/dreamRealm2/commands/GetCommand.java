@@ -2,6 +2,7 @@ package me.lukario.dreamRealm2.commands;
 
 import me.lukario.dreamRealm2.items.special.ranged.bow.Arch;
 import me.lukario.dreamRealm2.items.special.ranged.bow.JujuShortBow;
+import me.lukario.dreamRealm2.items.special.ranged.bow.TornadoBow;
 import me.lukario.dreamRealm2.items.special.ranged.misc.Cards;
 import me.lukario.dreamRealm2.items.special.Clock;
 import me.lukario.dreamRealm2.items.special.JetSu;
@@ -59,6 +60,11 @@ public class GetCommand implements CommandExecutor, TabExecutor {
         if (args.length == 2 && args[0].equalsIgnoreCase("Dual") && args[1].equalsIgnoreCase("Wield")) {
             player.getInventory().addItem(DualWield.createDualWield());
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Dual Wield!");
+            return true;
+        }
+        if (args.length == 2 && args[0].equalsIgnoreCase("Tornado") && args[1].equalsIgnoreCase("Bow")) {
+            player.getInventory().addItem(TornadoBow.createItem());
+            player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Tornado Bow!");
             return true;
         }
 
@@ -139,27 +145,46 @@ public class GetCommand implements CommandExecutor, TabExecutor {
         return false;
     }
 
-    @Override
+   @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         List<String> completions = new ArrayList<>();
 
+        // Define all possible completions for the first argument
+        List<String> mainTypes = Arrays.asList(
+            "Launch", "Tornado", "Shuriken", "Cat", "Jet", "Rapier", "Card",
+            "Wizard", "Clock", "Dagger", "SinOfSolace", "Scythe", "Terminator",
+            "Shadow", "Dual", "Pyromancer", "GiantSword"
+        );
+
+        // First argument suggestions
         if (args.length == 1) {
-            // Suggest main types
-            completions.addAll(Arrays.asList("Launch","Shuriken","Cat","Jet","Rapier","Card", "Wizard","Clock","Dagger","SinOfSolace","Scythe","Terminator","Shadow","Dual","Pyromancer","GiantSword"));
-        } else if (args.length == 2 && args[0].equalsIgnoreCase("launch")) {
-            // Suggest items for "launch"
-            completions.add("sword");
-        } else if (args.length == 2 && args[0].equalsIgnoreCase("wizard")) {
-            // Suggest items for "launch"
-            completions.add("wand");
-        }else if (args.length == 2 && args[0].equalsIgnoreCase("Shadow")) {
-            // Suggest items for "launch"
-            completions.add("Dance");
-        }else if (args.length == 2 && args[0].equalsIgnoreCase("Dual")) {
-            // Suggest items for "launch"
-            completions.add("Wield");
+            String currentInput = args[0].toLowerCase(); // Get current input in lowercase
+            for (String type : mainTypes) {
+                if (type.toLowerCase().startsWith(currentInput)) {
+                    completions.add(type); // Add matching types
+                }
+            }
         }
 
+        // Second argument suggestions based on the first argument
+        else if (args.length == 2) {
+            switch (args[0].toLowerCase()) {
+                case "launch":
+                    completions.add("sword");
+                    break;
+                case "wizard":
+                    completions.add("wand");
+                    break;
+                case "shadow":
+                    completions.add("dance");
+                    break;
+                case "dual":
+                    completions.add("wield");
+                case "tornado":
+                    completions.add("bow");
+                    break;
+            }
+        }
         return completions;
     }
 }
