@@ -127,8 +127,32 @@ public class Rapier implements Listener {
                     armorStand.teleport(newLocation);
 
                     // Check if the armor stand has hit a block
-                    if (isCollidingWithBlock(armorStand)) {
+                    for (LivingEntity livingEntity : currentLocation.getNearbyLivingEntities(1)){
+                        if (!livingEntity.equals(player) & !livingEntity.equals(armorStand)){
 
+                            livingEntity.damage(72,player);
+
+                            armorStand.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER,currentLocation,1,0,0,0,0);
+                            armorStand.getWorld().spawnParticle(Particle.EXPLOSION,currentLocation,10,2,2,2,0);
+
+                            Location soundLocation = armorStand.getLocation();
+                            armorStand.getWorld().playSound(soundLocation, Sound.ENTITY_GENERIC_EXPLODE, 3, 1);
+                            armorStand.getWorld().playSound(soundLocation, Sound.ENTITY_GENERIC_EXPLODE, 3, 0);
+
+                            for (LivingEntity livingEntityIn : currentLocation.getNearbyLivingEntities(2)){
+                                livingEntityIn.damage(48,player);
+                            }
+                            for (LivingEntity livingEntityIn : currentLocation.getNearbyLivingEntities(3)){
+                                livingEntityIn.damage(24,player);
+                            }
+                            for (LivingEntity livingEntityIn : currentLocation.getNearbyLivingEntities(4)){
+                                livingEntityIn.damage(12,player);
+                            }
+
+                            armorStand.remove();
+                        }
+                    }
+                    if (isCollidingWithBlock(armorStand)) {
                         armorStand.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER,currentLocation,1,0,0,0,0);
                         armorStand.getWorld().spawnParticle(Particle.EXPLOSION,currentLocation,10,2,2,2,0);
 

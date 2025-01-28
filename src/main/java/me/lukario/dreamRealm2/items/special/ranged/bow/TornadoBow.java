@@ -1,10 +1,7 @@
 package me.lukario.dreamRealm2.items.special.ranged.bow;
 
 import net.md_5.bungee.api.ChatColor;
-import org.bukkit.Color;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Particle;
+import org.bukkit.*;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -61,17 +58,45 @@ public class TornadoBow implements Listener {
         for (float i = 0F; i < maxDistance+0.5; i += stepSize){
             Location currentLocation = startingLocation.clone().add(direction.clone().multiply(i));
 
+
+            for(LivingEntity livingEntity : currentLocation.getNearbyLivingEntities(2,2,2)){
+                for(LivingEntity livingEntityIn : currentLocation.getNearbyLivingEntities(1,1,1)){
+                    if (!livingEntityIn.equals(player)){
+                        if (livingEntityIn.getNoDamageTicks()<5) {
+                            livingEntityIn.teleport(currentLocation);
+                            livingEntityIn.damage(50, player);
+                            player.getWorld().playSound(currentLocation, Sound.ENTITY_ENDERMAN_TELEPORT,2,1);
+                            player.getWorld().spawnParticle(Particle.CLOUD,currentLocation.add(0,-1,0),25,0.25,0.25,0.25,0);
+                        }
+                    }
+                }
+                if (!livingEntity.equals(player)){
+                    if (livingEntity.getNoDamageTicks()<5) {
+                        livingEntity.teleport(currentLocation);
+                        livingEntity.damage(25, player);
+                        player.getWorld().playSound(currentLocation, Sound.ENTITY_ENDERMAN_TELEPORT,2,1);
+                        player.getWorld().spawnParticle(Particle.CLOUD,currentLocation,25,0.25,0.25,0.25,0);
+                    }
+                }
+                if (!livingEntity.equals(player)){
+                    i+=100;
+                }
+            }
+
             if (currentLocation.getBlock().getType()!=Material.AIR){
+
+                for (LivingEntity livingEntity : currentLocation.getNearbyLivingEntities(4)){
+                    if (!livingEntity.equals(player)){
+                        livingEntity.teleport(currentLocation.add(direction.clone().multiply(-1)));
+                    }
+                }
+                player.getWorld().playSound(currentLocation, Sound.ENTITY_ENDERMAN_TELEPORT,2,1);
+                player.getWorld().spawnParticle(Particle.CLOUD,currentLocation,25,0.25,0.25,0.25,0);
+
+
                 break;
             }
 
-
-            for(LivingEntity livingEntity : currentLocation.getNearbyLivingEntities(1,1,1)){
-                if (!livingEntity.equals(player)){
-                    livingEntity.teleport(currentLocation.add(0,1,0));
-                    livingEntity.damage(50,player);
-                }
-            }
             Particle.DustOptions dustOptions = new Particle.DustOptions(Color.fromRGB(200, 200, 255), 1);
             player.getWorld().spawnParticle(Particle.DUST, currentLocation, 1, 0.1, 0.1, 0.1, 0.01, dustOptions);
         }
