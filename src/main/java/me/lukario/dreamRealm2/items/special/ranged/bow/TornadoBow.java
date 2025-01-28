@@ -68,6 +68,7 @@ public class TornadoBow implements Listener {
 
             for(LivingEntity livingEntity : currentLocation.getNearbyLivingEntities(1,1,1)){
                 if (!livingEntity.equals(player)){
+                    livingEntity.teleport(currentLocation.add(0,1,0));
                     livingEntity.damage(50,player);
                 }
             }

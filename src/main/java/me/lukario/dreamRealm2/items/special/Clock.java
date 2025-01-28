@@ -102,89 +102,79 @@ public void startFlameAnimation(PlayerItemHeldEvent event) {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 if (isHoldingTheCorrectItem(player)) {
                     Location playerLocation = player.getEyeLocation();
-                    Vector headDirection = playerLocation.getDirection().normalize(); // Direction the player is looking
+                    Vector headDirection = playerLocation.getDirection().normalize();
 
-                    double handLength = 3.0; // Length of the clock hand
-                    double handHeight = 2.0; // Vertical height of the rotation
+                    double handLength = 2.0; // Length of the clock hand
+                    double handHeight = handLength; // Set equal to handLength for consistent radius
 
-                    // Define offsets to move the effect back and up
-                    double backOffset = -1.0; // Move particles backward along the player's view direction
-                    double upOffset = 1.5;   // Move particles upward from the player's eye level
+                    double backOffset = -1.0;
+                    double upOffset = 1.5;
 
-                    // Project head direction onto the horizontal plane (ignore Y-axis)
                     Vector flatDirection = new Vector(headDirection.getX(), 0, headDirection.getZ()).normalize();
+                    Vector perpendicular = flatDirection.clone().rotateAroundY(Math.PI / 2);
 
-                    // Calculate the perpendicular vector in the horizontal plane
-                    Vector perpendicular = flatDirection.clone().rotateAroundY(Math.PI / 2); // 90 degrees rotation
-
-                    // Center of rotation (adjusted for back and up offsets)
                     double centerX = playerLocation.getX() + flatDirection.getX() * backOffset;
                     double centerY = playerLocation.getY() + upOffset;
                     double centerZ = playerLocation.getZ() + flatDirection.getZ() * backOffset;
 
-                    // Calculate the rotating point in 3D space
+                    // Calculate rotating point with consistent radius
                     double rotatingX = centerX + perpendicular.getX() * handLength * Math.cos(Math.toRadians(angle));
-                    double rotatingY = centerY + handHeight * Math.sin(Math.toRadians(angle)); // Vertical oscillation
+                    double rotatingY = centerY + handHeight * Math.sin(Math.toRadians(angle)); // Now uses handHeight = handLength
                     double rotatingZ = centerZ + perpendicular.getZ() * handLength * Math.cos(Math.toRadians(angle));
 
-                    // Draw particles along the rotating path
-                    for (double t = 0; t <= 1; t += 0.1) { // Divide the path into 10 segments
+                    // Draw particles along the path
+                    for (double t = 0; t <= 1; t += 0.1) {
                         double x = centerX + t * (rotatingX - centerX);
                         double y = centerY + t * (rotatingY - centerY);
                         double z = centerZ + t * (rotatingZ - centerZ);
 
-                        // Spawn particles at this segment
                         player.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, x, y, z, 1, 0, 0, 0, 0);
                     }
                 }
             }
-            angle += 4; // Increment angle for rotation
-            if (angle >= 360) {
-                angle -= 360; // Keep the angle within 0-360 degrees
-            }
+            angle += 2;
         }
-    }.runTaskTimer(plugin, 0L, 1L); // Run every tick (20 times per second)
+    }.runTaskTimer(plugin, 0L, 1L);
 }
 
-    boolean isAnimationRunningg = false;
-    @EventHandler
-    public void startFlameAnimationn(PlayerItemHeldEvent event) {
-        if(isAnimationRunningg==true){return;}
-        isAnimationRunningg=true;
+boolean isAnimationRunningg = false;
+@EventHandler
+public void startFlameAnimationn(PlayerItemHeldEvent event) {
+    if (isAnimationRunningg) {
+        return;
+    }
+    isAnimationRunningg = true;
+
     new BukkitRunnable() {
         double angle = 0; // Initialize rotation angle
+
         @Override
         public void run() {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 if (isHoldingTheCorrectItem(player)) {
                     Location playerLocation = player.getEyeLocation();
-                    Vector headDirection = playerLocation.getDirection().normalize(); // Direction the player is looking
+                    Vector headDirection = playerLocation.getDirection().normalize();
 
-                    double handLength = 3.0; // Length of the clock hand
-                    double handHeight = 2.0; // Vertical height of the rotation
+                    double handLength = 1.25; // Length of the clock hand
+                    double handHeight = handLength; // Set equal to handLength for consistent radius
 
-                    // Define offsets to move the effect back and up
-                    double backOffset = -1.0; // Move particles backward along the player's view direction
-                    double upOffset = 1.5;   // Move particles upward from the player's eye level
+                    double backOffset = -1.0;
+                    double upOffset = 1.5;
 
-                    // Project head direction onto the horizontal plane (ignore Y-axis)
                     Vector flatDirection = new Vector(headDirection.getX(), 0, headDirection.getZ()).normalize();
+                    Vector perpendicular = flatDirection.clone().rotateAroundY(Math.PI / 2);
 
-                    // Calculate the perpendicular vector in the horizontal plane
-                    Vector perpendicular = flatDirection.clone().rotateAroundY(Math.PI / 2); // Rotate by 90 degrees to get the axis of rotation
-
-                    // Center of rotation (adjusted for back and up offsets)
                     double centerX = playerLocation.getX() + flatDirection.getX() * backOffset;
                     double centerY = playerLocation.getY() + upOffset;
                     double centerZ = playerLocation.getZ() + flatDirection.getZ() * backOffset;
 
-                    // Calculate the rotating point in 3D space
+                    // Calculate rotating point with consistent radius
                     double rotatingX = centerX + perpendicular.getX() * handLength * Math.cos(Math.toRadians(angle));
-                    double rotatingY = centerY + handHeight * Math.sin(Math.toRadians(angle)); // Use sine for vertical movement
+                    double rotatingY = centerY + handHeight * Math.sin(Math.toRadians(angle)); // Now uses handHeight = handLength
                     double rotatingZ = centerZ + perpendicular.getZ() * handLength * Math.cos(Math.toRadians(angle));
 
-                    // Draw particles along the rotating path
-                    for (double t = 0; t <= 1; t += 0.1) { // Divide the path into 10 segments
+                    // Draw particles along the path
+                    for (double t = 0; t <= 1; t += 0.1) {
                         double x = centerX + t * (rotatingX - centerX);
                         double y = centerY + t * (rotatingY - centerY);
                         double z = centerZ + t * (rotatingZ - centerZ);
@@ -193,10 +183,9 @@ public void startFlameAnimation(PlayerItemHeldEvent event) {
                     }
                 }
             }
-            angle +=0.25;
-
+            angle += 0.2;
         }
-    }.runTaskTimer(plugin, 0L, 1L); // Run every tick (20 times per second)
+    }.runTaskTimer(plugin, 0L, 1L);
 }
 
     boolean isAnimationRunninggg = false;
@@ -233,46 +222,38 @@ public void startFlameAnimation(PlayerItemHeldEvent event) {
         public void run() {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 if (isHoldingTheCorrectItem(player)) {
-                    Location playerLocation = player.getEyeLocation();
-                    Vector headDirection = playerLocation.getDirection().normalize(); // Direction the player is looking
+                                        Location playerLocation = player.getEyeLocation();
+                    Vector headDirection = playerLocation.getDirection().normalize();
 
-                    double handLength = 3.0; // Length of the clock hand
-                    double handHeight = 2.0; // Vertical height of the rotation
+                    double handLength = 2.5; // Length of the clock hand
+                    double handHeight = handLength; // Set equal to handLength for consistent radius
 
-                    // Define offsets to move the effect back and up
-                    double backOffset = -1.0; // Move particles backward along the player's view direction
-                    double upOffset = 1.5;   // Move particles upward from the player's eye level
+                    double backOffset = -1.0;
+                    double upOffset = 1.5;
 
-                    // Project head direction onto the horizontal plane (ignore Y-axis)
                     Vector flatDirection = new Vector(headDirection.getX(), 0, headDirection.getZ()).normalize();
+                    Vector perpendicular = flatDirection.clone().rotateAroundY(Math.PI / 2);
 
-                    // Calculate the perpendicular vector in the horizontal plane
-                    Vector perpendicular = flatDirection.clone().rotateAroundY(Math.PI / 2); // Rotate by 90 degrees to get the axis of rotation
-
-                    // Center of rotation (adjusted for back and up offsets)
                     double centerX = playerLocation.getX() + flatDirection.getX() * backOffset;
                     double centerY = playerLocation.getY() + upOffset;
                     double centerZ = playerLocation.getZ() + flatDirection.getZ() * backOffset;
 
-                    // Calculate the rotating point in 3D space
+                    // Calculate rotating point with consistent radius
                     double rotatingX = centerX + perpendicular.getX() * handLength * Math.cos(Math.toRadians(angle));
-                    double rotatingY = centerY + handHeight * Math.sin(Math.toRadians(angle)); // Use sine for vertical movement
+                    double rotatingY = centerY + handHeight * Math.sin(Math.toRadians(angle)); // Now uses handHeight = handLength
                     double rotatingZ = centerZ + perpendicular.getZ() * handLength * Math.cos(Math.toRadians(angle));
 
-                    // Draw particles along the rotating path
-                    for (double t = 1.0; t <= 1; t += 0.1) { // Divide the path into 10 segments
+                    // Draw particles along the path
+                    for (double t = 1.0; t <= 1; t += 0.1) {
                         double x = centerX + t * (rotatingX - centerX);
                         double y = centerY + t * (rotatingY - centerY);
                         double z = centerZ + t * (rotatingZ - centerZ);
 
-                        // Spawn particles at this segment
-//                        player.getWorld().spawnParticle(Particle.SOUL, x, y, z, 1, 0, 0, 0, 0);
                         player.getWorld().spawnParticle(Particle.SOUL, x, y, z, 1, 0, 0, 0, 0);
-//                        player.getWorld().spawnParticle(Particle.SCULK_SOUL, x, y, z, 1, 0, 0, 0, 0);
                     }
                 }
             }
-            angle +=2;
+            angle += 2;
         }
     }.runTaskTimer(plugin, 0L, 1L); // Run every tick (20 times per second)
 }
