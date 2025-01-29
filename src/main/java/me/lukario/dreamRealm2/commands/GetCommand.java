@@ -6,6 +6,7 @@ import me.lukario.dreamRealm2.items.special.ranged.bow.TornadoBow;
 import me.lukario.dreamRealm2.items.special.ranged.misc.Cards;
 import me.lukario.dreamRealm2.items.special.Clock;
 import me.lukario.dreamRealm2.items.special.JetSu;
+import me.lukario.dreamRealm2.items.special.ranged.misc.FlameThrower;
 import me.lukario.dreamRealm2.items.special.ranged.misc.Pyromancer;
 import me.lukario.dreamRealm2.items.special.ranged.misc.Shuriken;
 import me.lukario.dreamRealm2.items.swords.*;
@@ -65,6 +66,11 @@ public class GetCommand implements CommandExecutor, TabExecutor {
         if (args.length == 2 && args[0].equalsIgnoreCase("Tornado") && args[1].equalsIgnoreCase("Bow")) {
             player.getInventory().addItem(TornadoBow.createItem());
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Tornado Bow!");
+            return true;
+        }
+        if (args.length == 2 && args[0].equalsIgnoreCase("Flame") && args[1].equalsIgnoreCase("Thrower")) {
+            player.getInventory().addItem(FlameThrower.createItem());
+            player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "FlameThrower!");
             return true;
         }
 
@@ -153,7 +159,7 @@ public class GetCommand implements CommandExecutor, TabExecutor {
         List<String> mainTypes = Arrays.asList(
             "Launch", "Tornado", "Shuriken", "Cat", "Jet", "Rapier", "Card",
             "Wizard", "Clock", "Dagger", "SinOfSolace", "Scythe", "Terminator",
-            "Shadow", "Dual", "Pyromancer", "GiantSword"
+            "Shadow", "Dual", "Pyromancer", "GiantSword","Flame"
         );
 
         // First argument suggestions
@@ -180,6 +186,8 @@ public class GetCommand implements CommandExecutor, TabExecutor {
                     break;
                 case "dual":
                     completions.add("wield");
+                case "flame":
+                    completions.add("thrower");
                 case "tornado":
                     completions.add("bow");
                     break;
