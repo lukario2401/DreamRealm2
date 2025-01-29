@@ -210,7 +210,7 @@ public class Pyromancer implements Listener {
                     // Check if the entity is within the radius, not the player, and is not the falling boulder
                     if (entity instanceof LivingEntity && entity != player && entity.getLocation().distance(fallingBlock.getLocation()) <= 6) {
                         LivingEntity livingEntity = (LivingEntity) entity;
-                        livingEntity.damage(32); // Adjust the damage as needed
+                        livingEntity.damage(32,player); // Adjust the damage as needed
                     }
                 }
 

@@ -5,6 +5,7 @@ import com.comphenix.protocol.ProtocolManager;
 import me.lukario.dreamRealm2.commands.DamageTest;
 import me.lukario.dreamRealm2.commands.GetCommand;
 import me.lukario.dreamRealm2.commands.SumCommand;
+import me.lukario.dreamRealm2.items.armor.Ferocity;
 import me.lukario.dreamRealm2.items.special.ranged.bow.Arch;
 import me.lukario.dreamRealm2.items.special.ranged.bow.JujuShortBow;
 import me.lukario.dreamRealm2.items.special.ranged.bow.TornadoBow;
@@ -44,7 +45,6 @@ public final class DreamRealm2 extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Clock(this), this);
         getServer().getPluginManager().registerEvents(new Hyperion(this), this);
         getServer().getPluginManager().registerEvents(new Scythe(this), this);
-        getServer().getPluginManager().registerEvents(new Rapier(this), this);
         getServer().getPluginManager().registerEvents(new WizardWand(this), this);
         getServer().getPluginManager().registerEvents(new SinOfSolace(this), this);
         getServer().getPluginManager().registerEvents(new Arch(this), this);
@@ -52,6 +52,9 @@ public final class DreamRealm2 extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new DualWield(this), this);
         getServer().getPluginManager().registerEvents(new Pyromancer(this), this);
         getServer().getPluginManager().registerEvents(new JujuShortBow(this), this);
+        getServer().getPluginManager().registerEvents(new Rapier(this), this);
+        getServer().getPluginManager().registerEvents(new Ferocity(), this);
+
         getCommand("get").setExecutor(new GetCommand());
         getCommand("sum").setExecutor(new SumCommand());
         getCommand("damagetest").setExecutor(new DamageTest());
