@@ -100,6 +100,11 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             player.getInventory().addItem(GiantSword.createItemGiantSword());
             return true;
         }
+        if (args.length == 1 && args[0].equalsIgnoreCase("Katana")) {
+            player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Katana!");
+            player.getInventory().addItem(Katana.createItem());
+            return true;
+        }
         if (args.length == 1 && args[0].equalsIgnoreCase("Hyperion")) {
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Hyperion!");
             player.getInventory().addItem(Hyperion.createHyperion());
@@ -170,7 +175,7 @@ public class GetCommand implements CommandExecutor, TabExecutor {
         List<String> mainTypes = Arrays.asList(
             "Launch", "Tornado", "Shuriken", "Cat", "Jet", "Rapier", "Card",
             "Wizard", "Clock", "Dagger", "SinOfSolace", "Scythe", "Terminator",
-            "Shadow", "Dual", "Pyromancer", "GiantSword","Flame","Ferocity"
+            "Shadow", "Dual", "Pyromancer", "GiantSword","Flame","Ferocity","Katana"
         );
 
         // First argument suggestions

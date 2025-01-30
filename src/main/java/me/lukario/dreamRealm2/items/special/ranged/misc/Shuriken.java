@@ -24,7 +24,7 @@ public class Shuriken implements Listener {
         this.plugin = plugin;
     }
 
-    private static final String ITEM_NAME = ChatColor.of("#e668c6") + "Shuriken";//D88F07
+    private static final String ITEM_NAME = ChatColor.of("#C43C3C") + "Shuriken";//D88F07
     private static final String ITEM_LORE = ChatColor.YELLOW + "Crafted after defeating #######";
     private static final Material ITEM_MATERIAL = Material.NETHER_STAR;
 

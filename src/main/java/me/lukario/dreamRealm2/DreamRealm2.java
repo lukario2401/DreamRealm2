@@ -37,6 +37,7 @@ public final class DreamRealm2 extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new CookWithSneak(), this);
         getServer().getPluginManager().registerEvents(new GiantSword(), this);
         getServer().getPluginManager().registerEvents(new FlameThrower(this), this);
+        getServer().getPluginManager().registerEvents(new Katana(this), this);
         getServer().getPluginManager().registerEvents(new Dagger(this), this);
         getServer().getPluginManager().registerEvents(new TornadoBow(this), this);
         getServer().getPluginManager().registerEvents(new Shuriken(this), this);

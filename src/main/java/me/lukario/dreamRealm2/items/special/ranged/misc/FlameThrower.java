@@ -62,15 +62,12 @@ public class FlameThrower implements Listener {
                         livingEntity.setFireTicks(200);
                     }
                 }
-
-
-
             }
         }
     }
 
 
-        private static boolean isHoldingTheCorrectItem(Player player) {
+    private static boolean isHoldingTheCorrectItem(Player player) {
         ItemStack mainHandItem = player.getInventory().getItemInMainHand();
         ItemStack offHandItem = player.getInventory().getItemInOffHand();
 
