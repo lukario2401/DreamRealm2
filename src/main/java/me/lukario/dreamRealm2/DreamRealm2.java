@@ -6,6 +6,7 @@ import me.lukario.dreamRealm2.commands.DamageTest;
 import me.lukario.dreamRealm2.commands.GetCommand;
 import me.lukario.dreamRealm2.commands.SumCommand;
 import me.lukario.dreamRealm2.items.armor.Ferocity;
+import me.lukario.dreamRealm2.items.special.builder.Wrench;
 import me.lukario.dreamRealm2.items.special.ranged.bow.Arch;
 import me.lukario.dreamRealm2.items.special.ranged.bow.JujuShortBow;
 import me.lukario.dreamRealm2.items.special.ranged.bow.TornadoBow;
@@ -36,6 +37,7 @@ public final class DreamRealm2 extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new CustomSword(), this);
         getServer().getPluginManager().registerEvents(new CookWithSneak(), this);
         getServer().getPluginManager().registerEvents(new GiantSword(), this);
+        getServer().getPluginManager().registerEvents(new Wrench(this), this);
         getServer().getPluginManager().registerEvents(new FlameThrower(this), this);
         getServer().getPluginManager().registerEvents(new Katana(this), this);
         getServer().getPluginManager().registerEvents(new Dagger(this), this);

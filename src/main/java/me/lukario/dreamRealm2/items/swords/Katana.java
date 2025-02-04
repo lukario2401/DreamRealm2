@@ -49,36 +49,29 @@ public class Katana implements Listener {
     if (event.getAction() == Action.LEFT_CLICK_BLOCK || event.getAction() == Action.LEFT_CLICK_AIR) {
         player.sendMessage("click");
 
-        Location location = player.getLocation();
-        Vector direction = location.getDirection().normalize();
+       Location location = player.getLocation().add(0,1,0);
+       Vector direction = location.getDirection().normalize();
 
-//        direction = direction.clone().multiply(2);
 
-        // Get the left direction by rotating the direction vector by -90 degrees (left)
-        location.add(direction.clone().multiply(1.0));
+       for (float i = 0; i <= 12; i += 0.1f){
 
-        Vector leftDirection = new Vector(-direction.getZ(), 0, direction.getX()).normalize();
+           boolean isEnemyDetected = false;
 
-        // Adjust the position to be slightly to the left
+           Location currentLocation = location.clone().add(direction.clone().multiply(i));
 
-        // Damage nearby entities except the player
+           for (LivingEntity livingEntity : currentLocation.getNearbyLivingEntities(0.3)){
+               if (!livingEntity.equals(player)){
+                   isEnemyDetected = true;
+               }
+           }
 
-        for (float i = -1.5f; i <= 1.5; i+=0.05f){
+           if (isEnemyDetected){
+               currentLocation.getWorld().spawnParticle(Particle.FLAME,currentLocation,1,0,0,0,0);
+           }else{
+               currentLocation.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME,currentLocation,1,0,0,0,0);
+           }
 
-            float height = i/2;
-
-            Location newLocation = location.clone().add(leftDirection.multiply(i)).add(0, 1+height, 0); // Adjust height slightly
-//            newLocation = newLocation.setDirection(newLocation.getDirection().multiply(2).normalize());
-
-            for (LivingEntity livingEntity : newLocation.getNearbyLivingEntities(0.1)) {
-                if (!livingEntity.equals(player)) {
-                    livingEntity.damage(21, player);
-                }
-            }
-
-            // Spawn the particle exactly to the left
-            player.getWorld().spawnParticle(Particle.FLAME, newLocation, 1, 0, 0, 0, 0);
-        }
+       }
     }
 }
 

@@ -1,6 +1,7 @@
 package me.lukario.dreamRealm2.commands;
 
 import me.lukario.dreamRealm2.items.armor.Ferocity;
+import me.lukario.dreamRealm2.items.special.builder.Wrench;
 import me.lukario.dreamRealm2.items.special.ranged.bow.Arch;
 import me.lukario.dreamRealm2.items.special.ranged.bow.JujuShortBow;
 import me.lukario.dreamRealm2.items.special.ranged.bow.TornadoBow;
@@ -160,6 +161,11 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Shuriken");
             return true;
         }
+        if (args.length == 1 && args[0].equalsIgnoreCase("Wrench")) {
+            player.getInventory().addItem(Wrench.createItem());
+            player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Wrench");
+            return true;
+        }
 
 
         // Invalid argument
@@ -175,7 +181,7 @@ public class GetCommand implements CommandExecutor, TabExecutor {
         List<String> mainTypes = Arrays.asList(
             "Launch", "Tornado", "Shuriken", "Cat", "Jet", "Rapier", "Card",
             "Wizard", "Clock", "Dagger", "SinOfSolace", "Scythe", "Terminator",
-            "Shadow", "Dual", "Pyromancer", "GiantSword","Flame","Ferocity","Katana"
+            "Shadow", "Dual", "Pyromancer", "GiantSword","Flame","Ferocity","Katana","Wrench"
         );
 
         // First argument suggestions
