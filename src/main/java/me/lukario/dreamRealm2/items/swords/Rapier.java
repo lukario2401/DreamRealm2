@@ -55,19 +55,16 @@ public class Rapier implements Listener {
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        UUID playerUUID = player.getUniqueId();
-
         if (!isHoldingTheCorrectItem(player)) return;
 
-        Action action = event.getAction();
-        if (action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK) {
-            handleRightClick(player);
-        } else if (action == Action.LEFT_CLICK_AIR || action == Action.LEFT_CLICK_BLOCK) {
-            handleLeftClick(player);
+        if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            spawnArmorStand(player);
+        } else if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
+            launchArmorStand(player);
         }
     }
 
-    private void handleRightClick(Player player) {
+    private void spawnArmorStand(Player player) {
         Location spawnLocation = player.getLocation().add(0, 1, 0);
         ArmorStand armorStand = spawnLocation.getWorld().spawn(spawnLocation, ArmorStand.class);
 
@@ -88,10 +85,10 @@ public class Rapier implements Listener {
         startTrackingArmorStands(player);
     }
 
-    private void handleLeftClick(Player player) {
+    private void launchArmorStand(Player player) {
         for (ArmorStand armorStand : player.getWorld().getEntitiesByClass(ArmorStand.class)) {
             if (isOwnedArmorStand(armorStand, player)) {
-                launchArmorStand(armorStand, player);
+                moveArmorStandToTarget(armorStand, player);
             }
         }
     }
@@ -101,44 +98,32 @@ public class Rapier implements Listener {
                armorStand.getMetadata("RapierOwner").get(0).asString().equals(player.getUniqueId().toString());
     }
 
-    private void launchArmorStand(ArmorStand armorStand, Player player) {
-        new BukkitRunnable() {
-            final UUID standUUID = armorStand.getUniqueId();
+    private void moveArmorStandToTarget(ArmorStand armorStand, Player player) {
+        Location targetBlock = player.getTargetBlockExact(50).getLocation(); // Get the block the player is looking at
 
+        new BukkitRunnable() {
             @Override
             public void run() {
-                ArmorStand currentStand = (ArmorStand) armorStand.getWorld().getEntity(standUUID);
-                if (currentStand == null || !currentStand.isValid()) {
+                if (!armorStand.isValid()) {
                     this.cancel();
                     return;
                 }
 
-                Location currentLoc = currentStand.getLocation();
-                Vector direction = currentLoc.getDirection().normalize();
-                Location newLoc = currentLoc.add(direction.multiply(1.5));
-                currentStand.teleport(newLoc);
+                Location currentLoc = armorStand.getLocation();
+                Vector direction = targetBlock.clone().subtract(currentLoc).toVector().normalize().multiply(1.5);
 
-                handleCollisions(currentStand, player, newLoc);
+                // Move the armor stand
+                armorStand.teleport(currentLoc.add(direction));
+
+                // Stop if it reaches the target or collides
+                if (currentLoc.distanceSquared(targetBlock) < 2 || isCollidingWithBlock(armorStand)) {
+                    triggerExplosionEffects(armorStand);
+                    applyRadialDamage(armorStand, player);
+                    armorStand.remove();
+                    this.cancel();
+                }
             }
         }.runTaskTimer(plugin, 0L, 1L);
-    }
-
-    private void handleCollisions(ArmorStand armorStand, Player owner, Location location) {
-        // Check entity collisions
-        for (LivingEntity entity : location.getNearbyLivingEntities(1)) {
-            if (entity.equals(owner) || entity.equals(armorStand)) continue;
-            applyDamage(entity, owner, 72);
-            triggerExplosionEffects(armorStand);
-            armorStand.remove();
-            return;
-        }
-
-        // Check block collisions
-        if (isCollidingWithBlock(armorStand)) {
-            triggerExplosionEffects(armorStand);
-            applyRadialDamage(armorStand, owner);
-            armorStand.remove();
-        }
     }
 
     private void applyRadialDamage(ArmorStand armorStand, Player owner) {
@@ -147,14 +132,10 @@ public class Rapier implements Listener {
 
         for (int i = 0; i < damages.length; i++) {
             for (LivingEntity entity : loc.getNearbyLivingEntities(i + 1)) {
-                if (entity.equals(owner) || entity.equals(armorStand)) continue;
-                applyDamage(entity, owner, damages[i]);
+                if (entity.equals(owner) || entity instanceof ArmorStand) continue; // Avoid hitting armor stands
+                entity.damage(damages[i], owner);
             }
         }
-    }
-
-    private void applyDamage(LivingEntity target, Player damager, double amount) {
-        target.damage(amount, damager);
     }
 
     private void triggerExplosionEffects(ArmorStand armorStand) {
@@ -164,96 +145,53 @@ public class Rapier implements Listener {
         world.spawnParticle(Particle.EXPLOSION_EMITTER, loc, 1);
         world.spawnParticle(Particle.EXPLOSION, loc, 10, 2, 2, 2);
         world.playSound(loc, Sound.ENTITY_GENERIC_EXPLODE, 3, 1);
-        world.playSound(loc, Sound.ENTITY_GENERIC_EXPLODE, 3, 0);
     }
 
     @EventHandler
     public void onEntityDamagedByEntityEvent(EntityDamageByEntityEvent event) {
-        if (!(event.getDamager() instanceof Player)) return;
-
-        Player player = (Player) event.getDamager();
-        if (!isHoldingTheCorrectItem(player)) return;
-
-        double baseDamage = event.getDamage() + 7;
-        event.setDamage((baseDamage * baseDamage) / 10);
-    }
-
-
-    private static boolean isHoldingTheCorrectItem(Player player) {
-        ItemStack mainHandItem = player.getInventory().getItemInMainHand();
-        ItemStack offHandItem = player.getInventory().getItemInOffHand();
-
-        // Check if either hand holds the correct item
-        if (isCorrectItem(mainHandItem)) {
-            return true; // Correct item in main hand
-        } else if (isCorrectItem(offHandItem)) {
-            return true; // Correct item in of
+        if (event.getDamager() instanceof Player player && isHoldingTheCorrectItem(player)) {
+            double baseDamage = event.getDamage() + 7;
+            event.setDamage((baseDamage * baseDamage) / 10);
         }
 
-        return false; // No correct item in either hand
+        // Prevent Armor Stands from hitting other Armor Stands
+        if (event.getDamager() instanceof ArmorStand && event.getEntity() instanceof ArmorStand) {
+            event.setCancelled(true);
+        }
+    }
+
+    private static boolean isHoldingTheCorrectItem(Player player) {
+        return isCorrectItem(player.getInventory().getItemInMainHand()) ||
+               isCorrectItem(player.getInventory().getItemInOffHand());
     }
 
     private static boolean isCorrectItem(ItemStack item) {
         if (item == null || item.getType() != ITEM_MATERIAL) return false;
-
         ItemMeta meta = item.getItemMeta();
-        if (meta == null) return false;
-
-        if (!ChatColor.stripColor(meta.getDisplayName()).equals(ChatColor.stripColor(ITEM_NAME))) {
-            return false;
-        }
-
-        if (meta.getLore() == null) return false;
-
-        for (String loreLine : meta.getLore()) {
-            if (ChatColor.stripColor(loreLine).equals(ChatColor.stripColor(ITEM_LORE))) {
-                return true;
-            }
-        }
-        return false;
+        return meta != null && ChatColor.stripColor(meta.getDisplayName()).equals(ChatColor.stripColor(ITEM_NAME));
     }
 
     private void startTrackingArmorStands(Player player) {
         UUID playerUUID = player.getUniqueId();
 
-        // Cancel any existing tasks for this player
         if (tasks.containsKey(playerUUID)) {
             Bukkit.getScheduler().cancelTask(tasks.get(playerUUID));
         }
 
-        // Start a new repeating task
         int taskId = new BukkitRunnable() {
             @Override
             public void run() {
-                // Check if the player is still online
                 if (!player.isOnline()) {
                     this.cancel();
                     tasks.remove(playerUUID);
-                    return;
-                }
-
-                // Get all armor stands with the player's UUID in the tag
-                for (ArmorStand armorStand : player.getWorld().getEntitiesByClass(ArmorStand.class)) {
-                    if (armorStand.getScoreboardTags().contains("Rapier_" + playerUUID)) {
-                        // Update the armor stand's direction to match the player's gaze
-                        Location eyeLocation = player.getEyeLocation();
-                        Vector direction = eyeLocation.getDirection();
-
-                        Location armorStandLocation = armorStand.getLocation();
-                        armorStandLocation.setDirection(direction);
-                        armorStand.teleport(armorStandLocation);
-                    }
                 }
             }
-        }.runTaskTimer(plugin, 0L, 1L).getTaskId(); // Run every tick (1L)
+        }.runTaskTimer(plugin, 0L, 20L).getTaskId();
 
-        // Store the task ID for this player
         tasks.put(playerUUID, taskId);
     }
+
     private boolean isCollidingWithBlock(ArmorStand armorStand) {
-        Location location = armorStand.getLocation();
-        return location.getBlock().getType().isSolid() || // Check block at current level
-               location.add(0, 1, 0).getBlock().getType().isSolid() || // Check block above
-               location.add(0, 2, 0).getBlock().getType().isSolid();  // Check two blocks above
+        return armorStand.getLocation().getBlock().getType().isSolid();
     }
 }

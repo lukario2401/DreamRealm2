@@ -46,62 +46,65 @@ public class Wrench implements Listener {
     }
 
     @EventHandler
-    public void wrenchUsed(PlayerInteractEvent event) {
-        Player player = event.getPlayer();
+public void wrenchUsed(PlayerInteractEvent event) {
+    Player player = event.getPlayer();
 
-        if (!isHoldingTheCorrectItem(player)) return;
+    if (!isHoldingTheCorrectItem(player)) return;
 
-        if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            ArmorStand armorStand = (ArmorStand) player.getWorld().spawnEntity(player.getLocation(), EntityType.ARMOR_STAND);
-            armorStand.setArms(true);
-            armorStand.setBasePlate(false);
-            armorStand.setInvisible(true);
-            armorStand.setInvulnerable(true);
-            armorStand.setMarker(true);
-            armorStand.setGravity(false);
-            armorStand.setItem(EquipmentSlot.HEAD, new ItemStack(Material.ENDER_EYE, 1));
+    if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+        // Get player's horizontal facing direction
+        Location playerLoc = player.getLocation();
+        Vector direction = new Vector(playerLoc.getDirection().getX(), 0, playerLoc.getDirection().getZ()).normalize();
 
-            Location location = player.getLocation();
-            location.setPitch(0);
-            armorStand.teleport(location);
+        // Create armor stand facing player's initial direction
+        ArmorStand armorStand = (ArmorStand) player.getWorld().spawnEntity(playerLoc, EntityType.ARMOR_STAND);
+        armorStand.setArms(true);
+        armorStand.setBasePlate(false);
+        armorStand.setInvisible(true);
+        armorStand.setInvulnerable(true);
+        armorStand.setMarker(true);
+        armorStand.setGravity(false);
+        armorStand.getEquipment().setHelmet(new ItemStack(Material.ENDER_EYE));
 
+        // Set initial rotation
+        Location armorStandLoc = playerLoc.clone();
+        armorStandLoc.setDirection(direction);
+        armorStand.teleport(armorStandLoc);
 
-            new BukkitRunnable() {
-                double angle = -45;
-                boolean increasing = true;
-                int ticksLived = 0;
+        final float baseYaw = armorStandLoc.getYaw(); // Store initial facing
 
-                @Override
-                public void run() {
-                    if (!armorStand.isValid() || ticksLived > 1200) {
-                        armorStand.remove();
-                        cancel();
-                        return;
-                    }
+        new BukkitRunnable() {
+            double offsetAngle = 0; // Start centered
+            boolean increasing = true;
+            int ticksLived = 0;
 
-                    // Set the armor stand’s yaw to face back and forth
-                    Location armorStandLocation = armorStand.getLocation();
-                    armorStandLocation.setYaw((float) angle);
-                    armorStand.teleport(armorStandLocation);
-
-                    // Adjust angle for oscillation
-                    if (increasing) {
-                        angle += 3;
-                        if (angle >= 90) increasing = false;
-                    } else {
-                        angle -= 3;
-                        if (angle <= -90) increasing = true;
-                    }
-
-                    // Perform raycasting
-                    performRayCast(armorStand, player);
-
-                    ticksLived++;
+            @Override
+            public void run() {
+                if (!armorStand.isValid() || ticksLived++ >= 1200) {
+                    armorStand.remove();
+                    cancel();
+                    return;
                 }
-            }.runTaskTimer(plugin, 0L, 1L);
 
-        }
+                // Update rotation with base yaw + offset
+                Location newLoc = armorStand.getLocation();
+                newLoc.setYaw((float) (baseYaw + offsetAngle));
+                armorStand.teleport(newLoc);
+
+                // Oscillate between -90° and +90°
+                if (increasing) {
+                    offsetAngle += 1.5;
+                    if (offsetAngle >= 90) increasing = false;
+                } else {
+                    offsetAngle -= 1.5;
+                    if (offsetAngle <= -90) increasing = true;
+                }
+
+                performRayCast(armorStand, player);
+            }
+        }.runTaskTimer(plugin, 0L, 1L);
     }
+}
 
     private void performRayCast(ArmorStand armorStand, Player player) {
         Location start = armorStand.getEyeLocation();

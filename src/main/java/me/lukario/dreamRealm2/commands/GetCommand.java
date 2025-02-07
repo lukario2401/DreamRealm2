@@ -166,6 +166,11 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Wrench");
             return true;
         }
+        if (args.length == 1 && args[0].equalsIgnoreCase("Flash")) {
+            player.getInventory().addItem(Flash.createItem());
+            player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Flash");
+            return true;
+        }
 
 
         // Invalid argument
@@ -181,7 +186,7 @@ public class GetCommand implements CommandExecutor, TabExecutor {
         List<String> mainTypes = Arrays.asList(
             "Launch", "Tornado", "Shuriken", "Cat", "Jet", "Rapier", "Card",
             "Wizard", "Clock", "Dagger", "SinOfSolace", "Scythe", "Terminator",
-            "Shadow", "Dual", "Pyromancer", "GiantSword","Flame","Ferocity","Katana","Wrench"
+            "Shadow", "Dual", "Pyromancer", "GiantSword","Flame","Ferocity","Katana","Wrench","Flash"
         );
 
         // First argument suggestions
