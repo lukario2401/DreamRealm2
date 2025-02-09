@@ -6,6 +6,7 @@ me\lukario\dreamRealm2\items\swords\Dagger.class
 me\lukario\dreamRealm2\items\special\ranged\bow\Arch$1.class
 me\lukario\dreamRealm2\items\swords\ShadowDance$4.class
 me\lukario\dreamRealm2\items\swords\Katana.class
+me\lukario\dreamRealm2\items\special\magic\FireWand.class
 me\lukario\dreamRealm2\items\swords\GiantSword.class
 me\lukario\dreamRealm2\items\swords\Rapier.class
 me\lukario\dreamRealm2\items\special\Clock$2.class
@@ -15,7 +16,9 @@ me\lukario\dreamRealm2\CookWithSneak.class
 me\lukario\dreamRealm2\RayCast.class
 me\lukario\dreamRealm2\items\swords\ShadowDance$3.class
 me\lukario\dreamRealm2\items\swords\Dagger$1.class
+me\lukario\dreamRealm2\items\special\magic\FireWand$1.class
 me\lukario\dreamRealm2\items\special\ranged\bow\Arch$2.class
+me\lukario\dreamRealm2\items\swords\Flash$1.class
 me\lukario\dreamRealm2\items\swords\ShadowDance$1.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Cards$1.class
 me\lukario\dreamRealm2\items\special\ranged\bow\JujuShortBow.class
@@ -44,6 +47,7 @@ me\lukario\dreamRealm2\items\special\builder\Wrench$1.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Pyromancer$5.class
 me\lukario\dreamRealm2\items\swords\SinOfSolace$1.class
 me\lukario\dreamRealm2\items\swords\DualWield.class
+me\lukario\dreamRealm2\items\swords\Flash.class
 me\lukario\dreamRealm2\items\swords\Hyperion.class
 me\lukario\dreamRealm2\items\special\Clock$4.class
 me\lukario\dreamRealm2\items\swords\Rapier$1.class

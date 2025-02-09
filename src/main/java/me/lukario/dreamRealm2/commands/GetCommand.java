@@ -2,6 +2,7 @@ package me.lukario.dreamRealm2.commands;
 
 import me.lukario.dreamRealm2.items.armor.Ferocity;
 import me.lukario.dreamRealm2.items.special.builder.Wrench;
+import me.lukario.dreamRealm2.items.special.magic.FireWand;
 import me.lukario.dreamRealm2.items.special.ranged.bow.Arch;
 import me.lukario.dreamRealm2.items.special.ranged.bow.JujuShortBow;
 import me.lukario.dreamRealm2.items.special.ranged.bow.TornadoBow;
@@ -171,6 +172,11 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Flash");
             return true;
         }
+        if (args.length == 1 && args[0].equalsIgnoreCase("FireWand")) {
+            player.getInventory().addItem(FireWand.createItem());
+            player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "FireWand");
+            return true;
+        }
 
 
         // Invalid argument
@@ -186,7 +192,7 @@ public class GetCommand implements CommandExecutor, TabExecutor {
         List<String> mainTypes = Arrays.asList(
             "Launch", "Tornado", "Shuriken", "Cat", "Jet", "Rapier", "Card",
             "Wizard", "Clock", "Dagger", "SinOfSolace", "Scythe", "Terminator",
-            "Shadow", "Dual", "Pyromancer", "GiantSword","Flame","Ferocity","Katana","Wrench","Flash"
+            "Shadow", "Dual", "Pyromancer", "GiantSword","Flame","Ferocity","Katana","Wrench","Flash","FireWand"
         );
 
         // First argument suggestions

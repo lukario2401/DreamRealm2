@@ -80,7 +80,7 @@ public class Flash implements Listener {
                 if (!isUsingFlashSkill){return;}
 
                 Location location = player.getEyeLocation();
-                Vector direction = location.getDirection();
+                Vector direction = location.getDirection().normalize();
 
                 if (runTime%2==0){
                     for (float i =0; i <= 64; i+= 0.5f){
