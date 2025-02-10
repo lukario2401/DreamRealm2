@@ -80,7 +80,11 @@ public class Theather implements Listener {
 
     private void teleport(Player player,LivingEntity globalLivingEntity){
         if (globalLivingEntity!=null){
-            player.teleport(globalLivingEntity);
+
+            Location teleportLocation = globalLivingEntity.getLocation().add(0,1,0);
+            teleportLocation = teleportLocation.setDirection(player.getLocation().getDirection());
+
+            player.teleport(teleportLocation);
             canUse = false;
             targetedEntities.put(player.getUniqueId(),null);
         }
