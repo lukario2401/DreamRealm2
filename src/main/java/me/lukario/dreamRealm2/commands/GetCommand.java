@@ -3,6 +3,7 @@ package me.lukario.dreamRealm2.commands;
 import me.lukario.dreamRealm2.items.armor.Ferocity;
 import me.lukario.dreamRealm2.items.special.builder.Wrench;
 import me.lukario.dreamRealm2.items.special.magic.FireWand;
+import me.lukario.dreamRealm2.items.special.magic.Theather;
 import me.lukario.dreamRealm2.items.special.ranged.bow.Arch;
 import me.lukario.dreamRealm2.items.special.ranged.bow.JujuShortBow;
 import me.lukario.dreamRealm2.items.special.ranged.bow.TornadoBow;
@@ -27,7 +28,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static me.lukario.dreamRealm2.items.swords.CustomSword.createCustomSword;
-import static me.lukario.dreamRealm2.items.special.ranged.misc.WizardWand.createCustomWizardWand;
+import static me.lukario.dreamRealm2.items.special.magic.WizardWand.createCustomWizardWand;
 
 public class GetCommand implements CommandExecutor, TabExecutor {
     @Override
@@ -177,6 +178,11 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "FireWand");
             return true;
         }
+        if (args.length == 1 && args[0].equalsIgnoreCase("Theater")) {
+            player.getInventory().addItem(Theather.createItem());
+            player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Theater");
+            return true;
+        }
 
 
         // Invalid argument
@@ -190,7 +196,7 @@ public class GetCommand implements CommandExecutor, TabExecutor {
 
         // Define all possible completions for the first argument
         List<String> mainTypes = Arrays.asList(
-            "Launch", "Tornado", "Shuriken", "Cat", "Jet", "Rapier", "Card",
+            "Launch", "Tornado", "Shuriken", "Cat", "Jet", "Rapier", "Card","Theater",
             "Wizard", "Clock", "Dagger", "SinOfSolace", "Scythe", "Terminator",
             "Shadow", "Dual", "Pyromancer", "GiantSword","Flame","Ferocity","Katana","Wrench","Flash","FireWand"
         );
