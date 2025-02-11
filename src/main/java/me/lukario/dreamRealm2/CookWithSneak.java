@@ -7,8 +7,19 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class CookWithSneak implements Listener {
+
+    @EventHandler
+    private void playerSneakToRegainSaturation(PlayerToggleSneakEvent event){
+        Player player = event.getPlayer();
+
+        if (player.isSneaking()){
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION,1,255, true));
+        }
+    }
 
     @EventHandler
     public void onSneak(PlayerToggleSneakEvent event) {
