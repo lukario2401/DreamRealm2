@@ -2,6 +2,7 @@ package me.lukario.dreamRealm2.commands;
 
 import me.lukario.dreamRealm2.items.armor.Ferocity;
 import me.lukario.dreamRealm2.items.special.builder.Fence;
+import me.lukario.dreamRealm2.items.special.builder.Portal;
 import me.lukario.dreamRealm2.items.special.builder.Wrench;
 import me.lukario.dreamRealm2.items.special.magic.FireWand;
 import me.lukario.dreamRealm2.items.special.magic.Theather;
@@ -189,6 +190,12 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Fence");
             return true;
         }
+        if (args.length == 1 && args[0].equalsIgnoreCase("Portal")) {
+            player.getInventory().addItem(Portal.createItem());
+            player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Portal");
+            return true;
+        }
+
 
 
         // Invalid argument
@@ -204,7 +211,7 @@ public class GetCommand implements CommandExecutor, TabExecutor {
         List<String> mainTypes = Arrays.asList(
             "Launch", "Tornado", "Shuriken", "Cat", "Jet", "Rapier", "Card","Theater","Fence",
             "Wizard", "Clock", "Dagger", "SinOfSolace", "Scythe", "Terminator",
-            "Shadow", "Dual", "Pyromancer", "GiantSword","Flame","Ferocity","Katana","Wrench","Flash","FireWand"
+            "Shadow", "Dual", "Pyromancer", "GiantSword","Flame","Ferocity","Katana","Wrench","Flash","FireWand","Portal"
         );
 
         // First argument suggestions
