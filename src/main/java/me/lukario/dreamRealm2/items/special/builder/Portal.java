@@ -74,7 +74,6 @@ public class Portal implements Listener {
             firstArmorStand = armorStand;
 
             if (firstArmorStand !=null && secondArmorStand!=null){
-                player.sendMessage("g");
                 beamEffectForPortal(firstArmorStand,secondArmorStand);
             }
 
@@ -97,7 +96,6 @@ public class Portal implements Listener {
             secondArmorStand = armorStand;
 
             if (firstArmorStand !=null && secondArmorStand!=null){
-                player.sendMessage("g");
                 beamEffectForPortal(firstArmorStand,secondArmorStand);
             }
 

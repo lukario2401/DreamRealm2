@@ -69,7 +69,7 @@ public class Fence implements Listener {
             int runningFor = 1;
             ArmorStand firstArmorStand = null;
             ArmorStand secondArmorStand = null;
-            for (LivingEntity livingEntity : player.getLocation().getNearbyLivingEntities(6)){
+            for (LivingEntity livingEntity : player.getLocation().getNearbyLivingEntities(12)){
                 if (livingEntity instanceof ArmorStand){
                     ItemStack helmet = livingEntity.getEquipment().getHelmet();
                     if (helmet != null && helmet.getType() == Material.HEAVY_CORE){
@@ -126,7 +126,7 @@ public class Fence implements Listener {
                     for (LivingEntity entity : current.getNearbyLivingEntities(0.25)) {
                         if (!(entity instanceof ArmorStand) && !hitEntities.contains(entity.getUniqueId())) {
                             hitEntities.add(entity.getUniqueId());
-                            entity.damage(5);
+                            entity.damage(6);
                             entity.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 20, 5, true));
                         }
                     }

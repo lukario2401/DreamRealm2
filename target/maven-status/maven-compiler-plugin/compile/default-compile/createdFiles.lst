@@ -4,6 +4,7 @@ me\lukario\dreamRealm2\EntityListener.class
 me\lukario\dreamRealm2\items\special\magic\WizardWand.class
 me\lukario\dreamRealm2\items\swords\CustomSword.class
 me\lukario\dreamRealm2\items\swords\Dagger.class
+me\lukario\dreamRealm2\items\special\magic\ShareHealth$1.class
 me\lukario\dreamRealm2\items\special\ranged\bow\Arch$1.class
 me\lukario\dreamRealm2\items\swords\ShadowDance$4.class
 me\lukario\dreamRealm2\items\swords\Katana.class
@@ -18,6 +19,7 @@ me\lukario\dreamRealm2\RayCast.class
 me\lukario\dreamRealm2\items\swords\ShadowDance$3.class
 me\lukario\dreamRealm2\items\special\builder\Fence.class
 me\lukario\dreamRealm2\items\swords\Dagger$1.class
+me\lukario\dreamRealm2\items\special\builder\Portal.class
 me\lukario\dreamRealm2\items\special\magic\FireWand$1.class
 me\lukario\dreamRealm2\items\special\ranged\bow\Arch$2.class
 me\lukario\dreamRealm2\items\swords\Flash$1.class
@@ -26,6 +28,7 @@ me\lukario\dreamRealm2\items\special\ranged\misc\Cards$1.class
 me\lukario\dreamRealm2\items\special\ranged\bow\JujuShortBow.class
 me\lukario\dreamRealm2\items\special\magic\WizardWand$1.class
 me\lukario\dreamRealm2\items\special\builder\Wrench$2.class
+me\lukario\dreamRealm2\items\special\builder\Portal$1.class
 me\lukario\dreamRealm2\items\special\ranged\bow\JujuShortBow$2.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Shuriken.class
 me\lukario\dreamRealm2\commands\SumCommand.class
@@ -44,6 +47,7 @@ me\lukario\dreamRealm2\items\special\ranged\misc\Cards.class
 me\lukario\dreamRealm2\items\special\ranged\bow\JujuShortBow$1.class
 me\lukario\dreamRealm2\items\special\Clock$3.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Pyromancer$1.class
+me\lukario\dreamRealm2\items\special\magic\ShareHealth.class
 me\lukario\dreamRealm2\items\special\magic\Theather$2.class
 me\lukario\dreamRealm2\items\swords\DualWield$2.class
 me\lukario\dreamRealm2\items\swords\Scythe.class
@@ -63,6 +67,7 @@ me\lukario\dreamRealm2\RayCast$3.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Pyromancer.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Pyromancer$2.class
 me\lukario\dreamRealm2\commands\GetCommand.class
+me\lukario\dreamRealm2\items\special\magic\ShareHealth$2.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Pyromancer$6.class
 me\lukario\dreamRealm2\items\swords\ShadowDance$5.class
 me\lukario\dreamRealm2\items\special\JetSu.class
