@@ -4,6 +4,7 @@ import me.lukario.dreamRealm2.items.armor.Ferocity;
 import me.lukario.dreamRealm2.items.special.builder.Fence;
 import me.lukario.dreamRealm2.items.special.builder.Portal;
 import me.lukario.dreamRealm2.items.special.builder.Wrench;
+import me.lukario.dreamRealm2.items.special.magic.Chain;
 import me.lukario.dreamRealm2.items.special.magic.FireWand;
 import me.lukario.dreamRealm2.items.special.magic.ShareHealth;
 import me.lukario.dreamRealm2.items.special.magic.Theather;
@@ -201,6 +202,11 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "ShareHealth");
             return true;
         }
+        if (args.length == 1 && args[0].equalsIgnoreCase("Chain")) {
+            player.getInventory().addItem(Chain.createItem());
+            player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Chain");
+            return true;
+        }
 
 
 
@@ -216,7 +222,7 @@ public class GetCommand implements CommandExecutor, TabExecutor {
         // Define all possible completions for the first argument
         List<String> mainTypes = Arrays.asList(
             "Launch", "Tornado", "Shuriken", "Cat", "Jet", "Rapier", "Card","Theater","Fence",
-            "Wizard", "Clock", "Dagger", "SinOfSolace", "Scythe", "Terminator","ShareHealth",
+            "Wizard", "Clock", "Dagger", "SinOfSolace", "Scythe", "Terminator","ShareHealth","Chain",
             "Shadow", "Dual", "Pyromancer", "GiantSword","Flame","Ferocity","Katana","Wrench","Flash","FireWand","Portal"
         );
 
