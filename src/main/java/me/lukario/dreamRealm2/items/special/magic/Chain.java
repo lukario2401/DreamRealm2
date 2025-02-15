@@ -68,7 +68,6 @@ public class Chain implements Listener {
         Player player = event.getPlayer();
         if (cooldown.get(player.getUniqueId())==null){
             cooldown.put(player.getUniqueId(),0F);
-            player.sendMessage("triggerted");
         }
 
         if (!isHoldingTheCorrectItem(player)){return;}
@@ -77,7 +76,6 @@ public class Chain implements Listener {
             if (cooldown.get(player.getUniqueId())==0){
                 LivingEntity livingEntity = chainGetMob(player);
                 if (livingEntity==null){
-                    player.sendMessage("gay");
                 }else{
                     beamBetweenTwoEntity(player,livingEntity);
                 }
