@@ -61,7 +61,6 @@ public class Slash implements Listener {
                         cooldown.put(uuid,cooldown.get(uuid)-1);
                     }
                 }
-
             }
         }.runTaskTimer(plugin,0,1);
     }
