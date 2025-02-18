@@ -42,6 +42,7 @@ me\lukario\dreamRealm2\items\swords\Rapier$2.class
 me\lukario\dreamRealm2\DoubleJump.class
 me\lukario\dreamRealm2\items\special\builder\Wrench.class
 me\lukario\dreamRealm2\items\special\ranged\bow\TornadoBow.class
+me\lukario\dreamRealm2\items\swords\Style$3.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Pyromancer$4.class
 me\lukario\dreamRealm2\commands\DamageTest.class
 me\lukario\dreamRealm2\items\special\magic\Theather.class
@@ -56,13 +57,16 @@ me\lukario\dreamRealm2\items\special\magic\ShareHealth.class
 me\lukario\dreamRealm2\items\special\magic\Theather$2.class
 me\lukario\dreamRealm2\items\special\magic\Chain$2.class
 me\lukario\dreamRealm2\items\swords\DualWield$2.class
+me\lukario\dreamRealm2\items\swords\Style$1.class
 me\lukario\dreamRealm2\items\swords\Scythe.class
 me\lukario\dreamRealm2\items\special\magic\ChainedBuff$3.class
 me\lukario\dreamRealm2\items\special\ranged\bow\Arch.class
 me\lukario\dreamRealm2\items\swords\Slash.class
+me\lukario\dreamRealm2\items\swords\Swipe.class
 me\lukario\dreamRealm2\items\special\builder\Wrench$1.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Pyromancer$5.class
 me\lukario\dreamRealm2\items\swords\SinOfSolace$1.class
+me\lukario\dreamRealm2\items\swords\Style$4.class
 me\lukario\dreamRealm2\items\swords\DualWield.class
 me\lukario\dreamRealm2\items\special\builder\Fence$1.class
 me\lukario\dreamRealm2\items\special\magic\Theather$1.class
@@ -72,7 +76,9 @@ me\lukario\dreamRealm2\items\special\Clock$4.class
 me\lukario\dreamRealm2\items\swords\Rapier$1.class
 me\lukario\dreamRealm2\items\special\ranged\misc\FlameThrower.class
 me\lukario\dreamRealm2\items\special\magic\Chain.class
+me\lukario\dreamRealm2\items\swords\Style$2.class
 me\lukario\dreamRealm2\RayCast$3.class
+me\lukario\dreamRealm2\items\swords\Style.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Pyromancer.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Pyromancer$2.class
 me\lukario\dreamRealm2\items\special\magic\ChainedBuff$2.class

@@ -96,17 +96,20 @@ public class Style implements Listener {
 
                     style2(player, 10);
                     style2(player, -10);
+
                 } else if (attackCount.get(uuid)==3) {
 
                     style1(player);
                     style2(player,10);
                     style2(player,-10);
+
                 } else if (attackCount.get(uuid)==4) {
 
                     style2(player,10);
                     style2(player,-10);
                     style2(player,30);
                     style2(player,-30);
+
                 } else if (attackCount.get(uuid)==5){
 
                     style1(player);
@@ -116,6 +119,7 @@ public class Style implements Listener {
                     style2(player,-30);
 
                 } else if (attackCount.get(uuid)==6) {
+
                     style2(player,10);
                     style2(player,-10);
                     style2(player,30);
