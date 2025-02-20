@@ -1,9 +1,8 @@
-package me.lukario.dreamRealm2.items.swords;
+package me.lukario.dreamRealm2.items.swords.ability;
 
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Particle;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.LivingEntity;
@@ -20,6 +19,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.Arrays;
+
+import static me.lukario.dreamRealm2.Misc.damageNoTicks;
 
 public class Dagger implements Listener {
 
@@ -116,7 +117,7 @@ public class Dagger implements Listener {
 
                         for (LivingEntity livingEntity : armorStandLocation.getNearbyLivingEntities(2)) {
                             if (!livingEntity.equals(player)) {
-                                livingEntity.damage(12, player);
+                                livingEntity.damage(21,player);
                             }
                         }
 
@@ -134,7 +135,7 @@ public class Dagger implements Listener {
 
                         for (LivingEntity livingEntity : armorStandLocation.getNearbyLivingEntities(2)) {
                             if (!livingEntity.equals(player)) {
-                                livingEntity.damage(21, player);
+                                damageNoTicks(livingEntity,34,player);
                             }
                         }
                     }

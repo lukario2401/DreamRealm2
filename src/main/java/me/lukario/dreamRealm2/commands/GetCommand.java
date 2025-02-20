@@ -14,7 +14,8 @@ import me.lukario.dreamRealm2.items.special.JetSu;
 import me.lukario.dreamRealm2.items.special.ranged.misc.FlameThrower;
 import me.lukario.dreamRealm2.items.special.ranged.misc.Pyromancer;
 import me.lukario.dreamRealm2.items.special.ranged.misc.Shuriken;
-import me.lukario.dreamRealm2.items.swords.*;
+import me.lukario.dreamRealm2.items.swords.ability.*;
+import me.lukario.dreamRealm2.items.swords.swing.*;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -28,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static me.lukario.dreamRealm2.items.swords.CustomSword.createCustomSword;
+import static me.lukario.dreamRealm2.items.swords.ability.CustomSword.createCustomSword;
 import static me.lukario.dreamRealm2.items.special.magic.WizardWand.createCustomWizardWand;
 
 public class GetCommand implements CommandExecutor, TabExecutor {

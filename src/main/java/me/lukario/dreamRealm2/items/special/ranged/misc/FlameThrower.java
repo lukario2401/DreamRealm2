@@ -23,6 +23,8 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.UUID;
 
+import static me.lukario.dreamRealm2.Misc.damageNoTicks;
+
 public class FlameThrower implements Listener {
 
     private final Plugin plugin;
@@ -185,21 +187,4 @@ public class FlameThrower implements Listener {
         }
         return false;
     }
-
-    public static void damageNoTicks(LivingEntity livingEntity,double damage, Player player){
-        if (livingEntity.getHealth()>damage){
-            livingEntity.setHealth(livingEntity.getHealth()-damage);
-            livingEntity.playHurtAnimation(1);
-            if (livingEntity.getHurtSound()!=null){
-                livingEntity.getWorld().playSound(livingEntity.getLocation(),livingEntity.getHurtSound(),1,1);
-            }
-            Creature creature = (Creature) livingEntity;
-            creature.setTarget(player);
-        }else{
-            livingEntity.setHealth(0);
-            Creature creature = (Creature) livingEntity;
-            creature.setTarget(player);
-        }
-    }
-
 }

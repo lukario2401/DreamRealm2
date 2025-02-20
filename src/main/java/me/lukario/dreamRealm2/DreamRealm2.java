@@ -16,7 +16,8 @@ import me.lukario.dreamRealm2.items.special.ranged.bow.TornadoBow;
 import me.lukario.dreamRealm2.items.special.ranged.misc.*;
 import me.lukario.dreamRealm2.items.special.Clock;
 import me.lukario.dreamRealm2.items.special.JetSu;
-import me.lukario.dreamRealm2.items.swords.*;
+import me.lukario.dreamRealm2.items.swords.ability.*;
+import me.lukario.dreamRealm2.items.swords.swing.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class DreamRealm2 extends JavaPlugin {

@@ -1,4 +1,4 @@
-package me.lukario.dreamRealm2.items.swords;
+package me.lukario.dreamRealm2.items.swords.ability;
 
 
 import me.lukario.dreamRealm2.RayCast;

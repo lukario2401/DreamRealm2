@@ -1,4 +1,4 @@
-package me.lukario.dreamRealm2.items.swords;
+package me.lukario.dreamRealm2.items.swords.ability;
 
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
@@ -18,8 +18,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.UUID;
 
 public class Flash implements Listener {
 
