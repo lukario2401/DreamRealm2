@@ -1,4 +1,4 @@
-package me.lukario.dreamRealm2.items.swords.swing;
+package me.lukario.dreamRealm2.items.swords;
 
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
@@ -17,17 +17,17 @@ import org.bukkit.util.Vector;
 
 import java.util.Arrays;
 
-public class Katana implements Listener {
+public class Swipe implements Listener {
 
     private final Plugin plugin;
 
-    public Katana(Plugin plugin) {
+    public Swipe(Plugin plugin) {
         this.plugin = plugin;
     }
 
-    private static final String ITEM_NAME = ChatColor.of("#D88F07") + "Katana";//e668c6
-    private static final String ITEM_LORE = ChatColor.YELLOW + "Crafted after defeating ######";
-    private static final Material ITEM_MATERIAL = Material.IRON_SWORD;
+    private static final String ITEM_NAME = ChatColor.of("#D88F07") + "Swipe";//e668c6
+    private static final String ITEM_LORE = ChatColor.YELLOW + "Crafted after defeating #######";
+    private static final Material ITEM_MATERIAL = Material.GOLDEN_SWORD;
 
     public static ItemStack createItem() {
         ItemStack item = new ItemStack(ITEM_MATERIAL);
@@ -41,44 +41,47 @@ public class Katana implements Listener {
         return item;
     }
 
-    @EventHandler
-    public void katanaUse(PlayerInteractEvent event) {
+@EventHandler
+public void swipeUse(PlayerInteractEvent event) {
     Player player = event.getPlayer();
     if (!isHoldingTheCorrectItem(player)) return;
 
     if (event.getAction() == Action.LEFT_CLICK_BLOCK || event.getAction() == Action.LEFT_CLICK_AIR) {
-//        player.sendMessage("click");
 
-        Location location = player.getEyeLocation();
+        swipe(player,1,true);
+        swipe(player,2,false);
+        swipe(player,3,false);
 
-
-        for (float j =-7; j <= 7; j +=1){
-
-            Location rotatedLocation = location.clone();
-            {rotatedLocation.setYaw(location.getYaw()-j*4);}
-
-            Vector direction = rotatedLocation.getDirection().normalize();
-
-            for (float i =0; i <= 6; i+=1f){
-                Location current = rotatedLocation.clone().add(direction.clone().multiply(i));
-
-//                    current.getWorld().spawnParticle(Particle.CRIT,current,1,0,0,0,0);
-
-
-                for (LivingEntity livingEntity : current.getNearbyLivingEntities(1)){
-                    if (!livingEntity.equals(player)){
-                        livingEntity.damage(21,player);
-                    }
-                }
-
-                if (i == 6){
-                    current.getWorld().spawnParticle(Particle.SWEEP_ATTACK,current,1,0,0,0,0);
-                }
-            }
-        }
     }
 }
+    private void swipe(Player player, Integer intt, Boolean isThereParticle){
+        Location eyeLocation = player.getEyeLocation();
+        Vector direction = eyeLocation.getDirection().normalize();
+        Location location = eyeLocation.clone();
 
+        location.add(direction.clone().multiply(intt));
+
+        {location.setYaw(eyeLocation.getYaw()+90);}
+
+//        location.getWorld().spawnParticle(Particle.FLAME,location,1,0,0,0,0);
+
+        Vector directionOfNewOne = location.getDirection();
+        //1132
+        for (float i = -2; i <= 2; i+=0.25f){
+            Location current = location.clone().add(directionOfNewOne.clone().multiply(i));
+
+            if (isThereParticle){
+                current.getWorld().spawnParticle(Particle.CRIT,current.add(0,i/2,0),1,0,0,0,0);
+            }
+
+            for (LivingEntity livingEntity : current.add(0,i/2,0).getNearbyLivingEntities(1)){
+                if (!livingEntity.equals(player)){
+                    livingEntity.damage(21,player);
+                }
+            }
+
+        }
+    }
 
     private static boolean isHoldingTheCorrectItem(Player player) {
         ItemStack mainHandItem = player.getInventory().getItemInMainHand();

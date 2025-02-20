@@ -1,4 +1,4 @@
-package me.lukario.dreamRealm2.items.swords.ability;
+package me.lukario.dreamRealm2.items.swords;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;

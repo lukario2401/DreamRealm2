@@ -14,8 +14,8 @@ import me.lukario.dreamRealm2.items.special.JetSu;
 import me.lukario.dreamRealm2.items.special.ranged.misc.FlameThrower;
 import me.lukario.dreamRealm2.items.special.ranged.misc.Pyromancer;
 import me.lukario.dreamRealm2.items.special.ranged.misc.Shuriken;
-import me.lukario.dreamRealm2.items.swords.ability.*;
-import me.lukario.dreamRealm2.items.swords.swing.*;
+import me.lukario.dreamRealm2.items.swords.GiantSword;
+import me.lukario.dreamRealm2.items.swords.MidasStaff;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -29,8 +29,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static me.lukario.dreamRealm2.items.swords.ability.CustomSword.createCustomSword;
 import static me.lukario.dreamRealm2.items.special.magic.WizardWand.createCustomWizardWand;
+import static me.lukario.dreamRealm2.items.swords.CustomSword.createCustomSword;
 
 public class GetCommand implements CommandExecutor, TabExecutor {
     @Override
@@ -55,7 +55,7 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             return true;
         }
         if (args.length == 2 && args[0].equalsIgnoreCase("Shadow") && args[1].equalsIgnoreCase("Dance")) {
-            player.getInventory().addItem(ShadowDance.createShadowDance());
+            player.getInventory().addItem(me.lukario.dreamRealm2.items.swords.ShadowDance.createShadowDance());
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Shadow Dance!");
             return true;
         }
@@ -65,7 +65,7 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             return true;
         }
         if (args.length == 2 && args[0].equalsIgnoreCase("Dual") && args[1].equalsIgnoreCase("Wield")) {
-            player.getInventory().addItem(DualWield.createDualWield());
+            player.getInventory().addItem(me.lukario.dreamRealm2.items.swords.DualWield.createDualWield());
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Dual Wield!");
             return true;
         }
@@ -107,12 +107,12 @@ public class GetCommand implements CommandExecutor, TabExecutor {
         }
         if (args.length == 1 && args[0].equalsIgnoreCase("Katana")) {
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Katana!");
-            player.getInventory().addItem(Katana.createItem());
+            player.getInventory().addItem(me.lukario.dreamRealm2.items.swords.Katana.createItem());
             return true;
         }
         if (args.length == 1 && args[0].equalsIgnoreCase("Hyperion")) {
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Hyperion!");
-            player.getInventory().addItem(Hyperion.createHyperion());
+            player.getInventory().addItem(me.lukario.dreamRealm2.items.swords.Hyperion.createHyperion());
             return true;
         }
         if (args.length == 1 && args[0].equalsIgnoreCase("JujuShortbow")) {
@@ -126,22 +126,22 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             return true;
         }
         if (args.length == 1 && args[0].equalsIgnoreCase("SinOfSolace")) {
-            player.getInventory().addItem(SinOfSolace.createSinOfSolace());
+            player.getInventory().addItem(me.lukario.dreamRealm2.items.swords.SinOfSolace.createSinOfSolace());
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Sin Of Solace!");
             return true;
         }
         if (args.length == 1 && args[0].equalsIgnoreCase("Rapier")) {
-            player.getInventory().addItem(Rapier.createItem());
+            player.getInventory().addItem(me.lukario.dreamRealm2.items.swords.Rapier.createItem());
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Rapier");
             return true;
         }
         if (args.length == 1 && args[0].equalsIgnoreCase("Scythe")) {
-            player.getInventory().addItem(Scythe.createItem());
+            player.getInventory().addItem(me.lukario.dreamRealm2.items.swords.Scythe.createItem());
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Scythe");
             return true;
         }
         if (args.length == 1 && args[0].equalsIgnoreCase("Dagger")) {
-            player.getInventory().addItem(Dagger.createItem());
+            player.getInventory().addItem(me.lukario.dreamRealm2.items.swords.Dagger.createItem());
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Dagger");
             return true;
         }
@@ -171,7 +171,7 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             return true;
         }
         if (args.length == 1 && args[0].equalsIgnoreCase("Flash")) {
-            player.getInventory().addItem(Flash.createItem());
+            player.getInventory().addItem(me.lukario.dreamRealm2.items.swords.Flash.createItem());
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Flash");
             return true;
         }
@@ -211,18 +211,23 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             return true;
         }
             if (args.length == 1 && args[0].equalsIgnoreCase("Slash")) {
-            player.getInventory().addItem(Slash.createItem());
+            player.getInventory().addItem(me.lukario.dreamRealm2.items.swords.Slash.createItem());
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Slash");
             return true;
         }
         if (args.length == 1 && args[0].equalsIgnoreCase("Style")) {
-            player.getInventory().addItem(Style.createItem());
+            player.getInventory().addItem(me.lukario.dreamRealm2.items.swords.Style.createItem());
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Style");
             return true;
         }
         if (args.length == 1 && args[0].equalsIgnoreCase("Swipe")) {
-            player.getInventory().addItem(Swipe.createItem());
+            player.getInventory().addItem(me.lukario.dreamRealm2.items.swords.Swipe.createItem());
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Swipe");
+            return true;
+        }
+        if (args.length == 1 && args[0].equalsIgnoreCase("MidasStaff")) {
+            player.getInventory().addItem(MidasStaff.createItem());
+            player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "MidasStaff");
             return true;
         }
 
@@ -241,7 +246,7 @@ public class GetCommand implements CommandExecutor, TabExecutor {
         // Define all possible completions for the first argument
         List<String> mainTypes = Arrays.asList(
             "Launch", "Tornado", "Shuriken", "Cat", "Jet", "Rapier", "Card","Theater","Fence","ChainedBuff","Style",
-            "Wizard", "Clock", "Dagger", "SinOfSolace", "Scythe", "Terminator","ShareHealth","Chain","Slash","Swipe",
+            "Wizard", "Clock", "Dagger", "SinOfSolace", "Scythe", "Terminator","ShareHealth","Chain","Slash","Swipe","MidasStaff",
             "Shadow", "Dual", "Pyromancer", "GiantSword","Flame","Ferocity","Katana","Wrench","Flash","FireWand","Portal"
         );
 

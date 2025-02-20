@@ -14,10 +14,10 @@ import me.lukario.dreamRealm2.items.special.ranged.bow.Arch;
 import me.lukario.dreamRealm2.items.special.ranged.bow.JujuShortBow;
 import me.lukario.dreamRealm2.items.special.ranged.bow.TornadoBow;
 import me.lukario.dreamRealm2.items.special.ranged.misc.*;
+import me.lukario.dreamRealm2.items.swords.*;
 import me.lukario.dreamRealm2.items.special.Clock;
 import me.lukario.dreamRealm2.items.special.JetSu;
-import me.lukario.dreamRealm2.items.swords.ability.*;
-import me.lukario.dreamRealm2.items.swords.swing.*;
+import me.lukario.dreamRealm2.items.swords.MidasStaff;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class DreamRealm2 extends JavaPlugin {
@@ -41,6 +41,7 @@ public final class DreamRealm2 extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new CustomSword(), this);
         getServer().getPluginManager().registerEvents(new CookWithSneak(), this);
         getServer().getPluginManager().registerEvents(new GiantSword(), this);
+        getServer().getPluginManager().registerEvents(new MidasStaff(this), this);
         getServer().getPluginManager().registerEvents(new Swipe(this), this);
         getServer().getPluginManager().registerEvents(new Style(this), this);
         getServer().getPluginManager().registerEvents(new Slash(this), this);
@@ -54,23 +55,23 @@ public final class DreamRealm2 extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new FireWand(this), this);
         getServer().getPluginManager().registerEvents(new Wrench(this), this);
         getServer().getPluginManager().registerEvents(new FlameThrower(this), this);
-        getServer().getPluginManager().registerEvents(new Katana(this), this);
-        getServer().getPluginManager().registerEvents(new Dagger(this), this);
+        getServer().getPluginManager().registerEvents(new me.lukario.dreamRealm2.items.swords.Katana(this), this);
+        getServer().getPluginManager().registerEvents(new me.lukario.dreamRealm2.items.swords.Dagger(this), this);
         getServer().getPluginManager().registerEvents(new TornadoBow(this), this);
         getServer().getPluginManager().registerEvents(new Shuriken(this), this);
         getServer().getPluginManager().registerEvents(new JetSu(this), this);
         getServer().getPluginManager().registerEvents(new Cards(this), this);
         getServer().getPluginManager().registerEvents(new Clock(this), this);
-        getServer().getPluginManager().registerEvents(new Hyperion(this), this);
-        getServer().getPluginManager().registerEvents(new Scythe(this), this);
+        getServer().getPluginManager().registerEvents(new me.lukario.dreamRealm2.items.swords.Hyperion(this), this);
+        getServer().getPluginManager().registerEvents(new me.lukario.dreamRealm2.items.swords.Scythe(this), this);
         getServer().getPluginManager().registerEvents(new WizardWand(this), this);
-        getServer().getPluginManager().registerEvents(new SinOfSolace(this), this);
+        getServer().getPluginManager().registerEvents(new me.lukario.dreamRealm2.items.swords.SinOfSolace(this), this);
         getServer().getPluginManager().registerEvents(new Arch(this), this);
-        getServer().getPluginManager().registerEvents(new ShadowDance(this), this);
-        getServer().getPluginManager().registerEvents(new DualWield(this), this);
+        getServer().getPluginManager().registerEvents(new me.lukario.dreamRealm2.items.swords.ShadowDance(this), this);
+        getServer().getPluginManager().registerEvents(new me.lukario.dreamRealm2.items.swords.DualWield(this), this);
         getServer().getPluginManager().registerEvents(new Pyromancer(this), this);
         getServer().getPluginManager().registerEvents(new JujuShortBow(this), this);
-        getServer().getPluginManager().registerEvents(new Rapier(this), this);
+        getServer().getPluginManager().registerEvents(new me.lukario.dreamRealm2.items.swords.Rapier(this), this);
         getServer().getPluginManager().registerEvents(new Ferocity(), this);
 
         getCommand("get").setExecutor(new GetCommand());

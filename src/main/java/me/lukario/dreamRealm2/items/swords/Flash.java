@@ -1,4 +1,4 @@
-package me.lukario.dreamRealm2.items.swords.ability;
+package me.lukario.dreamRealm2.items.swords;
 
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
