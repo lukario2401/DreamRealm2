@@ -17,7 +17,7 @@ import me.lukario.dreamRealm2.items.special.ranged.misc.*;
 import me.lukario.dreamRealm2.items.swords.*;
 import me.lukario.dreamRealm2.items.special.Clock;
 import me.lukario.dreamRealm2.items.special.JetSu;
-import me.lukario.dreamRealm2.items.swords.MidasStaff;
+import me.lukario.dreamRealm2.items.special.ranged.misc.MidasStaff;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class DreamRealm2 extends JavaPlugin {
@@ -41,6 +41,7 @@ public final class DreamRealm2 extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new CustomSword(), this);
         getServer().getPluginManager().registerEvents(new CookWithSneak(), this);
         getServer().getPluginManager().registerEvents(new GiantSword(), this);
+        getServer().getPluginManager().registerEvents(new YetiSword(this), this);
         getServer().getPluginManager().registerEvents(new MidasStaff(this), this);
         getServer().getPluginManager().registerEvents(new Swipe(this), this);
         getServer().getPluginManager().registerEvents(new Style(this), this);
@@ -55,7 +56,7 @@ public final class DreamRealm2 extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new FireWand(this), this);
         getServer().getPluginManager().registerEvents(new Wrench(this), this);
         getServer().getPluginManager().registerEvents(new FlameThrower(this), this);
-        getServer().getPluginManager().registerEvents(new me.lukario.dreamRealm2.items.swords.Katana(this), this);
+        getServer().getPluginManager().registerEvents(new Katana(this), this);
         getServer().getPluginManager().registerEvents(new me.lukario.dreamRealm2.items.swords.Dagger(this), this);
         getServer().getPluginManager().registerEvents(new TornadoBow(this), this);
         getServer().getPluginManager().registerEvents(new Shuriken(this), this);

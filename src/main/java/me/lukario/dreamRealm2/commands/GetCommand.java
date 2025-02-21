@@ -8,14 +8,10 @@ import me.lukario.dreamRealm2.items.special.magic.*;
 import me.lukario.dreamRealm2.items.special.ranged.bow.Arch;
 import me.lukario.dreamRealm2.items.special.ranged.bow.JujuShortBow;
 import me.lukario.dreamRealm2.items.special.ranged.bow.TornadoBow;
-import me.lukario.dreamRealm2.items.special.ranged.misc.Cards;
+import me.lukario.dreamRealm2.items.special.ranged.misc.*;
 import me.lukario.dreamRealm2.items.special.Clock;
 import me.lukario.dreamRealm2.items.special.JetSu;
-import me.lukario.dreamRealm2.items.special.ranged.misc.FlameThrower;
-import me.lukario.dreamRealm2.items.special.ranged.misc.Pyromancer;
-import me.lukario.dreamRealm2.items.special.ranged.misc.Shuriken;
 import me.lukario.dreamRealm2.items.swords.GiantSword;
-import me.lukario.dreamRealm2.items.swords.MidasStaff;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -230,6 +226,11 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "MidasStaff");
             return true;
         }
+        if (args.length == 1 && args[0].equalsIgnoreCase("YetiSword")) {
+            player.getInventory().addItem(YetiSword.createItem());
+            player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "YetiSword");
+            return true;
+        }
 
 
 
@@ -245,7 +246,7 @@ public class GetCommand implements CommandExecutor, TabExecutor {
 
         // Define all possible completions for the first argument
         List<String> mainTypes = Arrays.asList(
-            "Launch", "Tornado", "Shuriken", "Cat", "Jet", "Rapier", "Card","Theater","Fence","ChainedBuff","Style",
+            "Launch", "Tornado", "Shuriken", "Cat", "Jet", "Rapier", "Card","Theater","Fence","ChainedBuff","Style","YetiSword",
             "Wizard", "Clock", "Dagger", "SinOfSolace", "Scythe", "Terminator","ShareHealth","Chain","Slash","Swipe","MidasStaff",
             "Shadow", "Dual", "Pyromancer", "GiantSword","Flame","Ferocity","Katana","Wrench","Flash","FireWand","Portal"
         );

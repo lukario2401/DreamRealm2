@@ -1,11 +1,9 @@
-package me.lukario.dreamRealm2.items.swords;
+package me.lukario.dreamRealm2.items.special.ranged.misc;
 
-import io.papermc.paper.command.brigadier.argument.resolvers.PlayerProfileListResolver;
 import me.lukario.dreamRealm2.Misc;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.LivingEntity;
@@ -24,8 +22,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.UUID;
-
-import static me.lukario.dreamRealm2.Misc.damageNoTicks;
 
 public class MidasStaff implements Listener {
 
@@ -175,10 +171,8 @@ public class MidasStaff implements Listener {
         }
         return false;
     }
-
-
-
 }
+
 //package me.lukario.dreamRealm2.items.swords;
 //
 //import io.papermc.paper.command.brigadier.argument.resolvers.PlayerProfileListResolver;
