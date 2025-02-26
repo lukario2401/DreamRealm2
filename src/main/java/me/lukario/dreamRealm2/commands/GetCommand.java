@@ -236,7 +236,11 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Meteor");
             return true;
         }
-
+        if (args.length == 1 && args[0].equalsIgnoreCase("Link")) {
+            player.getInventory().addItem(Link.createItem());
+            player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Link");
+            return true;
+        }
 
 
 
@@ -251,7 +255,7 @@ public class GetCommand implements CommandExecutor, TabExecutor {
 
         // Define all possible completions for the first argument
         List<String> mainTypes = Arrays.asList(
-            "Launch", "Tornado", "Shuriken", "Cat", "Jet", "Rapier", "Card","Theater","Fence","ChainedBuff","Style","YetiSword",
+            "Launch", "Tornado", "Shuriken", "Cat", "Jet", "Rapier", "Card","Theater","Fence","ChainedBuff","Style","YetiSword","Link",
             "Wizard", "Clock", "Dagger", "SinOfSolace", "Scythe", "Terminator","ShareHealth","Chain","Slash","Swipe","MidasStaff",
             "Shadow", "Dual", "Pyromancer", "GiantSword","Flame","Ferocity","Katana","Wrench","Flash","FireWand","Portal","Meteor"
         );
