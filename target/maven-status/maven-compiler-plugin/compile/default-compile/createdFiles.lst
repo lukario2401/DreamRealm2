@@ -6,7 +6,9 @@ me\lukario\dreamRealm2\items\special\ranged\misc\MidasStaff.class
 me\lukario\dreamRealm2\items\special\magic\FireWand.class
 me\lukario\dreamRealm2\items\swords\GiantSword.class
 me\lukario\dreamRealm2\items\swords\Rapier.class
+me\lukario\dreamRealm2\items\special\ranged\misc\Link.class
 me\lukario\dreamRealm2\items\swords\ShadowDance.class
+me\lukario\dreamRealm2\items\special\ranged\misc\Swift$1.class
 me\lukario\dreamRealm2\RayCast$1.class
 me\lukario\dreamRealm2\items\swords\ShadowDance$3.class
 me\lukario\dreamRealm2\items\special\builder\Fence.class
@@ -29,6 +31,7 @@ me\lukario\dreamRealm2\DreamRealm2.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Cards.class
 me\lukario\dreamRealm2\items\special\ranged\bow\JujuShortBow$1.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Meteor$2.class
+me\lukario\dreamRealm2\items\special\ranged\misc\Link$1.class
 me\lukario\dreamRealm2\items\swords\DualWield$2.class
 me\lukario\dreamRealm2\items\swords\Style$1.class
 me\lukario\dreamRealm2\items\swords\Scythe.class
@@ -94,6 +97,7 @@ me\lukario\dreamRealm2\items\special\Clock$4.class
 me\lukario\dreamRealm2\items\special\ranged\misc\FlameThrower.class
 me\lukario\dreamRealm2\items\special\magic\Chain.class
 me\lukario\dreamRealm2\RayCast$3.class
+me\lukario\dreamRealm2\items\special\ranged\misc\Swift.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Pyromancer$2.class
 me\lukario\dreamRealm2\items\special\magic\ChainedBuff$2.class
 me\lukario\dreamRealm2\commands\GetCommand.class
