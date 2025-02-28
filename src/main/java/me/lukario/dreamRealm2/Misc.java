@@ -25,4 +25,17 @@ public class Misc implements Listener {
         }
         }
     }
+    public static void damageNoTicks(LivingEntity livingEntity, double damage){
+        if (livingEntity instanceof ArmorStand){}else {
+        if (livingEntity.getHealth()>damage){
+            livingEntity.setHealth(livingEntity.getHealth()-damage);
+            livingEntity.playHurtAnimation(1);
+            if (livingEntity.getHurtSound()!=null){
+                livingEntity.getWorld().playSound(livingEntity.getLocation(),livingEntity.getHurtSound(),1,1);
+            }
+        }else{
+            livingEntity.setHealth(0);
+        }
+        }
+    }
 }
