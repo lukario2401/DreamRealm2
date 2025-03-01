@@ -1,5 +1,6 @@
 package me.lukario.dreamRealm2.items.special.magic;
 
+import me.lukario.dreamRealm2.Misc;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -50,11 +51,9 @@ public class ChainedBuff implements Listener {
 
 
     private void cooldownManagement(){
-
         new BukkitRunnable(){
             @Override public void run(){
                 Set<UUID> uuid = cooldown.keySet();
-
                 for (UUID uuid1 : uuid){
                     if (cooldown.get(uuid1)>0f){
                         cooldown.put(uuid1,cooldown.get(uuid1)-1f);
@@ -62,12 +61,20 @@ public class ChainedBuff implements Listener {
                 }
             }
         }.runTaskTimer(plugin,0,1);
-
-
-
+        new BukkitRunnable(){
+            @Override public void run(){
+                Set<UUID> uuid = cooldownLeft.keySet();
+                for (UUID uuid1 : uuid){
+                    if (cooldownLeft.get(uuid1)>0f){
+                        cooldownLeft.put(uuid1,cooldownLeft.get(uuid1)-1f);
+                    }
+                }
+            }
+        }.runTaskTimer(plugin,0,1);
     }
 
     private static final HashMap<UUID,Float> cooldown = new HashMap<>();
+    private static final HashMap<UUID,Float> cooldownLeft = new HashMap<>();
 
 
     @EventHandler
@@ -77,25 +84,41 @@ public class ChainedBuff implements Listener {
         if (cooldown.get(player.getUniqueId())==null){
             cooldown.put(player.getUniqueId(),0f);
         }
+        if (cooldownLeft.get(player.getUniqueId())==null){
+            cooldownLeft.put(player.getUniqueId(),0f);
+        }
 
         if (!isHoldingTheCorrectItem(player)){return;}
 
         if (Action.RIGHT_CLICK_AIR==event.getAction()||Action.RIGHT_CLICK_BLOCK==event.getAction()){
             if (cooldown.get(player.getUniqueId())==0){
-                cooldown.put(player.getUniqueId(),200f);
     //            createSlash(player,45f);
     //            createSlash(player,-45f);
 
                 LivingEntity livingEntity = getLivingEntity(player);
                 if (livingEntity!=null){
-                    twoPlaceBeam(player,livingEntity);
+                    cooldown.put(player.getUniqueId(),10f);
+                    attt(player,livingEntity);
                 }
             }else{
                 player.sendMessage(ChatColor.DARK_RED + "Your cooldown is: " + Math.round(cooldown.get(player.getUniqueId())/20));
                 player.getWorld().playSound(player.getLocation(),Sound.ENTITY_ENDERMAN_TELEPORT,1,1);
             }
+        }
+        if (Action.LEFT_CLICK_AIR==event.getAction()||Action.LEFT_CLICK_BLOCK==event.getAction()){
+            if (cooldownLeft.get(player.getUniqueId())==0){
+    //            createSlash(player,45f);
+    //            createSlash(player,-45f);
 
-
+                LivingEntity livingEntity = getLivingEntity(player);
+                if (livingEntity!=null){
+                    cooldownLeft.put(player.getUniqueId(),10f);
+                    att(player,livingEntity);
+                }
+            }else{
+                player.sendMessage(ChatColor.DARK_RED + "Your cooldown is: " + Math.round(cooldownLeft.get(player.getUniqueId())/20));
+                player.getWorld().playSound(player.getLocation(),Sound.ENTITY_ENDERMAN_TELEPORT,1,1);
+            }
         }
 
     }
@@ -103,20 +126,40 @@ public class ChainedBuff implements Listener {
     private LivingEntity getLivingEntity(Player player){
 
         Location location = player.getEyeLocation();
-        Vector direction = location.getDirection();
+        Vector direction = location.getDirection().normalize();
 
-        for (float i = 0; i <= 32; i+=0.5f){
-            Location current = location.clone().add(direction.clone().multiply(i));
-
-            for (LivingEntity livingEntity : current.getNearbyLivingEntities(1)){
-                if (!livingEntity.equals(player)){
-                    return livingEntity;
+        for (float i =0; i<=96; i+=0.5f){
+            if (i<32){
+                Location current = location.clone().add(direction.clone().multiply(i));
+                for (LivingEntity livingEntity:current.getNearbyLivingEntities(1)){
+                    if (!livingEntity.equals(player)){
+                        if (!livingEntity.isDead()){
+                            return livingEntity;
+                        }
+                    }
                 }
             }
-
-            current.getWorld().spawnParticle(Particle.CRIT,current,1,0,0,0,0);
+            if (i>32){
+                Location current = location.clone().add(direction.clone().multiply(i));
+                for (LivingEntity livingEntity:current.getNearbyLivingEntities(2)){
+                    if (!livingEntity.equals(player)){
+                        if (!livingEntity.isDead()){
+                            return livingEntity;
+                        }
+                    }
+                }
+            }
+            if (i>64){
+                Location current = location.clone().add(direction.clone().multiply(i));
+                for (LivingEntity livingEntity:current.getNearbyLivingEntities(3)){
+                    if (!livingEntity.equals(player)){
+                        if (!livingEntity.isDead()){
+                            return livingEntity;
+                        }
+                    }
+                }
+            }
         }
-
         return null;
     }
 
@@ -153,6 +196,134 @@ public class ChainedBuff implements Listener {
             }
         }.runTaskTimer(plugin,0,1);
     }
+
+    private void att(Player player, LivingEntity livingEntity) {
+    // Start and end points (a bit above each entity)
+    Location startLocation = player.getLocation().add(0, 1, 0);
+    Location endLocation = livingEntity.getLocation().add(0, 1, 0);
+
+    // Midpoint between start and end
+    Location controlLocation = startLocation.clone().add(
+            endLocation.clone().subtract(startLocation).multiply(0.5)
+    );
+
+    // Get the player's facing direction (horizontal)
+    Vector direction = player.getLocation().getDirection();
+    // Flatten out the Y, so we only rotate in the horizontal plane
+    direction.setY(0);
+    direction.normalize();
+
+    // Rotate 90° to get a 'right' vector
+    // If direction = (x, 0, z), a perpendicular is (z, 0, -x).
+    Vector right = new Vector(direction.getZ(), 0, -direction.getX()).normalize();
+
+    // Adjust how far "right" you want the curve to arc
+    right.multiply(6); // Try bigger or smaller values for a different arc
+
+    // Add the rightward offset to the control location
+    controlLocation.add(right);
+
+    // Number of interpolation steps (more steps = smoother curve)
+    int steps =  20;
+
+    for (int i = 0; i <= steps; i++) {
+        double t = (double) i / steps;
+        double u = 1 - t;
+
+        // Quadratic Bézier interpolation:
+        double x = (u * u * startLocation.getX())
+                 + (2 * u * t * controlLocation.getX())
+                 + (t * t * endLocation.getX());
+
+        double y = (u * u * startLocation.getY())
+                 + (2 * u * t * controlLocation.getY())
+                 + (t * t * endLocation.getY());
+
+        double z = (u * u * startLocation.getZ())
+                 + (2 * u * t * controlLocation.getZ())
+                 + (t * t * endLocation.getZ());
+
+        // Current position on the curve
+        Location current = new Location(startLocation.getWorld(), x, y, z);
+
+        // Spawn a flame particle
+        current.getWorld().spawnParticle(Particle.FLAME, current, 1,0,0,0,0);
+
+        // Damage nearby living entities (excluding the caster)
+        for (LivingEntity near : current.getNearbyLivingEntities(2)) {
+            if (!near.equals(player)) {
+
+                livingEntity.getWorld().spawnParticle(Particle.EXPLOSION,current,1,0,0,0,0);
+                livingEntity.getWorld().playSound(current,Sound.ENTITY_GENERIC_EXPLODE,3,1);
+                Misc.damageNoTicks(livingEntity,24,player);
+            }
+        }
+    }
+}
+
+private void attt(Player player, LivingEntity livingEntity) {
+    // Start and end points (slightly above each entity)
+    Location startLocation = player.getLocation().add(0, 1, 0);
+    Location endLocation = livingEntity.getLocation().add(0, 1, 0);
+
+    // Midpoint between start and end
+    Location controlLocation = startLocation.clone().add(
+            endLocation.clone().subtract(startLocation).multiply(0.5)
+    );
+
+    // Get the player's facing direction, flattened horizontally
+    Vector direction = player.getLocation().getDirection();
+    direction.setY(0);
+    direction.normalize();
+
+    // Create a "left" vector by rotating the direction vector 90° left
+    // For direction (x, 0, z), left is (-z, 0, x)
+    Vector left = new Vector(-direction.getZ(), 0, direction.getX()).normalize();
+
+    // Increase the curve by applying a larger leftward offset
+    left.multiply(8);  // Increased from 2 to 4 for a more pronounced curve
+
+    // Offset the control point to the left
+    controlLocation.add(left);
+
+    // Number of interpolation steps (more steps gives a smoother curve)
+    int steps = 20;
+
+    for (int i = 0; i <= steps; i++) {
+        double t = (double) i / steps;
+        double u = 1 - t;
+
+        // Quadratic Bézier interpolation:
+        double x = (u * u * startLocation.getX())
+                 + (2 * u * t * controlLocation.getX())
+                 + (t * t * endLocation.getX());
+
+        double y = (u * u * startLocation.getY())
+                 + (2 * u * t * controlLocation.getY())
+                 + (t * t * endLocation.getY());
+
+        double z = (u * u * startLocation.getZ())
+                 + (2 * u * t * controlLocation.getZ())
+                 + (t * t * endLocation.getZ());
+
+        // Current position on the curve
+        Location current = new Location(startLocation.getWorld(), x, y, z);
+
+        // Spawn a flame particle
+        current.getWorld().spawnParticle(Particle.FLAME, current, 1,0,0,0,0);
+
+        // Damage nearby living entities (excluding the caster)
+        for (LivingEntity near : current.getNearbyLivingEntities(2)) {
+            if (!near.equals(player)) {
+
+                livingEntity.getWorld().spawnParticle(Particle.EXPLOSION,current,1,0,0,0,0);
+                livingEntity.getWorld().playSound(current,Sound.ENTITY_GENERIC_EXPLODE,3,1);
+                Misc.damageNoTicks(livingEntity,24,player);
+            }
+        }
+    }
+}
+
 
     private void createSlash(Player player,float rotation){
         ItemStack displayItem = new ItemStack(Material.FEATHER);

@@ -13,11 +13,15 @@ import me.lukario.dreamRealm2.items.special.Clock;
 import me.lukario.dreamRealm2.items.special.JetSu;
 import me.lukario.dreamRealm2.items.swords.GiantSword;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -265,9 +269,10 @@ public class GetCommand implements CommandExecutor, TabExecutor {
 
         // Define all possible completions for the first argument
         List<String> mainTypes = Arrays.asList(
-            "Launch", "Tornado", "Shuriken", "Cat", "Jet", "Rapier", "Card","Theater","Fence","ChainedBuff","Style","YetiSword","Link",
-            "Wizard", "Clock", "Dagger", "SinOfSolace", "Scythe", "Terminator","ShareHealth","Chain","Slash","Swipe","MidasStaff",
-            "Shadow", "Dual", "Swift","Satellite", "Pyromancer", "GiantSword","Flame","Ferocity","Katana","Wrench","Flash","FireWand","Portal","Meteor"
+            "Launch", "Tornado", "Shuriken", "Cat", "Jet", "Rapier", "Card", "Theater", "Fence", "ChainedBuff",
+            "Style", "YetiSword", "Link", "Wizard", "Clock", "Dagger", "SinOfSolace", "Scythe", "Terminator", "ShareHealth",
+            "Chain", "Slash", "Swipe", "MidasStaff", "Shadow", "Dual", "Swift", "Satellite", "Pyromancer", "GiantSword",
+            "Flame", "Ferocity", "Katana", "Wrench", "Flash", "FireWand", "Portal", "Meteor"
         );
 
         // First argument suggestions

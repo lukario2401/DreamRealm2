@@ -76,11 +76,12 @@ public class Satellite implements Listener {
         }
         if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (cooldown.get(uuid) == 0) {
-                player.playSound(player, Sound.ENTITY_BLAZE_SHOOT, 1, 1);
 
                 LivingEntity livingEntity = getLivingEntity(player);
 
                 if (livingEntity!=null){
+
+                    player.playSound(player, Sound.ENTITY_BLAZE_SHOOT, 1, 1);
 
                     Location satelliteLocation = launchSatellite(player);
                     if (satelliteLocation!=null){
