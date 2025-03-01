@@ -16,9 +16,11 @@ me\lukario\dreamRealm2\items\swords\Dagger$1.class
 me\lukario\dreamRealm2\items\special\builder\Portal.class
 me\lukario\dreamRealm2\items\special\ranged\bow\Arch$2.class
 me\lukario\dreamRealm2\items\special\ranged\bow\JujuShortBow.class
+me\lukario\dreamRealm2\items\special\ranged\misc\Satellite.class
 me\lukario\dreamRealm2\items\special\magic\WizardWand$1.class
 me\lukario\dreamRealm2\items\special\ranged\misc\FlameThrower$2.class
 me\lukario\dreamRealm2\items\special\builder\Wrench$2.class
+me\lukario\dreamRealm2\items\special\ranged\misc\Satellite$2.class
 me\lukario\dreamRealm2\items\special\builder\Portal$1.class
 me\lukario\dreamRealm2\commands\SumCommand.class
 me\lukario\dreamRealm2\items\swords\DualWield$1.class
@@ -40,6 +42,7 @@ me\lukario\dreamRealm2\items\swords\Swipe.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Pyromancer$5.class
 me\lukario\dreamRealm2\items\swords\DualWield.class
 me\lukario\dreamRealm2\items\special\ranged\misc\YetiSword$2.class
+me\lukario\dreamRealm2\items\special\ranged\misc\Satellite$1.class
 me\lukario\dreamRealm2\items\special\builder\Fence$1.class
 me\lukario\dreamRealm2\items\swords\Rapier$1.class
 me\lukario\dreamRealm2\items\swords\Style$2.class
@@ -59,6 +62,7 @@ me\lukario\dreamRealm2\items\special\ranged\misc\YetiSword$1.class
 me\lukario\dreamRealm2\items\special\ranged\bow\Arch$1.class
 me\lukario\dreamRealm2\items\swords\ShadowDance$4.class
 me\lukario\dreamRealm2\items\swords\Katana.class
+me\lukario\dreamRealm2\items\special\ranged\misc\Satellite$3.class
 me\lukario\dreamRealm2\items\special\Clock$2.class
 me\lukario\dreamRealm2\CookWithSneak.class
 me\lukario\dreamRealm2\items\special\magic\Chain$1.class

@@ -77,7 +77,7 @@ public class Swift implements Listener {
             if (cooldown.get(uuid) == 0) {
                 player.playSound(player, Sound.ENTITY_BLAZE_SHOOT, 1, 1);
 
-                LivingEntity livingEntity = getLivingEntity(player,32);
+                LivingEntity livingEntity = getLivingEntity(player,96);
 
                 if (livingEntity!=null){
 
@@ -140,7 +140,7 @@ public class Swift implements Listener {
         Location location = player.getEyeLocation();
         Vector direction = location.getDirection().normalize();
 
-        for (float i =0; i <= range; i+=0.5f){
+        for (float i =0; i <= 32; i+=0.5f){
             Location current = location.clone().add(direction.clone().multiply(i));
 
             for (LivingEntity livingEntity : current.getNearbyLivingEntities(1)){
@@ -148,6 +148,36 @@ public class Swift implements Listener {
                     return livingEntity;
                 }
             }
+        }
+        if(range>32){
+            for (float i =0; i <= range; i+=0.5f){
+            Location current = location.clone().add(direction.clone().multiply(i));
+
+            for (LivingEntity livingEntity : current.getNearbyLivingEntities(2)){
+                if (!livingEntity.equals(player)){
+                    return livingEntity;
+                }
+            }
+        }
+        }
+        if(range>64){
+            for (float i =0; i <= range; i+=0.5f){
+            Location current = location.clone().add(direction.clone().multiply(i));
+
+            if (i>64){
+            for (LivingEntity livingEntity : current.getNearbyLivingEntities(3)){
+                if (!livingEntity.equals(player)){
+                    return livingEntity;
+                }
+            }
+            }else{
+                for (LivingEntity livingEntity : current.getNearbyLivingEntities(2)){
+                if (!livingEntity.equals(player)){
+                    return livingEntity;
+                }
+            }
+            }
+        }
         }
         return null;
     }

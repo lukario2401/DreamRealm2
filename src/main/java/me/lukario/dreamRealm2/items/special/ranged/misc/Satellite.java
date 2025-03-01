@@ -126,18 +126,30 @@ public class Satellite implements Listener {
                     this.cancel();
                 }
 
-                Location current = satelliteLocation.add(direction.clone().multiply(i));
+                Location current = satelliteLocation.clone().add(direction.clone().multiply(i));
 
                 current.getWorld().spawnParticle(Particle.FLAME,current,1,0,0,0,0);
-                if (i>=distance-0.25){
+                if (i>=distance-0.5){
                     for (LivingEntity livingEntity1 : current.getNearbyLivingEntities(2)){
                         livingEntity1.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER,livingEntity1.getLocation(),1);
-                        livingEntity1.getWorld().playSound(livingEntity.getLocation(),Sound.ENTITY_GENERIC_EXPLODE,1,1);
+                        livingEntity1.getWorld().playSound(livingEntity.getLocation(),Sound.ENTITY_GENERIC_EXPLODE,5,1);
                         Misc.damageNoTicks(livingEntity1,120);
                     }
                 }
+                if (i>distance/2){
+                    current = satelliteLocation.clone().add(direction.clone().multiply(i));
+                    current.getWorld().spawnParticle(Particle.FLAME,current,1,0,0,0,0);
+                    if (i>=distance-0.5){
+                        for (LivingEntity livingEntity1 : current.getNearbyLivingEntities(3)){
+                            livingEntity1.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER,livingEntity1.getLocation(),1);
+                            livingEntity1.getWorld().playSound(livingEntity.getLocation(),Sound.ENTITY_GENERIC_EXPLODE,5,1);
+                            Misc.damageNoTicks(livingEntity1,120);
+                        }
+                    }
+                    i+=0.5f;
+                }
 
-                i+=0.25f;
+                i+=0.5f;
             }
         }.runTaskTimer(plugin,60,1);
     }
@@ -148,17 +160,15 @@ public class Satellite implements Listener {
         location.setPitch(-80);
         Vector direction = location.getDirection().normalize();
 
-        for (float i =0; i<=12;i+=0.5f){
+        for (float i =0; i<=24;i+=0.5f){
             Location current = location.clone().add(direction.clone().multiply(i));
 
             current.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME,current,1,0,0,0,0);
 
-            if (i==12){
+            if (i==24){
                 return current;
             }
         }
-
-
         return null;
     }
 
@@ -167,11 +177,29 @@ public class Satellite implements Listener {
         Location location = player.getEyeLocation();
         Vector direction = location.getDirection().normalize();
 
-        for (float i =0; i<=32; i+=0.5f){
-            Location current = location.clone().add(direction.clone().multiply(i));
-            for (LivingEntity livingEntity:current.getNearbyLivingEntities(1)){
-                if (!livingEntity.equals(player)){
-                    return livingEntity;
+        for (float i =0; i<=96; i+=0.5f){
+            if (i<32){
+                Location current = location.clone().add(direction.clone().multiply(i));
+                for (LivingEntity livingEntity:current.getNearbyLivingEntities(1)){
+                    if (!livingEntity.equals(player)){
+                        return livingEntity;
+                    }
+                }
+            }
+            if (i>32){
+                Location current = location.clone().add(direction.clone().multiply(i));
+                for (LivingEntity livingEntity:current.getNearbyLivingEntities(2)){
+                    if (!livingEntity.equals(player)){
+                        return livingEntity;
+                    }
+                }
+            }
+            if (i>64){
+                Location current = location.clone().add(direction.clone().multiply(i));
+                for (LivingEntity livingEntity:current.getNearbyLivingEntities(3)){
+                    if (!livingEntity.equals(player)){
+                        return livingEntity;
+                    }
                 }
             }
         }
