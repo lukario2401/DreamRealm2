@@ -11,6 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
@@ -75,12 +76,32 @@ public class ChainedBuff implements Listener {
 
     private static final HashMap<UUID,Float> cooldown = new HashMap<>();
     private static final HashMap<UUID,Float> cooldownLeft = new HashMap<>();
+    private static final HashMap<UUID,Boolean> hasUsedItem = new HashMap<>();
 
+
+    public void playerHeldItemEventForParticle(PlayerItemHeldEvent event){
+        Player player = event.getPlayer();
+        UUID uuid = player.getUniqueId();
+        if (hasUsedItem.get(uuid)==null){
+            hasUsedItem.put(uuid,false);
+        }
+        if (hasUsedItem.get(uuid)==false){
+            particleForTheClaw(player);
+            hasUsedItem.put(uuid,true);
+        }
+    }
 
     @EventHandler
     public void chainedBuffUsed(PlayerInteractEvent event){
         Player player = event.getPlayer();
-
+//        UUID uuid = player.getUniqueId();
+//        if (hasUsedItem.get(uuid)==null){
+//            hasUsedItem.put(uuid,false);
+//        }
+//        if (hasUsedItem.get(uuid)==false){
+//            particleForTheClaw(player);
+//            hasUsedItem.put(uuid,true);
+//        }
         if (cooldown.get(player.getUniqueId())==null){
             cooldown.put(player.getUniqueId(),0f);
         }
@@ -121,6 +142,35 @@ public class ChainedBuff implements Listener {
             }
         }
 
+    }
+
+    private void particleForTheClaw(Player player){
+        new BukkitRunnable(){
+            @Override
+            public void run(){
+                if (isHoldingTheCorrectItem(player)){
+                    Location location = player.getEyeLocation().add(0,-0.5,0);
+                    Vector direction = location.getDirection();
+
+                    for (float i =0; i<=1.5;i+=0.1f){
+                    Location current = location.clone().add(direction.clone().multiply(i));
+
+                    Vector rightOffset = direction.clone().crossProduct(new Vector(0, -0.5, 0)).normalize().multiply(-i);
+
+                    current.getWorld().spawnParticle(Particle.FLAME,current.clone().add(rightOffset),1,0,0,0,0);
+                    }
+                    for (float j=1.5f; j<=3;j+=0.1f){
+                    Location current = location.clone().add(direction.clone().multiply(j));
+
+                    Vector rightOffset = direction.clone().crossProduct(new Vector(0, -0.5, 0)).normalize().multiply(j-3);
+
+                    current.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME,current.clone().add(rightOffset),1,0,0,0,0);
+                    }
+                }else{
+                    hasUsedItem.put(player.getUniqueId(),false);
+                }
+            }
+        }.runTaskTimer(plugin,0,1);
     }
 
     private LivingEntity getLivingEntity(Player player){

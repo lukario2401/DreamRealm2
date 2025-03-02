@@ -44,6 +44,7 @@ me\lukario\dreamRealm2\items\swords\DualWield.class
 me\lukario\dreamRealm2\items\special\ranged\misc\YetiSword$2.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Satellite$1.class
 me\lukario\dreamRealm2\items\special\builder\Fence$1.class
+me\lukario\dreamRealm2\items\special\magic\ChainedBuff$5.class
 me\lukario\dreamRealm2\items\swords\Rapier$1.class
 me\lukario\dreamRealm2\items\swords\Style$2.class
 me\lukario\dreamRealm2\items\swords\Style.class
@@ -76,6 +77,7 @@ me\lukario\dreamRealm2\items\special\ranged\misc\Cards$1.class
 me\lukario\dreamRealm2\items\special\ranged\bow\JujuShortBow$2.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Shuriken.class
 me\lukario\dreamRealm2\items\special\magic\ChainedBuff$1.class
+me\lukario\dreamRealm2\items\special\magic\ChainedBuff$4.class
 me\lukario\dreamRealm2\items\special\magic\ChainedBuff.class
 me\lukario\dreamRealm2\RayCast$2.class
 me\lukario\dreamRealm2\items\swords\Rapier$2.class
