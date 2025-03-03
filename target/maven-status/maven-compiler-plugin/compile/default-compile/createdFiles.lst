@@ -2,7 +2,9 @@ me\lukario\dreamRealm2\items\special\Clock.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Pyromancer$3.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Meteor.class
 me\lukario\dreamRealm2\items\special\ranged\misc\YetiSword.class
+me\lukario\dreamRealm2\items\special\ranged\bow\Terminator.class
 me\lukario\dreamRealm2\items\special\ranged\misc\MidasStaff.class
+me\lukario\dreamRealm2\items\special\ranged\bow\Terminator$1.class
 me\lukario\dreamRealm2\items\special\magic\FireWand.class
 me\lukario\dreamRealm2\items\swords\GiantSword.class
 me\lukario\dreamRealm2\items\swords\Rapier.class
@@ -22,6 +24,7 @@ me\lukario\dreamRealm2\items\special\ranged\misc\FlameThrower$2.class
 me\lukario\dreamRealm2\items\special\builder\Wrench$2.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Satellite$2.class
 me\lukario\dreamRealm2\items\special\builder\Portal$1.class
+me\lukario\dreamRealm2\items\special\ranged\bow\Terminator$4.class
 me\lukario\dreamRealm2\commands\SumCommand.class
 me\lukario\dreamRealm2\items\swords\DualWield$1.class
 me\lukario\dreamRealm2\DoubleJump.class
@@ -94,6 +97,7 @@ me\lukario\dreamRealm2\items\special\magic\Chain$2.class
 me\lukario\dreamRealm2\items\special\magic\ChainedBuff$3.class
 me\lukario\dreamRealm2\items\special\ranged\bow\Arch.class
 me\lukario\dreamRealm2\items\special\builder\Wrench$1.class
+me\lukario\dreamRealm2\items\special\ranged\bow\Terminator$3.class
 me\lukario\dreamRealm2\items\swords\SinOfSolace$1.class
 me\lukario\dreamRealm2\items\swords\Style$4.class
 me\lukario\dreamRealm2\items\special\magic\Theather$1.class
@@ -103,6 +107,7 @@ me\lukario\dreamRealm2\items\special\Clock$4.class
 me\lukario\dreamRealm2\items\special\ranged\misc\FlameThrower.class
 me\lukario\dreamRealm2\items\special\magic\Chain.class
 me\lukario\dreamRealm2\RayCast$3.class
+me\lukario\dreamRealm2\items\special\ranged\bow\Terminator$2.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Swift.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Pyromancer$2.class
 me\lukario\dreamRealm2\items\special\magic\ChainedBuff$2.class

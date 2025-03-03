@@ -7,6 +7,7 @@ import me.lukario.dreamRealm2.items.special.builder.Wrench;
 import me.lukario.dreamRealm2.items.special.magic.*;
 import me.lukario.dreamRealm2.items.special.ranged.bow.Arch;
 import me.lukario.dreamRealm2.items.special.ranged.bow.JujuShortBow;
+import me.lukario.dreamRealm2.items.special.ranged.bow.Terminator;
 import me.lukario.dreamRealm2.items.special.ranged.bow.TornadoBow;
 import me.lukario.dreamRealm2.items.special.ranged.misc.*;
 import me.lukario.dreamRealm2.items.special.Clock;
@@ -255,6 +256,11 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Satellite");
             return true;
         }
+        if (args.length == 1 && args[0].equalsIgnoreCase("Termination")) {
+            player.getInventory().addItem(Terminator.createItem());
+            player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Terminator");
+            return true;
+        }
 
 
 
@@ -272,7 +278,7 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             "Launch", "Tornado", "Shuriken", "Cat", "Jet", "Rapier", "Card", "Theater", "Fence", "ChainedBuff",
             "Style", "YetiSword", "Link", "Wizard", "Clock", "Dagger", "SinOfSolace", "Scythe", "Terminator", "ShareHealth",
             "Chain", "Slash", "Swipe", "MidasStaff", "Shadow", "Dual", "Swift", "Satellite", "Pyromancer", "GiantSword",
-            "Flame", "Ferocity", "Katana", "Wrench", "Flash", "FireWand", "Portal", "Meteor"
+            "Flame", "Ferocity", "Katana", "Wrench", "Flash", "FireWand", "Portal", "Meteor", "Terminator"
         );
 
         // First argument suggestions

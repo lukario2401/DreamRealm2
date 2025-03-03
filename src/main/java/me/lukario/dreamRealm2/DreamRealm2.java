@@ -12,6 +12,7 @@ import me.lukario.dreamRealm2.items.special.builder.Wrench;
 import me.lukario.dreamRealm2.items.special.magic.*;
 import me.lukario.dreamRealm2.items.special.ranged.bow.Arch;
 import me.lukario.dreamRealm2.items.special.ranged.bow.JujuShortBow;
+import me.lukario.dreamRealm2.items.special.ranged.bow.Terminator;
 import me.lukario.dreamRealm2.items.special.ranged.bow.TornadoBow;
 import me.lukario.dreamRealm2.items.special.ranged.misc.*;
 import me.lukario.dreamRealm2.items.swords.*;
@@ -41,6 +42,7 @@ public final class DreamRealm2 extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new CustomSword(), this);
         getServer().getPluginManager().registerEvents(new CookWithSneak(), this);
         getServer().getPluginManager().registerEvents(new GiantSword(), this);
+        getServer().getPluginManager().registerEvents(new Terminator(this), this);
         getServer().getPluginManager().registerEvents(new Satellite(this), this);
         getServer().getPluginManager().registerEvents(new Swift(this), this);
         getServer().getPluginManager().registerEvents(new Link(this), this);
