@@ -94,7 +94,9 @@ public class Terminator implements Listener {
                 player.playSound(player, Sound.ENTITY_BLAZE_SHOOT,1,1);
 
                 cooldown.put(uuid,10f);
-                shootTerminatorLeftCLick(player);
+                shootTerminatorLeftCLick(player, 10);
+                shootTerminatorLeftCLick(player, 0);
+                shootTerminatorLeftCLick(player, -10);
 
             }else{
                 player.sendMessage(ChatColor.DARK_RED+"Cooldown: "+cooldown.get(uuid)/20+"s");
@@ -220,8 +222,11 @@ public class Terminator implements Listener {
         }.runTaskTimer(plugin,60,1);
     }
 
-    private void shootTerminatorLeftCLick(Player player){
+    private void shootTerminatorLeftCLick(Player player, float rotation){
         Location location = player.getEyeLocation();
+
+        location.setYaw(location.getYaw()+rotation);
+
         Vector direction = location.getDirection().normalize();
 
         for (float i =0; i<=64;i+=0.5f){
