@@ -267,6 +267,11 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Claws");
             return true;
         }
+        if (args.length == 1 && args[0].equalsIgnoreCase("Missile")) {
+            player.getInventory().addItem(Missile.createItem());
+            player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Missile");
+            return true;
+        }
 
 
 
@@ -284,7 +289,8 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             "Launch", "Tornado", "Shuriken", "Cat", "Jet", "Rapier", "Card", "Theater", "Fence", "ChainedBuff",
             "Style", "YetiSword", "Link", "Wizard", "Clock", "Dagger", "SinOfSolace", "Scythe", "Terminator", "ShareHealth",
             "Chain", "Slash", "Swipe", "MidasStaff", "Shadow", "Dual", "Swift", "Satellite", "Pyromancer", "GiantSword",
-            "Flame", "Ferocity", "Katana", "Wrench", "Flash", "FireWand", "Portal", "Meteor", "Terminator", "Claws"
+            "Flame", "Ferocity", "Katana", "Wrench", "Flash", "FireWand", "Portal", "Meteor", "Terminator", "Claws",
+            "Missile"
         );
 
         // First argument suggestions
