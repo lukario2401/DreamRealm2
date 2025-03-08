@@ -7,6 +7,7 @@ me\lukario\dreamRealm2\items\special\ranged\misc\Missile$1.class
 me\lukario\dreamRealm2\items\special\ranged\misc\MidasStaff.class
 me\lukario\dreamRealm2\items\special\ranged\bow\Terminator$1.class
 me\lukario\dreamRealm2\items\special\magic\FireWand.class
+me\lukario\dreamRealm2\items\special\ranged\misc\GraveYard$1.class
 me\lukario\dreamRealm2\items\swords\GiantSword.class
 me\lukario\dreamRealm2\items\swords\Rapier.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Link.class
@@ -45,6 +46,7 @@ me\lukario\dreamRealm2\items\swords\Claws$1.class
 me\lukario\dreamRealm2\items\swords\Slash.class
 me\lukario\dreamRealm2\items\swords\Swipe.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Pyromancer$5.class
+me\lukario\dreamRealm2\items\special\ranged\misc\GraveYard.class
 me\lukario\dreamRealm2\items\swords\DualWield.class
 me\lukario\dreamRealm2\items\special\ranged\misc\YetiSword$2.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Satellite$1.class
@@ -72,6 +74,7 @@ me\lukario\dreamRealm2\items\swords\Katana.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Satellite$3.class
 me\lukario\dreamRealm2\items\special\Clock$2.class
 me\lukario\dreamRealm2\CookWithSneak.class
+me\lukario\dreamRealm2\items\special\ranged\misc\GraveYard$2.class
 me\lukario\dreamRealm2\items\special\magic\Chain$1.class
 me\lukario\dreamRealm2\RayCast.class
 me\lukario\dreamRealm2\items\special\magic\FireWand$1.class
@@ -127,3 +130,4 @@ me\lukario\dreamRealm2\Misc.class
 me\lukario\dreamRealm2\items\armor\Ferocity.class
 me\lukario\dreamRealm2\items\swords\SinOfSolace.class
 me\lukario\dreamRealm2\items\special\ranged\bow\Arch$3.class
+me\lukario\dreamRealm2\items\special\ranged\misc\GraveYard$3.class
