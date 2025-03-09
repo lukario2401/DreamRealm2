@@ -2,10 +2,7 @@ package me.lukario.dreamRealm2.items.special.ranged.misc;
 
 import me.lukario.dreamRealm2.Misc;
 import net.md_5.bungee.api.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Particle;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -93,7 +90,7 @@ private final Plugin plugin;
             if (cooldownLeft.get(uuid)==0){
 
                 player.playSound(player, Sound.ENTITY_BLAZE_SHOOT,1,1);
-                getLivingEntity(player,3);
+                getLivingEntity(player,4);
                 cooldownLeft.put(uuid,10f);
 
             }else{
@@ -155,147 +152,132 @@ private final Plugin plugin;
     private void twoPlaceRayCast(Location location,Player player, LivingEntity livingEntity, Boolean bool){
         Location startLocation = location;
 
-        if (!bool) {
-            new BukkitRunnable(){
-                float i =0;
-                @Override
-                public void run(){
-                    Location endLocation = livingEntity.getLocation();
+        new BukkitRunnable(){
+            float i =0;
+            @Override
+            public void run(){
+                Location endLocation = livingEntity.getLocation();
 
-                    double distance = startLocation.distance(endLocation);
-                    org.bukkit.util.Vector direction = endLocation.toVector().subtract(startLocation.toVector()).normalize();
+                double distance = startLocation.distance(endLocation);
+                org.bukkit.util.Vector direction = endLocation.toVector().subtract(startLocation.toVector()).normalize();
 
-
-                    Location current = startLocation.clone().add(direction.clone().multiply(i));
-
-                    current.getWorld().spawnParticle(Particle.FIREWORK,current,1,0,0,0,0);
-                    if (bool){
-                        for (LivingEntity livingEntity1: current.getNearbyLivingEntities(1)){
-                            if (!livingEntity1.equals(player)){
-                                Misc.damageNoTicks(livingEntity1,52,player);
-                                current.getWorld().spawnParticle(Particle.EXPLOSION,current,1,0,0,0,0);
-                            }
-                        }
-                        if (i>distance-1){
-                            for (LivingEntity livingEntity1: current.getNearbyLivingEntities(3)){
-                                if (!livingEntity1.equals(player)){
-                                    Misc.damageNoTicks(livingEntity1,32,player);
-                                    current.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER,current,1,0,0,0,0);
-                                    current.getWorld().playSound(current,Sound.ENTITY_GENERIC_EXPLODE,3,1);
-                                }
-                            }
-                            for (LivingEntity livingEntity1: current.getNearbyLivingEntities(2)){
-                                if (!livingEntity1.equals(player)){
-                                    Misc.damageNoTicks(livingEntity1,32,player);
-                                }
-                            }
-                            for (LivingEntity livingEntity1: current.getNearbyLivingEntities(1)){
-                                if (!livingEntity1.equals(player)){
-                                    Misc.damageNoTicks(livingEntity1,32,player);
-                                }
-                            }
-                        }
-                    }else{
-                        if (i>distance-1){
-                            for (LivingEntity livingEntity1: current.getNearbyLivingEntities(3)){
-                                if (!livingEntity1.equals(player)){
-                                    Misc.damageNoTicks(livingEntity1,128,player);
-                                    current.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER,current,1,0,0,0,0);
-                                    current.getWorld().playSound(current,Sound.ENTITY_GENERIC_EXPLODE,3,1);
-                                }
-                            }
-                        }
-                    }
-                    i+=1f;
-                }
-            }.runTaskTimer(plugin,0,1);
-        }else{
-            Location endLocation = livingEntity.getLocation();
-
-            double distance = startLocation.distance(endLocation);
-            org.bukkit.util.Vector direction = endLocation.toVector().subtract(startLocation.toVector()).normalize();
-
-            for (float i =0;i<=distance;i+=0.5f){
 
                 Location current = startLocation.clone().add(direction.clone().multiply(i));
 
                 current.getWorld().spawnParticle(Particle.FIREWORK,current,1,0,0,0,0);
-                if (bool){
+
+                if (i>distance-1){
+                    for (LivingEntity livingEntity1: current.getNearbyLivingEntities(3)){
+                        if (!livingEntity1.equals(player)){
+                        if (!livingEntity1.isDead()){
+                            Misc.damageNoTicks(livingEntity1,32,player);
+                        }
+                            current.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER,current,1,0,0,0,0);
+                            current.getWorld().playSound(current,Sound.ENTITY_GENERIC_EXPLODE,3,1);
+                        }
+                    }
+                    for (LivingEntity livingEntity1: current.getNearbyLivingEntities(2)){
+                        if (!livingEntity1.equals(player)){
+                        if (!livingEntity1.isDead()){
+                            Misc.damageNoTicks(livingEntity1,32,player);
+                        }
+                        }
+                    }
                     for (LivingEntity livingEntity1: current.getNearbyLivingEntities(1)){
                         if (!livingEntity1.equals(player)){
-                            Misc.damageNoTicks(livingEntity1,52,player);
-                            current.getWorld().spawnParticle(Particle.EXPLOSION,current,1,0,0,0,0);
+                        if (!livingEntity1.isDead()){
+                            Misc.damageNoTicks(livingEntity1,32,player);
+                        }
                         }
                     }
-                    if (i>distance-1){
-                        for (LivingEntity livingEntity1: current.getNearbyLivingEntities(3)){
-                            if (!livingEntity1.equals(player)){
-                                Misc.damageNoTicks(livingEntity1,32,player);
-                                current.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER,current,1,0,0,0,0);
-                                current.getWorld().playSound(current,Sound.ENTITY_GENERIC_EXPLODE,3,1);
-                            }
-                        }
-                        for (LivingEntity livingEntity1: current.getNearbyLivingEntities(2)){
-                            if (!livingEntity1.equals(player)){
-                                Misc.damageNoTicks(livingEntity1,32,player);
-                            }
-                        }
-                        for (LivingEntity livingEntity1: current.getNearbyLivingEntities(1)){
-                            if (!livingEntity1.equals(player)){
-                                Misc.damageNoTicks(livingEntity1,32,player);
-                            }
-                        }
-                    }
-                }else{
-                    if (i>distance-1){
-                        for (LivingEntity livingEntity1: current.getNearbyLivingEntities(3)){
-                            if (!livingEntity1.equals(player)){
-                                Misc.damageNoTicks(livingEntity1,128,player);
-                                current.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER,current,1,0,0,0,0);
-                                current.getWorld().playSound(current,Sound.ENTITY_GENERIC_EXPLODE,3,1);
-                            }
-                        }
-                    }
+                    this.cancel();
+                    return;
                 }
+                i+=1f;
             }
-        }
+        }.runTaskTimer(plugin,0,1);
     }
 
 
-    private void getLivingEntity(Player player,int radius){
-        Location location = player.getEyeLocation();
-        Vector direction = location.getDirection().normalize();
+private void getLivingEntity(Player player, int radius) {
+    Location eyeLocation = player.getEyeLocation();
+    Vector direction = eyeLocation.getDirection().normalize();
+    Location finalLocation = null;
 
-        for (float i = 0; i<=96; i+=0.5f) {
-            Location current = location.clone().add(direction.clone().multiply(i));
+    // Trace a path from the player's eye location up to 96 blocks away
+    for (double i = 0; i <= 96; i += 0.5) {
+        Location current = eyeLocation.clone().add(direction.clone().multiply(i));
+        // Stop the ray if a non-air block is encountered
+        if (current.getBlock().getType() != Material.AIR) {
+            for (LivingEntity livingEntity : current.getNearbyLivingEntities(radius)) {
+                if (!livingEntity.equals(player) && !livingEntity.isDead()) {
 
-            if (current.getBlock().getType()!=Material.AIR){
-                i+=96;
-                for (LivingEntity livingEntity : current.getNearbyLivingEntities(radius)) {
-                    if (!livingEntity.equals(player)) {
-                        if (!livingEntity.isDead()){
-                            if (livingEntity!=null){
-                                missileLeftClicked(player,livingEntity,false);
-                            }
-                        }
-                    }
+                   missileLeftClicked(player, livingEntity, false);
+                   missileLeftClicked(player, livingEntity, false);
+                   missileLeftClicked(player, livingEntity, false);
+                   missileLeftClicked(player, livingEntity, false);
+
                 }
             }
+            finalLocation = current;
+            break;
+        }
+        finalLocation = current;
+    }
 
-            if (i>95){
-                for (LivingEntity livingEntity : current.getNearbyLivingEntities(radius)) {
-                    if (!livingEntity.equals(player)) {
-                        if (!livingEntity.isDead()){
-                            if (livingEntity!=null){
-                                missileLeftClicked(player,livingEntity,false);
-                            }
-                        }
-                    }
-                }
-                i+=96;
-            }
+    // If a final location was determined, spawn particles around it in a circle
+    if (finalLocation != null) {
+        int numberOfPoints = 20;
+        double angleStep = 360.0 / numberOfPoints;
+        finalLocation.setYaw(0);
+        finalLocation.setPitch(0);
+
+        for (int i = 0; i < numberOfPoints; i++) {
+            // Clone the final location for rotation
+            Location particleLocation = finalLocation.clone();
+            // Calculate the yaw offset for this point
+            particleLocation.setYaw(particleLocation.getYaw() + (float) (angleStep * i));
+            Vector spawnDirection = particleLocation.getDirection().normalize();
+            Location spawnPoint = particleLocation.clone().add(spawnDirection.multiply(radius));
+
+            spawnPoint.getWorld().spawnParticle(Particle.DUST, spawnPoint.add(0,0.5,0), 2, 0, 0, 0, new Particle.DustOptions(Color.RED, 2.0f));
+
         }
     }
+//    if (finalLocation != null) {
+//        int numberOfPoints = 20;
+//        double angleStep = 360.0 / numberOfPoints;
+//        finalLocation.setYaw(0);
+//        finalLocation.setPitch(0);
+//
+//        for (int i = 0; i < numberOfPoints; i++) {
+//            // Clone the final location for rotation
+//            Location particleLocation = finalLocation.clone();
+//            // Calculate the yaw offset for this point
+//            particleLocation.setPitch(particleLocation.getPitch() + (float) (angleStep * i));
+//            Vector spawnDirection = particleLocation.getDirection().normalize();
+//            Location spawnPoint = particleLocation.clone().add(spawnDirection.multiply(radius));
+//            spawnPoint.getWorld().spawnParticle(Particle.FLAME, spawnPoint.add(0,0.5,0), 1, 0, 0, 0, 0);
+//        }
+//    }
+//    if (finalLocation != null) {
+//        int numberOfPoints = 20;
+//        double angleStep = 360.0 / numberOfPoints;
+//        finalLocation.setYaw(90);
+//        finalLocation.setPitch(0);
+//
+//        for (int i = 0; i < numberOfPoints; i++) {
+//            // Clone the final location for rotation
+//            Location particleLocation = finalLocation.clone();
+//            // Calculate the yaw offset for this point
+//            particleLocation.setPitch(particleLocation.getPitch() + (float) (angleStep * i));
+//            Vector spawnDirection = particleLocation.getDirection().normalize();
+//            Location spawnPoint = particleLocation.clone().add(spawnDirection.multiply(radius));
+//            spawnPoint.getWorld().spawnParticle(Particle.FLAME, spawnPoint.add(0,0.5,0), 1, 0, 0, 0, 0);
+//        }
+//    }
+}
+
 
     private static boolean isHoldingTheCorrectItem(Player player) {
         ItemStack mainHandItem = player.getInventory().getItemInMainHand();
