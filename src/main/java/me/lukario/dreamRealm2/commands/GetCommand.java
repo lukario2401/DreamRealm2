@@ -277,6 +277,11 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "GraveYard");
             return true;
         }
+        if (args.length == 1 && args[0].equalsIgnoreCase("SphereCage")) {
+            player.getInventory().addItem(SphereCage.createItem());
+            player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "SphereCage");
+            return true;
+        }
 
 
 
@@ -295,7 +300,7 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             "Style", "YetiSword", "Link", "Wizard", "Clock", "Dagger", "SinOfSolace", "Scythe", "Terminator", "ShareHealth",
             "Chain", "Slash", "Swipe", "MidasStaff", "Shadow", "Dual", "Swift", "Satellite", "Pyromancer", "GiantSword",
             "Flame", "Ferocity", "Katana", "Wrench", "Flash", "FireWand", "Portal", "Meteor", "Terminator", "Claws",
-            "Missile", "GraveYard"
+            "Missile", "GraveYard", "SphereCage"
         );
 
         // First argument suggestions
