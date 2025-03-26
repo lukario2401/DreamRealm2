@@ -22,7 +22,7 @@ import java.util.*;
 
 public class FireCracker implements Listener {
 
-private final Plugin plugin;
+    private final Plugin plugin;
 
     public FireCracker(Plugin plugin) {
         this.plugin = plugin;
@@ -111,7 +111,7 @@ private final Plugin plugin;
             Location location = livingEntityus.getLocation().add(0,1,0);
             location.setDirection(player.getLocation().getDirection());
 
-            location.setPitch(0);
+            location.setPitch(-15);
 
             for (float j = -45f; j <= 45; j+=9){
 
@@ -147,7 +147,7 @@ private final Plugin plugin;
         for (float i = 0; i <= 96; i+=1) {
             Location current = eyeLocation.clone().add(direction.clone().multiply(i));
             current.getWorld().spawnParticle(Particle.FIREWORK,current,1,0,0,0,0);
-                for (LivingEntity livingEntity : current.getNearbyLivingEntities(1)) {
+                for (LivingEntity livingEntity : current.getNearbyLivingEntities(i/24+0.5)) {
                     if (!livingEntity.equals(player) && !livingEntity.isDead()) {
 
                         return livingEntity;
