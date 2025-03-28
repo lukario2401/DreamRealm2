@@ -40,7 +40,7 @@ public class Stack implements Listener {
     private static final HashMap<UUID,Float> cooldownRight = new HashMap<>();
 
     private final Map<UUID, Float> stackCount = new HashMap<>();
-private final Map<UUID, Long> lastUpdateTime = new HashMap<>(); // Track last update time
+    private final Map<UUID, Long> lastUpdateTime = new HashMap<>(); // Track last update time
 
     // Call this whenever you update stackCount for a UUID
     public void updateStackCount(UUID uuid, float newValue) {

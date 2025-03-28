@@ -34,11 +34,15 @@ public final class DreamRealm2 extends JavaPlugin {
         System.out.println("---                                  ---");
         System.out.println("----------------------------------------");
 
+
+
+
         getServer().getPluginManager().registerEvents(new EntityListener(),this);
         getServer().getPluginManager().registerEvents(new DoubleJump(),this);
         getServer().getPluginManager().registerEvents(new CustomSword(), this);
         getServer().getPluginManager().registerEvents(new CookWithSneak(), this);
         getServer().getPluginManager().registerEvents(new GiantSword(), this);
+        getServer().getPluginManager().registerEvents(new Freja(this), this);
         getServer().getPluginManager().registerEvents(new Stack(this), this);
         getServer().getPluginManager().registerEvents(new FireCracker(this), this);
         getServer().getPluginManager().registerEvents(new SphereCage(this), this);
