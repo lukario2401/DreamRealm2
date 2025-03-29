@@ -108,7 +108,7 @@ public class Freja implements Listener {
                 }else{
 
                     player.sendMessage(" Freja reloading ");
-                    player.playSound(player, Sound.BLOCK_ANVIL_BREAK,1,1);
+                    player.playSound(player, Sound.BLOCK_ANVIL_PLACE,1,1);
 
                     cooldownLeft.put(uuid,20f);
                     frejaBoltCount.put(uuid,12f);
@@ -122,30 +122,31 @@ public class Freja implements Listener {
         }
         if (event.getAction()== Action.RIGHT_CLICK_AIR||event.getAction()==Action.RIGHT_CLICK_BLOCK){
             if (cooldownRight.get(uuid)==0){
-                        frejaRightClickHeld.put(uuid,frejaRightClickHeld.get(uuid)+1f);
-                                float frejaOldRightClickHeldCount = 0;
-                    final float[] frejaNewRightClickHeldCount = {0};
+                cooldownRight.put(uuid,20f);
+                frejaRightClickHeld.put(uuid,frejaRightClickHeld.get(uuid)+1f);
+                float frejaOldRightClickHeldCount = 0;
+                final float[] frejaNewRightClickHeldCount = {0};
 
-                    Set<UUID> keyLeft = frejaRightClickHeld.keySet();
-                    for (UUID uuid1 : keyLeft){
-                        frejaOldRightClickHeldCount = frejaRightClickHeld.get(uuid1);
-                    }
+                Set<UUID> keyLeft = frejaRightClickHeld.keySet();
+                for (UUID uuid1 : keyLeft){
+                    frejaOldRightClickHeldCount = frejaRightClickHeld.get(uuid1);
+                }
 
-                     float finalFrejaOldRightClickHeldCount = frejaOldRightClickHeldCount;
-                     new BukkitRunnable(){
-                        @Override
-                        public void run(){
-                            Set<UUID> keyLeft = frejaRightClickHeld.keySet();
-                            for (UUID uuid1 : keyLeft){
-                                frejaNewRightClickHeldCount[0] = frejaRightClickHeld.get(uuid1);
-                            }
-                            if (finalFrejaOldRightClickHeldCount == frejaNewRightClickHeldCount[0]){
-                                frejaRC(player);
-                            }
+                float finalFrejaOldRightClickHeldCount = frejaOldRightClickHeldCount;
+                new BukkitRunnable(){
+                    @Override
+                    public void run(){
+                        Set<UUID> keyLeft = frejaRightClickHeld.keySet();
+                        for (UUID uuid1 : keyLeft){
+                            frejaNewRightClickHeldCount[0] = frejaRightClickHeld.get(uuid1);
                         }
-                    }.runTaskTimer(plugin,10,1);
-                 cooldownLeft.put(uuid,20f);
-                     }else{
+                        if (finalFrejaOldRightClickHeldCount == frejaNewRightClickHeldCount[0]){
+                            frejaRC(player);
+                        }
+                        this.cancel();
+                    }
+                }.runTaskTimer(plugin,0,1);
+            }else{
                 player.sendMessage(ChatColor.DARK_RED+"Cooldown: "+(cooldownRight.get(uuid)/20)+"s");
                 player.playSound(player, Sound.ENTITY_ENDERMAN_TELEPORT,1,1);
             }
@@ -166,6 +167,10 @@ public class Freja implements Listener {
                     Location current = location.clone().add(direction.clone().multiply(i));
                     current.getWorld().spawnParticle(Particle.SOUL,current,1,0,0,0,0);
 
+                    if (current.getBlock().getType()!=Material.AIR){
+                        i+=256;
+                    }
+
                     for (LivingEntity livingEntity : current.getNearbyLivingEntities(0.6f)){
                         if (!livingEntity.equals(player)){
                             if (livingEntity instanceof ArmorStand){
@@ -180,14 +185,12 @@ public class Freja implements Listener {
                 }
                 this.cancel();
             }
-        }.runTaskTimer(plugin,0,1);
+        }.runTaskTimer(plugin,0,5);
     }
 
     private void frejaRC(Player player){
 
          UUID uuid = player.getUniqueId();
-
-
 
             if (frejaBoltCount.get(uuid)>9){
                 frejaBoltCount.put(uuid,12f);
@@ -216,9 +219,13 @@ public class Freja implements Listener {
         armorStand.setGravity(false);
         armorStand.setBasePlate(false);
 
-        for (float i = 0; i<=24f; i+=1f){
+        for (float i = 0; i<=48f; i+=1f){
 
             Location current = location.clone().add(direction.clone().multiply(i));
+
+            if (current.getBlock().getType() != Material.AIR){
+                i+=256;
+            }
 
             for (LivingEntity livingEntity : current.getNearbyLivingEntities(1.25f)){
                 if (!livingEntity.equals(player)){
