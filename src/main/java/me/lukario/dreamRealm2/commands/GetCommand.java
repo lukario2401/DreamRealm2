@@ -1,6 +1,7 @@
 package me.lukario.dreamRealm2.commands;
 
 import me.lukario.dreamRealm2.items.armor.Ferocity;
+import me.lukario.dreamRealm2.items.gui.GUIItem;
 import me.lukario.dreamRealm2.items.special.builder.Fence;
 import me.lukario.dreamRealm2.items.special.builder.Portal;
 import me.lukario.dreamRealm2.items.special.builder.Wrench;
@@ -291,7 +292,12 @@ public class GetCommand implements CommandExecutor, TabExecutor {
         }
         if (args.length == 1 && args[0].equalsIgnoreCase("Freja")) {
             player.getInventory().addItem(Freja.createItem());
-            player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Stack");
+            player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Freja");
+            return true;
+        }
+            if (args.length == 1 && args[0].equalsIgnoreCase("GUIItem")) {
+            player.getInventory().addItem(GUIItem.createItem());
+            player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "GUIItem");
             return true;
         }
 
@@ -311,7 +317,7 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             "Style", "YetiSword", "Link", "Wizard", "Clock", "Dagger", "SinOfSolace", "Scythe", "Terminator", "ShareHealth",
             "Chain", "Slash", "Swipe", "MidasStaff", "Shadow", "Dual", "Swift", "Satellite", "Pyromancer", "GiantSword",
             "Flame", "Ferocity", "Katana", "Wrench", "Flash", "FireWand", "Portal", "Meteor", "Terminator", "Claws",
-            "Missile", "GraveYard", "SphereCage", "FireCracker", "Stack", "Freja"
+            "Missile", "GraveYard", "SphereCage", "FireCracker", "Stack", "Freja", "GUIItem"
         );
 
         // First argument suggestions
