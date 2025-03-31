@@ -150,6 +150,56 @@ public class GUIItem implements Listener {
         bdmeta.setLore(Arrays.asList("Cant handle it?"));
         backDimension.setItemMeta(bdmeta);
 
+        ItemStack paneGray = new ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE);
+        ItemMeta pdmeta = paneGray.getItemMeta();
+
+        pdmeta.setDisplayName("§kk");
+        pdmeta.setCustomModelData(1013);
+        paneGray.setItemMeta(pdmeta);
+
+        ItemStack paneRed = new ItemStack(Material.RED_STAINED_GLASS_PANE);
+        pdmeta.setDisplayName("§kk");
+        pdmeta.setCustomModelData(1014);
+        paneGray.setItemMeta(pdmeta);
+
+        ItemStack paneBlue = new ItemStack(Material.BLUE_STAINED_GLASS_PANE);
+        pdmeta.setDisplayName("§k");
+        pdmeta.setCustomModelData(1015);
+        paneGray.setItemMeta(pdmeta);
+
+        ItemStack paneGreen = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
+        pdmeta.setDisplayName("§k");
+        pdmeta.setCustomModelData(1015);
+        paneGray.setItemMeta(pdmeta);
+
+        new BukkitRunnable() {
+            private float i = 0;
+
+            @Override
+            public void run() {
+                if (i == 0) {
+                    inventory.setItem(4, paneRed);
+                } else if (i == 1) {
+                    inventory.setItem(4, paneGreen);
+                } else if (i == 2) {
+                    inventory.setItem(4, paneBlue);
+                }
+
+                i += 1;
+                if (i >= 3) {
+                    i = 0;
+                }
+            }
+        }.runTaskTimer(plugin, 0, 10);
+
+        inventory.setItem(0,paneGray);
+        inventory.setItem(1,paneGray);
+        inventory.setItem(2,paneGray);
+        inventory.setItem(3,paneGray);
+        inventory.setItem(5,paneGray);
+        inventory.setItem(6,paneGray);
+        inventory.setItem(7,paneGray);
+        inventory.setItem(8,paneGray);
 
         inventory.setItem(22,backDimension);
         inventory.setItem(31,dimension);
@@ -179,7 +229,7 @@ public class GUIItem implements Listener {
 
     private void preventFall(Player player){
         Location previousPlayerLocation = player.getLocation();
-        Location location = new Location(player.getWorld(),0,320,0);
+        Location location = new Location(player.getWorld(),0,1320,0);
         player.teleport(location);
         new BukkitRunnable(){
             Boolean runTime = true;
