@@ -93,6 +93,7 @@ public class GUIItem implements Listener {
         gui.setItem(13, teleportItem);
         gui.setItem(15, closeItem);
         gui.setItem(18, teleport);
+        gui.setItem(22, getFreja);
 
         player.openInventory(gui);
         player.playSound(player.getLocation(), Sound.BLOCK_CHEST_OPEN, 1, 1);

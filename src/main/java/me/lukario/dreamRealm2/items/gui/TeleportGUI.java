@@ -3,6 +3,7 @@ package me.lukario.dreamRealm2.items.gui;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -93,33 +94,42 @@ public class TeleportGUI implements Listener {
                 if (locationOne.get(player.getUniqueId())!=null){
                     player.teleport(locationOne.get(player.getUniqueId()));
                     player.sendMessage("teleported to Location I");
+                    player.playSound(player, Sound.ENTITY_ENDERMAN_TELEPORT,1,1);
                 }
             }
             if (item.getItemMeta().getCustomModelData()==10112){
                 player.sendMessage("Location I has been set");
                 locationOne.put(player.getUniqueId(),player.getLocation());
+                player.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP,1,1);
+                player.closeInventory();
             }
 
             if (item.getItemMeta().getCustomModelData()==10121){
                 if (locationTwo.get(player.getUniqueId())!=null){
                     player.teleport(locationTwo.get(player.getUniqueId()));
                     player.sendMessage("teleported to Location II");
+                    player.playSound(player, Sound.ENTITY_ENDERMAN_TELEPORT,1,1);
                 }
             }
             if (item.getItemMeta().getCustomModelData()==10122){
                 locationTwo.put(player.getUniqueId(),player.getLocation());
                 player.sendMessage("Location II has been set");
+                player.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP,1,1);
+                player.closeInventory();
             }
 
             if (item.getItemMeta().getCustomModelData()==10131){
                 if (locationThree.get(player.getUniqueId())!=null){
                     player.teleport(locationThree.get(player.getUniqueId()));
                     player.sendMessage("teleported to Location III");
+                    player.playSound(player, Sound.ENTITY_ENDERMAN_TELEPORT,1,1);
                 }
             }
             if (item.getItemMeta().getCustomModelData()==10132){
                 locationThree.put(player.getUniqueId(),player.getLocation());
                 player.sendMessage("Location III has been set");
+                player.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP,1,1);
+                player.closeInventory();
             }
         }
     }
