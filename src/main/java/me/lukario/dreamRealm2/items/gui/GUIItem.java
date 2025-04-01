@@ -1,6 +1,5 @@
 package me.lukario.dreamRealm2.items.gui;
 
-import me.lukario.dreamRealm2.items.special.ranged.bow.Freja;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -16,7 +15,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -85,11 +83,16 @@ public class GUIItem implements Listener {
         fMeta.setDisplayName("§aGet");
         getFreja.setItemMeta(fMeta);
 
+        ItemStack teleport = new ItemStack(Material.ENDER_EYE);
+        ItemMeta teMeta = closeItem.getItemMeta();
+        teMeta.setDisplayName("§a Teleport Locations ");
+        teleport.setItemMeta(teMeta);
+
         // Set items in slots
         gui.setItem(11, infoItem);
         gui.setItem(13, teleportItem);
         gui.setItem(15, closeItem);
-        gui.setItem(22, getFreja);
+        gui.setItem(18, teleport);
 
         player.openInventory(gui);
         player.playSound(player.getLocation(), Sound.BLOCK_CHEST_OPEN, 1, 1);
@@ -125,6 +128,13 @@ public class GUIItem implements Listener {
                 case CHEST:
                     player.closeInventory();
                     getOpenGUI(player);
+                    player.playSound(player.getLocation(), Sound.BLOCK_CHEST_CLOSE, 1, 1);
+                    break;
+
+
+                case ENDER_EYE:
+                    player.closeInventory();
+                    TeleportGUI.teleportGUI(player);
                     player.playSound(player.getLocation(), Sound.BLOCK_CHEST_CLOSE, 1, 1);
                     break;
             }
