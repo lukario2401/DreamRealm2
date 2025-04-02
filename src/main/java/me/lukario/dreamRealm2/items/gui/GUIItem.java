@@ -1,5 +1,6 @@
 package me.lukario.dreamRealm2.items.gui;
 
+import me.lukario.dreamRealm2.Misc;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -88,6 +89,8 @@ public class GUIItem implements Listener {
         teMeta.setDisplayName("§a Teleport Locations ");
         teleport.setItemMeta(teMeta);
 
+        Misc.createInventoryItem(gui,Material.SUNFLOWER,26,10201,"Shop","Press to enter shop");
+
         // Set items in slots
         gui.setItem(11, infoItem);
         gui.setItem(13, teleportItem);
@@ -136,6 +139,12 @@ public class GUIItem implements Listener {
                 case ENDER_EYE:
                     player.closeInventory();
                     TeleportGUI.teleportGUI(player);
+                    player.playSound(player.getLocation(), Sound.BLOCK_CHEST_CLOSE, 1, 1);
+                    break;
+
+                case SUNFLOWER:
+                    player.closeInventory();
+                    ShopGUI.shopGuiCreate(player);
                     player.playSound(player.getLocation(), Sound.BLOCK_CHEST_CLOSE, 1, 1);
                     break;
             }
