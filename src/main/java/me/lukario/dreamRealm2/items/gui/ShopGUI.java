@@ -19,17 +19,51 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
+
+import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.configuration.file.YamlConfiguration;
+import java.io.File;
+import java.io.IOException;
 
 public class ShopGUI implements Listener {
 
-    private final Plugin plugin;
+    private static HashMap<UUID,Double> playersCash = new HashMap<>();
+    private final JavaPlugin plugin;
+    private final File dataFile;
+    private final YamlConfiguration config;
 
-    public ShopGUI(Plugin plugin) {
+    public ShopGUI(JavaPlugin plugin) {
         this.plugin = plugin;
+        this.dataFile = new File(plugin.getDataFolder(), "player_cash.yml");
+        this.config = YamlConfiguration.loadConfiguration(dataFile);
+        loadData();
     }
 
-    private static HashMap<UUID,Double> playersCash = new HashMap<>();
+    private void loadData() {
+        if (!dataFile.exists()) return;
+
+        for (String key : config.getKeys(false)) {
+            UUID uuid = UUID.fromString(key);
+            double cash = config.getDouble(key);
+            playersCash.put(uuid, cash);
+        }
+    }
+
+    public void saveData() {
+        try {
+            for (String key : config.getKeys(false)) {
+                config.set(key, null);
+            }
+            for (Map.Entry<UUID, Double> entry : playersCash.entrySet()) {
+                config.set(entry.getKey().toString(), entry.getValue());
+            }
+            config.save(dataFile);
+        } catch (IOException e) {
+            plugin.getLogger().severe("Failed to save player cash data: " + e.getMessage());
+        }
+    }
 
     public static void shopGuiCreate(Player player){
         if (player==null){return;}
@@ -73,7 +107,7 @@ public class ShopGUI implements Listener {
                         Misc.createInventoryItem(event.getInventory(),Material.SUNFLOWER,49,10210,"You have: "+playersCash.get(player.getUniqueId()).toString()+" Coins");
                         player.sendMessage("Purchase successful");
                         player.playSound(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP,1,1);
-
+//
                     }else {
                         player.sendMessage("Not enough coins");
                         player.playSound(player,Sound.ENTITY_ENDERMAN_TELEPORT,1,1);
