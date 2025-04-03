@@ -192,7 +192,7 @@ import org.bukkit.inventory.ItemStack;
          meta.setCustomModelData(2);
          item.setItemMeta(meta);
 
-         armorStand.setItem(EquipmentSlot.HEAD,new ItemStack(Material.WARPED_PLANKS));
+         armorStand.setItem(EquipmentSlot.HEAD,new ItemStack(Material.TNT));
 
          for (float i = 0; i<=48f; i+=1f){
 

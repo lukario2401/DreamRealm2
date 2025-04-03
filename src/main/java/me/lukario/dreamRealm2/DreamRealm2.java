@@ -25,6 +25,7 @@ public final class DreamRealm2 extends JavaPlugin {
 
     private ProtocolManager protocolManager;
     private ShopGUI shopGUI;
+    private TeleportGUI teleportGUI;
 
     @Override
     public void onEnable() {
@@ -47,7 +48,6 @@ public final class DreamRealm2 extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new CustomSword(), this);
         getServer().getPluginManager().registerEvents(new CookWithSneak(), this);
         getServer().getPluginManager().registerEvents(new GiantSword(), this);
-        getServer().getPluginManager().registerEvents(new TeleportGUI(), this);
         getServer().getPluginManager().registerEvents(new GUIItem(this), this);
         getServer().getPluginManager().registerEvents(new Freja(this), this);
         getServer().getPluginManager().registerEvents(new Stack(this), this);
@@ -107,11 +107,15 @@ public final class DreamRealm2 extends JavaPlugin {
 
         this.shopGUI = new ShopGUI(this);
         getServer().getPluginManager().registerEvents(shopGUI, this);
+
+        teleportGUI = new TeleportGUI(this);
+        getServer().getPluginManager().registerEvents(teleportGUI, this);
     }
 
     @Override
     public void onDisable() {
         shopGUI.saveData();
+        teleportGUI.saveData();
         System.out.println("--- You have left the Dream Realm ---");
     }
 }

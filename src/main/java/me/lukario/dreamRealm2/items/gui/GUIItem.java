@@ -138,7 +138,7 @@ public class GUIItem implements Listener {
 
                 case ENDER_EYE:
                     player.closeInventory();
-                    TeleportGUI.teleportGUI(player);
+                    TeleportGUI.openTeleportGUI(player);
                     player.playSound(player.getLocation(), Sound.BLOCK_CHEST_CLOSE, 1, 1);
                     break;
 
