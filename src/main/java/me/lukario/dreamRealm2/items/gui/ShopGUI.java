@@ -17,10 +17,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -39,6 +36,8 @@ public class ShopGUI implements Listener {
         this.dataFile = new File(plugin.getDataFolder(), "player_cash.yml");
         this.config = YamlConfiguration.loadConfiguration(dataFile);
         loadData();
+
+        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, this::saveData, 20L * 60 * 5, 20L * 60 * 5);
     }
 
     private void loadData() {
@@ -52,6 +51,14 @@ public class ShopGUI implements Listener {
     }
 
     public void saveData() {
+
+        Set<UUID> keySetKeyOh = playersCash.keySet();
+        for (UUID uuid : keySetKeyOh){
+            if (!playersCash.containsKey(uuid)){
+                playersCash.put(uuid,0D);
+            }
+        }
+
         try {
             for (String key : config.getKeys(false)) {
                 config.set(key, null);
@@ -65,21 +72,30 @@ public class ShopGUI implements Listener {
         }
     }
 
+    public static double getPlayerCash(UUID uuid) {
+        return playersCash.getOrDefault(uuid, 0D);
+    }
+
+    public void setPlayerCash(UUID uuid, double amount) {
+        playersCash.put(uuid, amount);
+    }
+
     public static void shopGuiCreate(Player player){
         if (player==null){return;}
         UUID uuid = player.getUniqueId();
-        if (playersCash.get(uuid)==null){
-            playersCash.put(uuid,0D);
-        }
+
         Inventory inventory = Bukkit.createInventory(player,54,"Shop");
 
         Misc.createInventoryItem(inventory,Material.CROSSBOW,11,10202,"Freja","Click to buy item Freja");
         Misc.createInventoryItem(inventory,Material.DIAMOND_SWORD,13,10203,"Rapier","Click to buy item Rapier");
         Misc.createInventoryItem(inventory,Material.IRON_SHOVEL,15,10204,"GraveYard","Click to buy item GraveYard");
 
-        String sunFlowerName = "You have: "+playersCash.get(player.getUniqueId()).toString()+" Coins";
-        Misc.createInventoryItem(inventory,Material.SUNFLOWER,49,10210,sunFlowerName);
+        String sunFlowerName = "You have: " + getPlayerCash(uuid) + " Coins";
+        Misc.createInventoryItem(inventory, Material.SUNFLOWER, 49, 10210, sunFlowerName);
 
+        if (!playersCash.containsKey(uuid)) {
+            playersCash.put(uuid, 0D);
+        }
         player.openInventory(inventory);
     }
 

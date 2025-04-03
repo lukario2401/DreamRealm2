@@ -13,6 +13,7 @@ import me.lukario.dreamRealm2.items.special.JetSu;
 import me.lukario.dreamRealm2.items.swords.Claws;
 import me.lukario.dreamRealm2.items.swords.GiantSword;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.command.Command;
@@ -48,6 +49,16 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             return false;
         }
 
+        if (args.length == 1 && args[0].equalsIgnoreCase("Guide")) {
+            player.getInventory().addItem(GUIItem.createItem());
+            player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Guide");
+            return true;
+        }
+
+        if (!player.isOp()) {
+            sender.sendMessage(ChatColor.RED + "You need to be an operator to use this command");
+            return true;
+        }
         // Handle "launch sword"
         if (args.length == 2 && args[0].equalsIgnoreCase("launch") && args[1].equalsIgnoreCase("sword")) {
             player.getInventory().addItem(createCustomSword());
@@ -295,11 +306,7 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Freja");
             return true;
         }
-            if (args.length == 1 && args[0].equalsIgnoreCase("GUIItem")) {
-            player.getInventory().addItem(GUIItem.createItem());
-            player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "GUIItem");
-            return true;
-        }
+
 
 
         // Invalid argument
@@ -309,7 +316,15 @@ public class GetCommand implements CommandExecutor, TabExecutor {
 
    @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+
+        Player player = (Player) sender;
         List<String> completions = new ArrayList<>();
+        completions.add("Guide");
+
+        if (!player.isOp()) {
+            sender.sendMessage(ChatColor.RED + "You need to be an operator to use this command");
+            return completions;
+        }
 
         // Define all possible completions for the first argument
         List<String> mainTypes = Arrays.asList(
@@ -317,7 +332,7 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             "Style", "YetiSword", "Link", "Wizard", "Clock", "Dagger", "SinOfSolace", "Scythe", "Terminator", "ShareHealth",
             "Chain", "Slash", "Swipe", "MidasStaff", "Shadow", "Dual", "Swift", "Satellite", "Pyromancer", "GiantSword",
             "Flame", "Ferocity", "Katana", "Wrench", "Flash", "FireWand", "Portal", "Meteor", "Terminator", "Claws",
-            "Missile", "GraveYard", "SphereCage", "FireCracker", "Stack", "Freja", "GUIItem"
+            "Missile", "GraveYard", "SphereCage", "FireCracker", "Stack", "Freja"
         );
 
         // First argument suggestions

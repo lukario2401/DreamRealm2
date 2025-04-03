@@ -24,6 +24,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class DreamRealm2 extends JavaPlugin {
 
     private ProtocolManager protocolManager;
+    private ShopGUI shopGUI;
+
     @Override
     public void onEnable() {
         System.out.println("The spell initialized");
@@ -46,7 +48,6 @@ public final class DreamRealm2 extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new CookWithSneak(), this);
         getServer().getPluginManager().registerEvents(new GiantSword(), this);
         getServer().getPluginManager().registerEvents(new TeleportGUI(), this);
-        getServer().getPluginManager().registerEvents(new ShopGUI(this), this);
         getServer().getPluginManager().registerEvents(new GUIItem(this), this);
         getServer().getPluginManager().registerEvents(new Freja(this), this);
         getServer().getPluginManager().registerEvents(new Stack(this), this);
@@ -99,10 +100,18 @@ public final class DreamRealm2 extends JavaPlugin {
         getCommand("damagetest").setExecutor(new DamageTest());
 
         protocolManager = ProtocolLibrary.getProtocolManager();
+
+        if (!getDataFolder().exists()) {
+            getDataFolder().mkdir();
+        }
+
+        this.shopGUI = new ShopGUI(this);
+        getServer().getPluginManager().registerEvents(shopGUI, this);
     }
 
     @Override
     public void onDisable() {
+        shopGUI.saveData();
         System.out.println("--- You have left the Dream Realm ---");
     }
 }
