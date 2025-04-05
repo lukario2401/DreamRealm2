@@ -90,13 +90,14 @@ public class GUIItem implements Listener {
         teleport.setItemMeta(teMeta);
 
         Misc.createInventoryItem(gui,Material.SUNFLOWER,26,10201,"Shop","Press to enter shop");
+        Misc.createInventoryItem(gui,Material.POTION,22,10301,"Skills","Press to enter skills menu");
 
         // Set items in slots
         gui.setItem(11, infoItem);
         gui.setItem(13, teleportItem);
         gui.setItem(15, closeItem);
         gui.setItem(18, teleport);
-        gui.setItem(22, getFreja);
+        gui.setItem(0, getFreja);
 
         player.openInventory(gui);
         player.playSound(player.getLocation(), Sound.BLOCK_CHEST_OPEN, 1, 1);
@@ -145,6 +146,13 @@ public class GUIItem implements Listener {
                 case SUNFLOWER:
                     player.closeInventory();
                     ShopGUI.shopGuiCreate(player);
+                    player.playSound(player.getLocation(), Sound.BLOCK_CHEST_CLOSE, 1, 1);
+                    break;
+
+
+                case POTION:
+                    player.closeInventory();
+                    SkillsGUI.skillsGuiCreate(player);
                     player.playSound(player.getLocation(), Sound.BLOCK_CHEST_CLOSE, 1, 1);
                     break;
             }

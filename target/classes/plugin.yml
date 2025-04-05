@@ -2,7 +2,7 @@ name: DreamRealm2
 version: '1.0-SNAPSHOT'
 main: me.lukario.dreamRealm2.DreamRealm2
 api-version: '1.21'
-depend: [ProtocolLib]
+softdepend: [ProtocolLib]
 commands:
   get:
     description: "Gives items to the player."

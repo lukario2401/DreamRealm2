@@ -8,6 +8,7 @@ import me.lukario.dreamRealm2.commands.SumCommand;
 import me.lukario.dreamRealm2.items.armor.Ferocity;
 import me.lukario.dreamRealm2.items.gui.GUIItem;
 import me.lukario.dreamRealm2.items.gui.ShopGUI;
+import me.lukario.dreamRealm2.items.gui.SkillsGUI;
 import me.lukario.dreamRealm2.items.gui.TeleportGUI;
 import me.lukario.dreamRealm2.items.special.builder.Fence;
 import me.lukario.dreamRealm2.items.special.builder.Portal;
@@ -48,6 +49,7 @@ public final class DreamRealm2 extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new CustomSword(), this);
         getServer().getPluginManager().registerEvents(new CookWithSneak(), this);
         getServer().getPluginManager().registerEvents(new GiantSword(), this);
+        getServer().getPluginManager().registerEvents(new SkillsGUI(this), this);
         getServer().getPluginManager().registerEvents(new GUIItem(this), this);
         getServer().getPluginManager().registerEvents(new Freja(this), this);
         getServer().getPluginManager().registerEvents(new Stack(this), this);
