@@ -60,7 +60,7 @@ public class GUIItem implements Listener {
         }
     }
 
-    private void openMainGUI(Player player) {
+    public static void openMainGUI(Player player) {
         Inventory gui = Bukkit.createInventory(null, 27, "§8Magical Interface");
 
         // Add items to GUI

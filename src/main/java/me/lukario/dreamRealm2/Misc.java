@@ -45,6 +45,18 @@ public class Misc implements Listener {
         }
     }
 
+    public static void createInventoryItem(Inventory inventory, Material itemMaterial, Integer slot, Integer customModelData, String name, String lore, String loreTwo){
+        ItemStack item = new ItemStack(itemMaterial);
+        ItemMeta meta = item.getItemMeta();
+
+        meta.setDisplayName(name);
+        meta.setCustomModelData(customModelData);
+        meta.setLore(Arrays.asList(lore,loreTwo));
+        item.setItemMeta(meta);
+
+        inventory.setItem(slot,item);
+    }
+
     public static void createInventoryItem(Inventory inventory, Material itemMaterial, Integer slot, Integer customModelData, String name, String lore){
         ItemStack item = new ItemStack(itemMaterial);
         ItemMeta meta = item.getItemMeta();

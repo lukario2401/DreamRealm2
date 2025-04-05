@@ -14,6 +14,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -89,9 +90,11 @@ public class ShopGUI implements Listener {
         Misc.createInventoryItem(inventory,Material.CROSSBOW,11,10202,"Freja","Click to buy item Freja");
         Misc.createInventoryItem(inventory,Material.DIAMOND_SWORD,13,10203,"Rapier","Click to buy item Rapier");
         Misc.createInventoryItem(inventory,Material.IRON_SHOVEL,15,10204,"GraveYard","Click to buy item GraveYard");
+        Misc.createInventoryItem(inventory, Material.EXPERIENCE_BOTTLE, 22, 10205, "Buy Points","Cost: "+SkillsGUI.getPointsBought(player)*100);
 
         String sunFlowerName = "You have: " + getPlayerCash(uuid) + " Coins";
         Misc.createInventoryItem(inventory, Material.SUNFLOWER, 49, 10210, sunFlowerName);
+
 
         if (!playersCash.containsKey(uuid)) {
             playersCash.put(uuid, 0D);
@@ -149,6 +152,28 @@ public class ShopGUI implements Listener {
                         playersCash.put(uuid,playersCash.get(uuid)-3600);
                         player.getInventory().addItem(GraveYard.createItem());
                         Misc.createInventoryItem(event.getInventory(),Material.SUNFLOWER,49,10210,"You have: "+playersCash.get(player.getUniqueId()).toString()+" Coins");
+                        player.sendMessage("Purchase successful");
+                        player.playSound(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP,1,1);
+                    }else {
+                        player.sendMessage("Not enough coins");
+                        player.playSound(player,Sound.ENTITY_ENDERMAN_TELEPORT,1,1);
+                    }
+                }
+                if (item.getItemMeta().getCustomModelData()==10205){
+
+                    int moneyNeededForPoints = SkillsGUI.getPointsBought(player);
+                    moneyNeededForPoints *= 100;
+
+                    if (playersCash.get(uuid)>=moneyNeededForPoints){
+
+                        playersCash.put(uuid,playersCash.get(uuid)-moneyNeededForPoints);
+
+                        SkillsGUI.setPoints(player,SkillsGUI.getPoints(player)+1);
+                        SkillsGUI.setPointsBought(player,SkillsGUI.getPointsBought(player)+1);
+
+                        Misc.createInventoryItem(event.getInventory(),Material.SUNFLOWER,49,10210,"You have: "+playersCash.get(player.getUniqueId()).toString()+" Coins");
+                        Misc.createInventoryItem(event.getInventory(), Material.EXPERIENCE_BOTTLE, 22, 10205, "Buy Points","Cost: "+SkillsGUI.getPointsBought(player)*100);
+
                         player.sendMessage("Purchase successful");
                         player.playSound(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP,1,1);
                     }else {
