@@ -162,7 +162,8 @@ public class ShopGUI implements Listener {
                 if (item.getItemMeta().getCustomModelData()==10205){
 
                     int moneyNeededForPoints = SkillsGUI.getPointsBought(player);
-                    moneyNeededForPoints *= 100;
+                    moneyNeededForPoints*=100;
+                    moneyNeededForPoints = moneyNeededForPoints + (moneyNeededForPoints/10);
 
                     if (playersCash.get(uuid)>=moneyNeededForPoints){
 
@@ -172,7 +173,7 @@ public class ShopGUI implements Listener {
                         SkillsGUI.setPointsBought(player,SkillsGUI.getPointsBought(player)+1);
 
                         Misc.createInventoryItem(event.getInventory(),Material.SUNFLOWER,49,10210,"You have: "+playersCash.get(player.getUniqueId()).toString()+" Coins");
-                        Misc.createInventoryItem(event.getInventory(), Material.EXPERIENCE_BOTTLE, 22, 10205, "Buy Points","Cost: "+SkillsGUI.getPointsBought(player)*100);
+                        Misc.createInventoryItem(event.getInventory(), Material.EXPERIENCE_BOTTLE, 22, 10205, "Buy Points","Cost: "+moneyNeededForPoints);
 
                         player.sendMessage("Purchase successful");
                         player.playSound(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP,1,1);

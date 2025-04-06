@@ -4,19 +4,24 @@ import me.lukario.dreamRealm2.Misc;
 import me.lukario.dreamRealm2.items.special.ranged.bow.Freja;
 import me.lukario.dreamRealm2.items.special.ranged.misc.GraveYard;
 import me.lukario.dreamRealm2.items.swords.Rapier;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.attribute.Attribute;
 
 import java.util.UUID;
 
@@ -122,6 +127,10 @@ public class SkillsGUI implements Listener {
                         player.getPersistentDataContainer().set(defenseKey, PersistentDataType.INTEGER, 0);
                         player.getPersistentDataContainer().set(boughtPointsKey, PersistentDataType.INTEGER, 0);
                         player.getPersistentDataContainer().set(pointsKey, PersistentDataType.INTEGER, 0);
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "attribute "+player.getName()+" minecraft:movement_speed modifier remove 0000001");
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "attribute "+player.getName()+" minecraft:armor modifier remove 0000001");
+                        player.closeInventory();
+
                         return;
                 }
                 if (modelData == 10306) {
@@ -152,6 +161,12 @@ public class SkillsGUI implements Listener {
                         player.getPersistentDataContainer().set(speedKey, PersistentDataType.INTEGER, currentSpeed);
                         player.getPersistentDataContainer().set(pointsKey, PersistentDataType.INTEGER, points-1);
 
+                        String playerName = player.getName();
+
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "attribute "+playerName+" minecraft:movement_speed modifier remove 0000001");
+                        double speedAtt = (double) getSpeed(player) / 20;
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "attribute "+playerName+" minecraft:movement_speed modifier add 0000001 "+speedAtt+" add_value");
+
                         Misc.createInventoryItem(inventory,Material.RABBIT_FOOT,13,10303,"Speed","Click to upgrade speed","Level: "+getSpeed(player));
                         player.sendMessage("Speed upgraded to: " + currentSpeed);
                     }
@@ -164,6 +179,13 @@ public class SkillsGUI implements Listener {
                         player.getPersistentDataContainer().set(defenseKey, PersistentDataType.INTEGER, currentDefense);
                         player.getPersistentDataContainer().set(pointsKey, PersistentDataType.INTEGER, points-1);
 
+                        String playerName = player.getName();
+                        double playerDefense = (double) getDefense(player)/2;
+
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "attribute "+playerName+" minecraft:armor modifier remove 0000001");
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "attribute "+playerName+" minecraft:armor modifier add 0000001 "+playerDefense+" add_value");
+
+
                         Misc.createInventoryItem(inventory,Material.SHIELD,15,10304,"Defense","Click to upgrade defense","Level: "+getDefense(player));
                         player.sendMessage("Defense upgraded to: " + currentDefense);
                     }
@@ -171,6 +193,18 @@ public class SkillsGUI implements Listener {
                     player.sendMessage("You don't have enough points");
                 }
             }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onPlayerDamage(EntityDamageByEntityEvent event) {
+        if (event.getDamager() instanceof Player) {
+            Player player = (Player) event.getDamager();
+
+            double bonusDamage = (event.getDamage() * (getStrength(player) * 10))/100;
+            event.setDamage(event.getDamage() + bonusDamage);
+
+            player.sendMessage(ChatColor.GOLD + "Strength bonus: +" + bonusDamage + " damage!");
         }
     }
 }

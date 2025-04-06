@@ -331,7 +331,7 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             "Launch", "Tornado", "Shuriken", "Cat", "Jet", "Rapier", "Card", "Theater", "Fence", "ChainedBuff",
             "Style", "YetiSword", "Link", "Wizard", "Clock", "Dagger", "SinOfSolace", "Scythe", "Terminator", "ShareHealth",
             "Chain", "Slash", "Swipe", "MidasStaff", "Shadow", "Dual", "Swift", "Satellite", "Pyromancer", "GiantSword",
-            "Flame", "Ferocity", "Katana", "Wrench", "Flash", "FireWand", "Portal", "Meteor", "Terminator", "Claws",
+            "Flame", "Ferocity", "Katana", "Wrench", "Flash", "FireWand", "Portal", "Meteor", "Termination", "Claws",
             "Missile", "GraveYard", "SphereCage", "FireCracker", "Stack", "Freja"
         );
 
