@@ -1,6 +1,10 @@
 package me.lukario.dreamRealm2;
 
+import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.LivingEntity;
@@ -43,6 +47,21 @@ public class Misc implements Listener {
                 livingEntity.setHealth(0);
             }
         }
+    }
+
+    public static void damageNoTicksArea(Location location, double damage, int radius){
+
+        location.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER,location.add(0,1,0),5,0.2,0.2,0.2,0);
+        location.getWorld().playSound(location.add(0,1,0), Sound.ENTITY_GENERIC_EXPLODE,5,1);
+
+        for (float i = 0; i <= radius; i+=1){
+            for (LivingEntity livingEntity : location.getNearbyLivingEntities(i)){
+                if (livingEntity instanceof ArmorStand){}else{
+                    Misc.damageNoTicks(livingEntity,damage);
+                }
+            }
+        }
+
     }
 
     public static void createInventoryItem(Inventory inventory, Material itemMaterial, Integer slot, Integer customModelData, String name, String lore, String loreTwo){
@@ -94,14 +113,4 @@ public class Misc implements Listener {
         inventory.setItem(slot,item);
     }
 
-    public static void createInventoryItem(Inventory inventory, Material itemMaterial , Integer slot){
-        ItemStack item = new ItemStack(itemMaterial);
-        ItemMeta meta = item.getItemMeta();
-
-        meta.setDisplayName("");
-        meta.setLore(Arrays.asList(""));
-        item.setItemMeta(meta);
-
-        inventory.setItem(slot,item);
-    }
 }

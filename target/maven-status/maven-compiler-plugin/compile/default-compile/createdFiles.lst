@@ -12,6 +12,7 @@ me\lukario\dreamRealm2\items\special\magic\FireWand.class
 me\lukario\dreamRealm2\items\special\ranged\misc\GraveYard$1.class
 me\lukario\dreamRealm2\items\swords\GiantSword.class
 me\lukario\dreamRealm2\items\swords\Rapier.class
+me\lukario\dreamRealm2\items\special\builder\Jet$1.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Link.class
 me\lukario\dreamRealm2\items\swords\ShadowDance.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Swift$1.class
@@ -97,6 +98,7 @@ me\lukario\dreamRealm2\items\swords\Flash$1.class
 me\lukario\dreamRealm2\items\swords\ShadowDance$1.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Cards$1.class
 me\lukario\dreamRealm2\items\special\magic\SphereCage$4.class
+me\lukario\dreamRealm2\items\special\builder\Jet$2.class
 me\lukario\dreamRealm2\items\special\ranged\bow\JujuShortBow$2.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Shuriken.class
 me\lukario\dreamRealm2\items\special\magic\ChainedBuff$1.class
@@ -125,6 +127,7 @@ me\lukario\dreamRealm2\items\special\magic\SphereCage$3.class
 me\lukario\dreamRealm2\items\special\magic\ShareHealth.class
 me\lukario\dreamRealm2\items\special\magic\Theather$2.class
 me\lukario\dreamRealm2\items\special\magic\Chain$2.class
+me\lukario\dreamRealm2\items\special\builder\Jet.class
 me\lukario\dreamRealm2\items\special\magic\ChainedBuff$3.class
 me\lukario\dreamRealm2\items\special\ranged\bow\Arch.class
 me\lukario\dreamRealm2\items\special\builder\Wrench$1.class
