@@ -1,10 +1,7 @@
 package me.lukario.dreamRealm2;
 
 import net.md_5.bungee.api.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Particle;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.LivingEntity;
@@ -19,6 +16,15 @@ import java.util.Arrays;
 public class Misc implements Listener {
 
     public static void damageNoTicks(LivingEntity livingEntity, double damage, Player player){
+        if (livingEntity.isDead()){
+            return;
+        }
+        if (livingEntity instanceof Player){
+            Player player1 = (Player) livingEntity;
+            if (player1.getGameMode()== GameMode.CREATIVE||player1.getGameMode()== GameMode.SPECTATOR){
+                return;
+            }
+        }
         if (livingEntity instanceof ArmorStand){}else {
             if (livingEntity.getHealth()>damage){
                 livingEntity.setHealth(livingEntity.getHealth()-damage);
@@ -36,6 +42,15 @@ public class Misc implements Listener {
         }
     }
     public static void damageNoTicks(LivingEntity livingEntity, double damage){
+        if (livingEntity.isDead()){
+            return;
+        }
+        if (livingEntity instanceof Player){
+            Player player1 = (Player) livingEntity;
+            if (player1.getGameMode() == GameMode.CREATIVE||player1.getGameMode()== GameMode.SPECTATOR){
+                return;
+            }
+        }
         if (livingEntity instanceof ArmorStand){}else {
             if (livingEntity.getHealth()>damage){
                 livingEntity.setHealth(livingEntity.getHealth()-damage);
@@ -57,7 +72,9 @@ public class Misc implements Listener {
         for (float i = 0; i <= radius; i+=1){
             for (LivingEntity livingEntity : location.getNearbyLivingEntities(i)){
                 if (livingEntity instanceof ArmorStand){}else{
-                    Misc.damageNoTicks(livingEntity,damage);
+                    if (!livingEntity.isDead()){
+                        Misc.damageNoTicks(livingEntity,damage);
+                    }
                 }
             }
         }

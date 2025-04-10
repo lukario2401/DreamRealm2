@@ -117,6 +117,7 @@ public class GUIItem implements Listener {
                 case BOOK:
                     player.sendMessage("§eThis is a magical information book!");
                     player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
+                    CommandGUI.openCommandGUI(player);
                     break;
 
                 case ENDER_PEARL:
@@ -218,7 +219,7 @@ public class GUIItem implements Listener {
                     i = 0;
                 }
             }
-        }.runTaskTimer(plugin, 0, 10);
+        }.runTaskTimer(plugin, 0, 2);
 
         inventory.setItem(0,paneGray);
         inventory.setItem(1,paneGray);

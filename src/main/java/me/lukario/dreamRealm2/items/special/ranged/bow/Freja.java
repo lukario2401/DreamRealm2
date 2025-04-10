@@ -68,6 +68,7 @@ import org.bukkit.inventory.ItemStack;
              meta.setDisplayName(ITEM_NAME);
              meta.setLore(Arrays.asList(ITEM_LORE));
              meta.setUnbreakable(true);
+             meta.setCustomModelData(2);
              item.setItemMeta(meta);
          }
          return item;

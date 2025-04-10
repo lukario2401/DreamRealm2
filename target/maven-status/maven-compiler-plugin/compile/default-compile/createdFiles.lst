@@ -89,6 +89,7 @@ me\lukario\dreamRealm2\CookWithSneak.class
 me\lukario\dreamRealm2\items\special\ranged\misc\GraveYard$2.class
 me\lukario\dreamRealm2\items\special\magic\Chain$1.class
 me\lukario\dreamRealm2\RayCast.class
+me\lukario\dreamRealm2\items\gui\CommandGUI.class
 me\lukario\dreamRealm2\items\special\ranged\bow\Freja$3.class
 me\lukario\dreamRealm2\items\special\magic\FireWand$1.class
 me\lukario\dreamRealm2\items\gui\GUIItem$1.class
@@ -115,6 +116,7 @@ me\lukario\dreamRealm2\items\special\ranged\bow\TornadoBow.class
 me\lukario\dreamRealm2\items\gui\TeleportGUI.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Pyromancer$4.class
 me\lukario\dreamRealm2\commands\DamageTest.class
+me\lukario\dreamRealm2\items\gui\CommandGUI$1.class
 me\lukario\dreamRealm2\items\special\magic\SphereCage$1.class
 me\lukario\dreamRealm2\items\swords\Slash$1.class
 me\lukario\dreamRealm2\items\special\ranged\bow\Freja$2.class
@@ -142,6 +144,7 @@ me\lukario\dreamRealm2\items\special\Clock$4.class
 me\lukario\dreamRealm2\items\special\ranged\misc\FlameThrower.class
 me\lukario\dreamRealm2\items\special\magic\Chain.class
 me\lukario\dreamRealm2\RayCast$3.class
+me\lukario\dreamRealm2\items\gui\CommandGUI$2.class
 me\lukario\dreamRealm2\items\special\ranged\bow\Terminator$2.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Swift.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Pyromancer$2.class
