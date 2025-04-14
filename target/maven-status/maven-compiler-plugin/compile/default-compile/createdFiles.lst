@@ -9,6 +9,7 @@ me\lukario\dreamRealm2\items\special\magic\SphereCage.class
 me\lukario\dreamRealm2\items\special\ranged\misc\MidasStaff.class
 me\lukario\dreamRealm2\items\special\ranged\bow\Terminator$1.class
 me\lukario\dreamRealm2\items\special\magic\FireWand.class
+me\lukario\dreamRealm2\items\special\builder\CAS$2.class
 me\lukario\dreamRealm2\items\special\ranged\misc\GraveYard$1.class
 me\lukario\dreamRealm2\items\swords\GiantSword.class
 me\lukario\dreamRealm2\items\swords\Rapier.class
@@ -130,6 +131,7 @@ me\lukario\dreamRealm2\items\special\magic\ShareHealth.class
 me\lukario\dreamRealm2\items\special\magic\Theather$2.class
 me\lukario\dreamRealm2\items\special\magic\Chain$2.class
 me\lukario\dreamRealm2\items\special\builder\Jet.class
+me\lukario\dreamRealm2\items\special\builder\CAS$1.class
 me\lukario\dreamRealm2\items\special\magic\ChainedBuff$3.class
 me\lukario\dreamRealm2\items\special\ranged\bow\Arch.class
 me\lukario\dreamRealm2\items\special\builder\Wrench$1.class
@@ -138,6 +140,7 @@ me\lukario\dreamRealm2\items\swords\SinOfSolace$1.class
 me\lukario\dreamRealm2\items\swords\Style$4.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Missile$2.class
 me\lukario\dreamRealm2\items\special\magic\Theather$1.class
+me\lukario\dreamRealm2\items\special\builder\CAS.class
 me\lukario\dreamRealm2\items\swords\Flash.class
 me\lukario\dreamRealm2\items\swords\Hyperion.class
 me\lukario\dreamRealm2\items\special\Clock$4.class

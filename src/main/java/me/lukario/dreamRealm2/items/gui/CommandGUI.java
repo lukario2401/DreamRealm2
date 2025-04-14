@@ -159,6 +159,7 @@ public class CommandGUI implements Listener {
                  if (armorStand.getLocation().add(0,-0.1,0).getBlock().getType()!=Material.AIR){
 
                      Misc.damageNoTicksArea(armorStand.getLocation(),25,6);
+//                     armorStand.getLocation().getWorld().createExplosion(armorStand.getLocation(),11.5f,true,true);
 
                      armorStand.remove();
                      this.cancel();
