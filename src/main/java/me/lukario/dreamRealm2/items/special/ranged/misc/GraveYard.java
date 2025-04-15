@@ -19,7 +19,7 @@ import java.util.*;
 
 public class GraveYard implements Listener {
 
-private final Plugin plugin;
+    private final Plugin plugin;
 
     public GraveYard(Plugin plugin) {
         this.plugin = plugin;
@@ -199,7 +199,7 @@ private final Plugin plugin;
     }
 
 
-private void getLivingEntity(Player player, int radius) {
+    private void getLivingEntity(Player player, int radius) {
     Location eyeLocation = player.getEyeLocation();
     Vector direction = eyeLocation.getDirection().normalize();
     Location finalLocation = null;
@@ -216,7 +216,6 @@ private void getLivingEntity(Player player, int radius) {
                    missileLeftClicked(player, livingEntity, false);
                    missileLeftClicked(player, livingEntity, false);
                    missileLeftClicked(player, livingEntity, false);
-
                 }
             }
             finalLocation = current;
@@ -244,38 +243,6 @@ private void getLivingEntity(Player player, int radius) {
 
         }
     }
-//    if (finalLocation != null) {
-//        int numberOfPoints = 20;
-//        double angleStep = 360.0 / numberOfPoints;
-//        finalLocation.setYaw(0);
-//        finalLocation.setPitch(0);
-//
-//        for (int i = 0; i < numberOfPoints; i++) {
-//            // Clone the final location for rotation
-//            Location particleLocation = finalLocation.clone();
-//            // Calculate the yaw offset for this point
-//            particleLocation.setPitch(particleLocation.getPitch() + (float) (angleStep * i));
-//            Vector spawnDirection = particleLocation.getDirection().normalize();
-//            Location spawnPoint = particleLocation.clone().add(spawnDirection.multiply(radius));
-//            spawnPoint.getWorld().spawnParticle(Particle.FLAME, spawnPoint.add(0,0.5,0), 1, 0, 0, 0, 0);
-//        }
-//    }
-//    if (finalLocation != null) {
-//        int numberOfPoints = 20;
-//        double angleStep = 360.0 / numberOfPoints;
-//        finalLocation.setYaw(90);
-//        finalLocation.setPitch(0);
-//
-//        for (int i = 0; i < numberOfPoints; i++) {
-//            // Clone the final location for rotation
-//            Location particleLocation = finalLocation.clone();
-//            // Calculate the yaw offset for this point
-//            particleLocation.setPitch(particleLocation.getPitch() + (float) (angleStep * i));
-//            Vector spawnDirection = particleLocation.getDirection().normalize();
-//            Location spawnPoint = particleLocation.clone().add(spawnDirection.multiply(radius));
-//            spawnPoint.getWorld().spawnParticle(Particle.FLAME, spawnPoint.add(0,0.5,0), 1, 0, 0, 0, 0);
-//        }
-//    }
 }
 
 
