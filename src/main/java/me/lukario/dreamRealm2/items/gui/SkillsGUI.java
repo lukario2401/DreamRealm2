@@ -60,6 +60,16 @@ public class SkillsGUI implements Listener {
             .set(strengthKey, PersistentDataType.INTEGER, value);
     }
 
+     public static int getHealth(Player player) {
+        return player.getPersistentDataContainer()
+            .getOrDefault(healthKey, PersistentDataType.INTEGER, 0);
+    }
+
+    public static void setHealth(Player player, int value) {
+        player.getPersistentDataContainer()
+            .set(healthKey, PersistentDataType.INTEGER, value);
+    }
+
      public static int getAttackSpeed(Player player) {
         return player.getPersistentDataContainer()
             .getOrDefault(attackspeedKey, PersistentDataType.INTEGER, 0);
@@ -125,6 +135,8 @@ public class SkillsGUI implements Listener {
         Misc.createInventoryItem(inventory,Material.SHIELD,15,10304,"Defense","Click to upgrade defense","Level: "+getDefense(player));
 
         Misc.createInventoryItem(inventory, Material.STONE_SWORD,20,10307,"Reach","Click to upgrade reach","Level: "+getReach(player));
+        Misc.createInventoryItem(inventory, Material.APPLE,24,10309,"Health","Click to upgrade Health","Level: "+getHealth(player));
+
         Misc.createInventoryItem(inventory, Material.IRON_SWORD,29,10308,"Attack Speed","Click to upgrade Attack Speed","Level: "+getAttackSpeed(player));
 
         Misc.createInventoryItem(inventory,Material.BARRIER,49,10305,"Reset","You have: "+getPoints(player)+" points");
@@ -156,6 +168,7 @@ public class SkillsGUI implements Listener {
                         player.getPersistentDataContainer().set(defenseKey, PersistentDataType.INTEGER, 0);
                         player.getPersistentDataContainer().set(reachKey, PersistentDataType.INTEGER, 0);
                         player.getPersistentDataContainer().set(attackspeedKey, PersistentDataType.INTEGER, 0);
+                        player.getPersistentDataContainer().set(healthKey, PersistentDataType.INTEGER, 0);
                         player.getPersistentDataContainer().set(boughtPointsKey, PersistentDataType.INTEGER, 0);
                         player.getPersistentDataContainer().set(pointsKey, PersistentDataType.INTEGER, 0);
 
@@ -164,6 +177,7 @@ public class SkillsGUI implements Listener {
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "attribute "+player.getName()+" minecraft:entity_interaction_range modifier remove 0000001");
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "attribute "+player.getName()+" minecraft:block_interaction_range modifier remove 0000001");
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "attribute " + player.getName() + " minecraft:attack_speed modifier remove 0000001");
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "attribute " + player.getName() + " minecraft:max_health modifier remove 0000001");
 
                         player.closeInventory();
 
@@ -203,7 +217,7 @@ public class SkillsGUI implements Listener {
                         // Remove the current speed modifier.
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "attribute " + playerName + " minecraft:movement_speed modifier remove 0000001");
                         // Calculate new speed attribute; adjust formula as needed.
-                        double speedAtt = (double) currentSpeed / 20;
+                        double speedAtt = (double) currentSpeed / 40;
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "attribute " + playerName + " minecraft:movement_speed modifier add 0000001 " + speedAtt + " add_value");
 
                         Misc.createInventoryItem(inventory, Material.RABBIT_FOOT, 13, 10303,
@@ -262,6 +276,22 @@ public class SkillsGUI implements Listener {
                         skillsGuiCreate(player);
 
                         player.sendMessage("Reach upgraded to: " + playerAttackSpeed);
+                    }
+                     if (modelData == 10309) {
+                        int currentHealth = getAttackSpeed(player);
+                        currentHealth += upgrades;
+                        setHealth(player, currentHealth);
+                        setPoints(player, points - upgrades);
+
+                        String playerName = player.getName();
+
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "attribute " + playerName + " minecraft:max_health modifier remove 0000001");
+                        double playerHealth = (double) currentHealth / 2;
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "attribute " + playerName + " minecraft:max_health modifier add 0000001 " + playerHealth + " add_value");
+
+                        skillsGuiCreate(player);
+
+                        player.sendMessage("Reach upgraded to: " + playerHealth);
                     }
                 } else {
                     player.sendMessage("You don't have enough points");
