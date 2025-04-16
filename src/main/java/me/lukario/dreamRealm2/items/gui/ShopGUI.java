@@ -103,97 +103,100 @@ public class ShopGUI implements Listener {
     }
 
     @EventHandler
-    public void onInventoryClickInShop(InventoryClickEvent event) {
-        if (event.getView().getTitle().equals("Shop")) {
-            event.setCancelled(true); // Prevent taking items
+public void onInventoryClickInShop(InventoryClickEvent event) {
+    if (event.getView().getTitle().equals("Shop")) {
+        event.setCancelled(true); // Prevent taking items
 
-            Player player = (Player) event.getWhoClicked();
-            ItemStack item = event.getCurrentItem();
-            UUID uuid = player.getUniqueId();
+        Player player = (Player) event.getWhoClicked();
+        ItemStack item = event.getCurrentItem();
+        UUID uuid = player.getUniqueId();
 
-            if (item == null) return;
+        if (item == null) return;
 
-//            if (item == null || item.getType() == Material.AIR || !item.hasItemMeta()) return;
+        ItemMeta meta = item.getItemMeta();
 
-            ItemMeta meta = item.getItemMeta();
-
-            if (meta.hasCustomModelData()){
-                if (item.getItemMeta().getCustomModelData()==10202){
-                    if (playersCash.get(uuid)>=1200){
-
-                        playersCash.put(uuid,playersCash.get(uuid)-1200);
-                        player.getInventory().addItem(Freja.createItem());
-                        Misc.createInventoryItem(event.getInventory(),Material.SUNFLOWER,49,10210,"You have: "+playersCash.get(player.getUniqueId()).toString()+" Coins");
-                        player.sendMessage("Purchase successful");
-                        player.playSound(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP,1,1);
-//
-                    }else {
-                        player.sendMessage("Not enough coins");
-                        player.playSound(player,Sound.ENTITY_ENDERMAN_TELEPORT,1,1);
-                    }
-                }
-                if (item.getItemMeta().getCustomModelData()==10203){
-                    if (playersCash.get(uuid)>=2400){
-
-                        playersCash.put(uuid,playersCash.get(uuid)-2400);
-                        player.getInventory().addItem(Rapier.createItem());
-                        Misc.createInventoryItem(event.getInventory(),Material.SUNFLOWER,49,10210,"You have: "+playersCash.get(player.getUniqueId()).toString()+" Coins");
-                        player.sendMessage("Purchase successful");
-                        player.playSound(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP,1,1);
-
-                    }else {
-                        player.sendMessage("Not enough coins");
-                        player.playSound(player,Sound.ENTITY_ENDERMAN_TELEPORT,1,1);
-                    }
-                }
-                if (item.getItemMeta().getCustomModelData()==10204){
-                    if (playersCash.get(uuid)>=3600){
-
-                        playersCash.put(uuid,playersCash.get(uuid)-3600);
-                        player.getInventory().addItem(GraveYard.createItem());
-                        Misc.createInventoryItem(event.getInventory(),Material.SUNFLOWER,49,10210,"You have: "+playersCash.get(player.getUniqueId()).toString()+" Coins");
-                        player.sendMessage("Purchase successful");
-                        player.playSound(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP,1,1);
-                    }else {
-                        player.sendMessage("Not enough coins");
-                        player.playSound(player,Sound.ENTITY_ENDERMAN_TELEPORT,1,1);
-                    }
-                }
-                if (item.getItemMeta().getCustomModelData()==10205){
-
-                    int moneyNeededForPoints = SkillsGUI.getPointsBought(player);
-                    moneyNeededForPoints*=100;
-                    moneyNeededForPoints = moneyNeededForPoints + (moneyNeededForPoints/10);
-
-                    if (playersCash.get(uuid)>=moneyNeededForPoints){
-
-                        playersCash.put(uuid,playersCash.get(uuid)-moneyNeededForPoints);
-
-                        SkillsGUI.setPoints(player,SkillsGUI.getPoints(player)+1);
-                        SkillsGUI.setPointsBought(player,SkillsGUI.getPointsBought(player)+1);
-
-                        Misc.createInventoryItem(event.getInventory(),Material.SUNFLOWER,49,10210,"You have: "+playersCash.get(player.getUniqueId()).toString()+" Coins");
-                        Misc.createInventoryItem(event.getInventory(), Material.EXPERIENCE_BOTTLE, 22, 10205, "Buy Points","Cost: "+moneyNeededForPoints);
-
-                        player.sendMessage("Purchase successful");
-                        player.playSound(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP,1,1);
-                    }else {
-                        player.sendMessage("Not enough coins");
-                        player.playSound(player,Sound.ENTITY_ENDERMAN_TELEPORT,1,1);
-                    }
+        if (meta.hasCustomModelData()){
+            if (item.getItemMeta().getCustomModelData() == 10202) {
+                if (playersCash.get(uuid) >= 1200) {
+                    playersCash.put(uuid, playersCash.get(uuid) - 1200);
+                    player.getInventory().addItem(Freja.createItem());
+                    Misc.createInventoryItem(event.getInventory(), Material.SUNFLOWER, 49, 10210, "You have: " + playersCash.get(player.getUniqueId()).toString() + " Coins");
+                    player.sendMessage("Purchase successful");
+                    player.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
+                } else {
+                    player.sendMessage("Not enough coins");
+                    player.playSound(player, Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
                 }
             }
+            if (item.getItemMeta().getCustomModelData() == 10203) {
+                if (playersCash.get(uuid) >= 2400) {
+                    playersCash.put(uuid, playersCash.get(uuid) - 2400);
+                    player.getInventory().addItem(Rapier.createItem());
+                    Misc.createInventoryItem(event.getInventory(), Material.SUNFLOWER, 49, 10210, "You have: " + playersCash.get(player.getUniqueId()).toString() + " Coins");
+                    player.sendMessage("Purchase successful");
+                    player.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
+                } else {
+                    player.sendMessage("Not enough coins");
+                    player.playSound(player, Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
+                }
+            }
+            if (item.getItemMeta().getCustomModelData() == 10204) {
+                if (playersCash.get(uuid) >= 3600) {
+                    playersCash.put(uuid, playersCash.get(uuid) - 3600);
+                    player.getInventory().addItem(GraveYard.createItem());
+                    Misc.createInventoryItem(event.getInventory(), Material.SUNFLOWER, 49, 10210, "You have: " + playersCash.get(player.getUniqueId()).toString() + " Coins");
+                    player.sendMessage("Purchase successful");
+                    player.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
+                } else {
+                    player.sendMessage("Not enough coins");
+                    player.playSound(player, Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
+                }
+            }
+            // Skill point purchase branch (custom model data 10205)
+            if (item.getItemMeta().getCustomModelData() == 10205) {
+                // Determine how many skill points to buy: 5 for shift-click, or 1 otherwise.
+                int multiplier = event.isShiftClick() ? 5 : 1;
+                int currentPointsBought = SkillsGUI.getPointsBought(player);
+                int totalCost = 0;
 
-            if (item.getType()==Material.DIAMOND){
+                // Calculate the total cost for the next 'multiplier' points.
+                for (int i = 0; i < multiplier; i++) {
+                    // The cost formula for each point; for example, if the cost is based on how many points have been bought.
+                    int costPerPoint = (currentPointsBought + i) * 100;
+                    // Add 10% surcharge to the cost.
+                    costPerPoint += costPerPoint / 2;
+                    totalCost += costPerPoint;
+                }
 
-                player.getInventory().removeItem(new ItemStack(Material.DIAMOND, 1));
-                playersCash.put(uuid,playersCash.get(uuid)+100);
+                if (playersCash.get(uuid) >= totalCost) {
+                    // Deduct the total cost.
+                    playersCash.put(uuid, playersCash.get(uuid) - totalCost);
 
-                player.sendMessage("You have: "+ playersCash.get(uuid) + " Coins");
-                Misc.createInventoryItem(event.getInventory(),Material.SUNFLOWER,49,10210,"You have: "+playersCash.get(player.getUniqueId()).toString()+" Coins");
-                player.playSound(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP,1,1);
+                    // Increase the skill points and update the points bought.
+                    SkillsGUI.setPoints(player, SkillsGUI.getPoints(player) + multiplier);
+                    SkillsGUI.setPointsBought(player, currentPointsBought + multiplier);
 
+                    // Update the inventory display.
+                    Misc.createInventoryItem(event.getInventory(), Material.SUNFLOWER, 49, 10210, "You have: " + playersCash.get(uuid).toString() + " Coins");
+                    Misc.createInventoryItem(event.getInventory(), Material.EXPERIENCE_BOTTLE, 22, 10205, "Buy Points", "Cost: " + totalCost);
+
+                    player.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
+                    shopGuiCreate(player);
+                } else {
+                    player.sendMessage("Not enough coins");
+                    player.playSound(player, Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
+                }
             }
         }
+
+        if (item.getType() == Material.DIAMOND) {
+
+            player.getInventory().removeItem(new ItemStack(Material.DIAMOND, 1));
+            playersCash.put(uuid, playersCash.get(uuid) + 100);
+            player.sendMessage("You have: " + playersCash.get(uuid) + " Coins");
+            Misc.createInventoryItem(event.getInventory(), Material.SUNFLOWER, 49, 10210, "You have: " + playersCash.get(player.getUniqueId()).toString() + " Coins");
+            player.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
+        }
     }
+}
 }

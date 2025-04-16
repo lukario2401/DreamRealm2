@@ -10,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.util.Vector;
 
 import java.util.Arrays;
 
@@ -128,6 +129,43 @@ public class Misc implements Listener {
         item.setItemMeta(meta);
 
         inventory.setItem(slot,item);
+    }
+    public static Location moveLocationInAnyDirection(Location location1,float distance){
+        Location location = location1.clone();
+        Vector oldDirection = location.getDirection();
+        location.setYaw(location.getYaw()+90);
+
+        Vector direction = location.getDirection().normalize();
+        location.add(direction.multiply(distance));
+        location.setDirection(oldDirection);
+
+        return location;
+    }
+    public static Location moveLocationInAnyDirection(Location location1, float distance, boolean rightOrLeft){
+        Location location = location1.clone();
+        Vector oldDirection = location.getDirection();
+        if (rightOrLeft){
+            location.setYaw(location.getYaw()+90);
+        }else{
+            location.setYaw(location.getYaw()-90);
+        }
+
+        Vector direction = location.getDirection().normalize();
+        location.add(direction.multiply(distance));
+        location.setDirection(oldDirection);
+
+        return location;
+    }
+    public static Location moveLocationInAnyDirection(Location location1,float distance, float rotation){
+        Location location = location1.clone();
+        Vector oldDirection = location.getDirection();
+        location.setYaw(location.getYaw()+rotation);
+
+        Vector direction = location.getDirection().normalize();
+        location.add(direction.multiply(distance));
+        location.setDirection(oldDirection);
+
+        return location;
     }
 
 }

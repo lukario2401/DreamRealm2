@@ -3,12 +3,14 @@ package me.lukario.dreamRealm2.items.special.magic;
 import me.lukario.dreamRealm2.Misc;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.*;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
@@ -41,6 +43,20 @@ public class LaserEye implements Listener {
         return item;
     }
 
+//    @EventHandler
+//    public void laserEyeHeld(PlayerItemHeldEvent event){
+//        Player player = event.getPlayer();
+//        if (isHoldingTheCorrectItem(player)){
+//            ArmorStand armorStand = player.getWorld().spawn(player.getLocation(), ArmorStand.class);
+//        }else{
+//        }
+//    }
+//
+//    @EventHandler
+//    public void teleportArmorStandToPlayer(){
+//
+//    }
+
     @EventHandler
     public void usedLaserEye(PlayerInteractEvent event){
 
@@ -60,6 +76,9 @@ public class LaserEye implements Listener {
     private LivingEntity getEntity(Player player){
 
         Location location = player.getEyeLocation();
+
+        location = Misc.moveLocationInAnyDirection(location,1,true);
+
         Vector direction = location.getDirection().normalize();
 
         for (float i = 0; i < 96; i+=0.5f){
