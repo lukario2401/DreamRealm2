@@ -2,23 +2,24 @@ package me.lukario.dreamRealm2.items.special.ranged.bow;
 
 import me.lukario.dreamRealm2.Misc;
  import net.md_5.bungee.api.ChatColor;
- import org.bukkit.Location;
- import org.bukkit.Material;
- import org.bukkit.Particle;
- import org.bukkit.Sound;
- import org.bukkit.entity.ArmorStand;
+import org.bukkit.*;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.LivingEntity;
  import org.bukkit.entity.Player;
  import org.bukkit.event.EventHandler;
- import org.bukkit.event.Listener;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
  import org.bukkit.event.block.Action;
  import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
  import org.bukkit.inventory.meta.ItemMeta;
  import org.bukkit.plugin.Plugin;
- import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
  import org.bukkit.util.Vector;
 
  import java.util.*;
@@ -30,6 +31,7 @@ import org.bukkit.inventory.ItemStack;
      public Freja(Plugin plugin) {
          this.plugin = plugin;
          cooldownManagement();
+         rightClickHeldManagement();
      }
 
      private static final String ITEM_NAME = ChatColor.of("#D88F07") + "Freja";
@@ -40,6 +42,9 @@ import org.bukkit.inventory.ItemStack;
      private static final HashMap<UUID,Float> frejaBoltCount = new HashMap<>();
 
      private static final HashMap<UUID,Float> cooldownRight = new HashMap<>();
+     private static final HashMap<UUID,Float> rightClickHeld = new HashMap<>();
+     private static final HashMap<UUID,Float> frejaIsPreventFallingActive = new HashMap<>();
+     private static final HashMap<UUID,Boolean> frejaCanFly = new HashMap<>();
 
       private void cooldownManagement(){
          new BukkitRunnable(){
@@ -57,8 +62,40 @@ import org.bukkit.inventory.ItemStack;
                          cooldownRight.put(uuid,cooldownRight.get(uuid)-1);
                      }
                  }
+                 Set<UUID> heldKey = frejaCanFly.keySet();
+                 for (UUID uuid : heldKey){
+                     if (rightClickHeld.get(uuid)==2){
+                         frejaCanFly.put(uuid,false);
+                     }
+                 }
              }
          }.runTaskTimer(plugin,0,1);
+     }
+
+
+      private void rightClickHeldManagement(){
+         new BukkitRunnable(){
+             @Override
+             public void run(){
+                 Set<UUID> keyHeld = rightClickHeld.keySet();
+                 for (UUID uuid : keyHeld){
+                     Player player = Bukkit.getPlayer(uuid);
+//                     if (player!=null) {
+//                         player.sendMessage("right: " + rightClickHeld.get(uuid));
+//                     }
+                     if (rightClickHeld.get(uuid)==0){
+                         if (player!=null){
+                            frejaRightClick(player);
+                         }
+                         rightClickHeld.put(uuid,2f);
+                     }
+                     if (rightClickHeld.get(uuid)==1){
+                         rightClickHeld.put(uuid,rightClickHeld.get(uuid)-1);
+                     }
+
+                 }
+             }
+         }.runTaskTimer(plugin,0,4);
      }
 
       public static ItemStack createItem() {
@@ -75,6 +112,16 @@ import org.bukkit.inventory.ItemStack;
      }
 
      @EventHandler
+     public void frejaSneakInAIR(PlayerToggleSneakEvent event){
+          Player player = event.getPlayer();
+
+          if (player.getLocation().add(0,-0.2,0).getBlock().getType()==Material.AIR){
+              player.setVelocity(new Vector(0,1,0));
+              player.playSound(player, Sound.ENTITY_ENDER_DRAGON_FLAP,1,1);
+          }
+     }
+
+     @EventHandler(priority = EventPriority.LOWEST)
      public void frejaUsed(PlayerInteractEvent event){
          Player player = event.getPlayer();
          UUID uuid = player.getUniqueId();
@@ -89,6 +136,17 @@ import org.bukkit.inventory.ItemStack;
          if (frejaBoltCount.get(uuid)==null){
              frejaBoltCount.put(uuid,12f);
          }
+
+        if (rightClickHeld.get(uuid)==null){
+             rightClickHeld.put(uuid,2f);
+        }
+
+        if (frejaIsPreventFallingActive.get(uuid)==null){
+             frejaIsPreventFallingActive.put(uuid,0f);
+        }
+        if (frejaCanFly.get(uuid)==null){
+             frejaCanFly.put(uuid,true);
+        }
 
          if (!isHoldingTheCorrectItem(player)){return;}
 
@@ -115,23 +173,28 @@ import org.bukkit.inventory.ItemStack;
              }
          }
          if (event.getAction()== Action.RIGHT_CLICK_AIR||event.getAction()==Action.RIGHT_CLICK_BLOCK){
-             if (cooldownRight.get(uuid)==0){
-
-             if (frejaBoltCount.get(uuid)>8){
-                 frejaBoltCount.put(uuid,12f);
-             }else{
-                 frejaBoltCount.put(uuid,frejaBoltCount.get(uuid)+4f);
+             rightClickHeld.put(uuid,1f);
+             if (frejaIsPreventFallingActive.get(uuid)==0){
+                 preventFalling(player);
+                 frejaIsPreventFallingActive.put(uuid,1f);
              }
-
-             frejaRightClick(player);
-
-             player.playSound(player, Sound.ENTITY_BLAZE_SHOOT,1,1);
-             cooldownRight.put(uuid,30f);
-
-             }else{
-                 player.sendMessage(ChatColor.DARK_RED+"Cooldown: "+(cooldownRight.get(uuid)/20)+"s");
-                 player.playSound(player, Sound.ENTITY_ENDERMAN_TELEPORT,1,1);
-             }
+//             if (cooldownRight.get(uuid)==0){
+//
+//                 if (frejaBoltCount.get(uuid)>8){
+//                     frejaBoltCount.put(uuid,12f);
+//                 }else{
+//                     frejaBoltCount.put(uuid,frejaBoltCount.get(uuid)+4f);
+//                 }
+//
+////                 frejaRightClick(player);
+//
+//                 player.playSound(player, Sound.ENTITY_BLAZE_SHOOT,1,1);
+//                 cooldownRight.put(uuid,30f);
+//
+//             }else{
+//                 player.sendMessage(ChatColor.DARK_RED+"Cooldown: "+(cooldownRight.get(uuid)/20)+"s");
+//                 player.playSound(player, Sound.ENTITY_ENDERMAN_TELEPORT,1,1);
+//             }
          }
          event.setCancelled(true);
      }
@@ -141,13 +204,33 @@ import org.bukkit.inventory.ItemStack;
          Location location = player.getEyeLocation();
          Vector direction = location.getDirection().normalize();
 
+//         ArmorStand armorStand = location.getWorld().spawn(location, ArmorStand.class);
+//
+//         armorStand.setSmall(true);
+//         armorStand.setInvisible(true);
+//         armorStand.setGravity(false);
+//         armorStand.setMarker(true);
+//         armorStand.setInvulnerable(true);
+//
+//         ItemStack item = new ItemStack(Material.FEATHER);
+//         ItemMeta meta = item.getItemMeta();
+//         meta.setCustomModelData(2);
+//         item.setItemMeta(meta);
+//
+//         armorStand.setItem(EquipmentSlot.HEAD,item);
+
          new BukkitRunnable(){
              @Override
              public void run(){
-                 for (float i = 0; i<=32f; i+=0.5f){
+                 for (float i = 0; i<=96f; i+=0.5f){
 
                      Location current = location.clone().add(direction.clone().multiply(i));
                      current.getWorld().spawnParticle(Particle.SOUL,current,1,0,0,0,0);
+
+//                     Location tempCurrent = current.add(0,-1,0);
+//                     tempCurrent.setDirection(direction);
+
+//                     armorStand.teleport(tempCurrent);
 
                     if (current.getBlock().getType()!=Material.AIR){
                         i+=256;
@@ -166,6 +249,9 @@ import org.bukkit.inventory.ItemStack;
                              }
                          }
                      }
+//                      if (i>=96f){
+//                          armorStand.remove();
+//                      }
                  }
                  this.cancel();
              }
@@ -195,7 +281,7 @@ import org.bukkit.inventory.ItemStack;
 
          armorStand.setItem(EquipmentSlot.HEAD,new ItemStack(Material.TNT));
 
-         for (float i = 0; i<=48f; i+=1f){
+         for (float i = 0; i<=96f; i+=1f){
 
              Location current = location.clone().add(direction.clone().multiply(i));
              armorStand.getLocation().getWorld().spawnParticle(Particle.SOUL,armorStand.getLocation().add(0,1,0),1,0.1,0.1,0.1,0);
@@ -272,6 +358,25 @@ import org.bukkit.inventory.ItemStack;
         }
     }.runTaskTimer(plugin, 0, 1);
 }
+    private void preventFalling(Player player){
+        new BukkitRunnable(){
+            @Override
+            public void run(){
+                if (!frejaCanFly.get(player.getUniqueId())){
+                    frejaIsPreventFallingActive.put(player.getUniqueId(),0f);
+                    this.cancel();
+                }
+                if (!player.isOnGround()){
+                    if (player.getVelocity().getY()<0){
+                        if (player.getFallDistance()>0){
+                            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING,2,255));
+                            player.setVelocity(new Vector(0,0.1,0));
+                        }
+                    }
+                }
+            }
+        }.runTaskTimer(plugin,0,1);
+    }
 
      private static boolean isHoldingTheCorrectItem(Player player) {
          ItemStack mainHandItem = player.getInventory().getItemInMainHand();
