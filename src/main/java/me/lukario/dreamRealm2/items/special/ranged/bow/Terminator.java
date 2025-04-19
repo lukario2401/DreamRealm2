@@ -240,6 +240,7 @@ public class Terminator implements Listener {
 
             for (LivingEntity livingEntity : current.getNearbyLivingEntities(1.5)){
                 if (!livingEntity.equals(player)){
+                    current.getWorld().spawnParticle(Particle.EXPLOSION,current,5,1,1,1,0);
 
                     for (LivingEntity livingEntity1 : current.getNearbyLivingEntities(8)){
                         if (!livingEntity1.equals(player)){

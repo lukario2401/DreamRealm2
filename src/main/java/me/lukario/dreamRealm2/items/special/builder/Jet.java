@@ -23,8 +23,10 @@ package me.lukario.dreamRealm2.items.special.builder;
  import org.eclipse.aether.metadata.Metadata;
 
  import java.util.Arrays;
+ import java.util.HashSet;
+ import java.util.Set;
 
- public class Jet implements Listener {
+public class Jet implements Listener {
 
      private final Plugin plugin;
 
@@ -65,7 +67,36 @@ package me.lukario.dreamRealm2.items.special.builder;
              }
 
          }
+          if (event.getAction()== Action.LEFT_CLICK_AIR||event.getAction()== Action.LEFT_CLICK_BLOCK){
+
+             getAirStrikeLocationForJetManyTargets(player);
+
+          }
      }
+
+    private void getAirStrikeLocationForJetManyTargets(Player player) {
+        Location location = player.getEyeLocation();
+        Vector direction = location.getDirection().normalize();
+        Set<LivingEntity> processedEntities = new HashSet<>();
+
+        for (float i = 0; i <= 64; i += 0.5f) {
+            Location current = location.clone().add(direction.clone().multiply(i));
+            current.getWorld().spawnParticle(Particle.CRIT, current, 1, 0, 0, 0, 0);
+
+            for (LivingEntity livingEntity : current.getNearbyLivingEntities(4)) {
+                if (livingEntity.equals(player) || livingEntity instanceof ArmorStand) {
+                    continue;
+                }
+                if (processedEntities.add(livingEntity)) {
+                    airStrikeAtLocation(livingEntity);
+                }
+            }
+
+            if (current.getBlock().getType() != Material.AIR) {
+                break;
+            }
+        }
+    }
 
      private LivingEntity getAirStrikeLocationForJet(Player player){
          Location location = player.getEyeLocation();

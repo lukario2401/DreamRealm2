@@ -115,6 +115,8 @@ import org.bukkit.scheduler.BukkitRunnable;
      public void frejaSneakInAIR(PlayerToggleSneakEvent event){
           Player player = event.getPlayer();
 
+          if(!isHoldingTheCorrectItem(player)){return;}
+
           if (player.getLocation().add(0,-0.2,0).getBlock().getType()==Material.AIR){
               player.setVelocity(new Vector(0,1,0));
               player.playSound(player, Sound.ENTITY_ENDER_DRAGON_FLAP,1,1);

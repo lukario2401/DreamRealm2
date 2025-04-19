@@ -319,6 +319,11 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "LaserEye");
             return true;
         }
+        if (args.length == 1 && args[0].equalsIgnoreCase("Mech")) {
+            player.getInventory().addItem(Mech.createItem());
+            player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Mech");
+            return true;
+        }
 
 
         // Invalid argument
@@ -344,7 +349,7 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             "Style", "YetiSword", "Link", "Wizard", "Clock", "Dagger", "SinOfSolace", "Scythe", "Terminator", "ShareHealth",
             "Chain", "Slash", "Swipe", "MidasStaff", "Shadow", "Dual", "Swift", "Satellite", "Pyromancer", "GiantSword",
             "Flame", "Ferocity", "Katana", "Wrench", "Flash", "FireWand", "Portal", "Meteor", "Termination", "Claws",
-            "Missile", "GraveYard", "SphereCage", "FireCracker", "Stack", "Freja","AirStrike", "CAS", "LaserEye"
+            "Missile", "GraveYard", "SphereCage", "FireCracker", "Stack", "Freja","AirStrike", "CAS", "LaserEye", "Mech"
         );
 
         // First argument suggestions
