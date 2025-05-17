@@ -22,6 +22,7 @@ public final class DreamRealm2 extends JavaPlugin {
     private ProtocolManager protocolManager;
     private ShopGUI shopGUI;
     private TeleportGUI teleportGUI;
+    private EnderChest EnderChest;
 
     @Override
     public void onEnable() {
@@ -35,8 +36,6 @@ public final class DreamRealm2 extends JavaPlugin {
         System.out.println("---                                  ---");
         System.out.println("---                                  ---");
         System.out.println("----------------------------------------");
-
-
 
 
         getServer().getPluginManager().registerEvents(new EntityListener(),this);
@@ -112,6 +111,9 @@ public final class DreamRealm2 extends JavaPlugin {
 
         teleportGUI = new TeleportGUI(this);
         getServer().getPluginManager().registerEvents(teleportGUI, this);
+
+        this.EnderChest = new EnderChest(this);
+        getServer().getPluginManager().registerEvents(EnderChest, this);
     }
 
     @Override

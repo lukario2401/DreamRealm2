@@ -69,6 +69,11 @@ public class GUIItem implements Listener {
         meta.setDisplayName("§6Information");
         infoItem.setItemMeta(meta);
 
+        ItemStack enderChest = new ItemStack(Material.ENDER_CHEST);
+        ItemMeta metae = enderChest.getItemMeta();
+        metae.setDisplayName("§7Ender Chest");
+        enderChest.setItemMeta(metae);
+
         ItemStack teleportItem = new ItemStack(Material.ENDER_PEARL);
         ItemMeta tMeta = teleportItem.getItemMeta();
         tMeta.setDisplayName("§bRandom Teleport");
@@ -93,6 +98,7 @@ public class GUIItem implements Listener {
         Misc.createInventoryItem(gui,Material.POTION,22,10301,"Skills","Press to enter skills menu");
 
         // Set items in slots
+        gui.setItem(8, enderChest);
         gui.setItem(11, infoItem);
         gui.setItem(13, teleportItem);
         gui.setItem(15, closeItem);
@@ -154,6 +160,13 @@ public class GUIItem implements Listener {
                 case POTION:
                     player.closeInventory();
                     SkillsGUI.skillsGuiCreate(player);
+                    player.playSound(player.getLocation(), Sound.BLOCK_CHEST_CLOSE, 1, 1);
+                    break;
+
+                case ENDER_CHEST:
+                    player.closeInventory();
+                    EnderChest gui = new EnderChest(plugin);
+                    gui.open(player);
                     player.playSound(player.getLocation(), Sound.BLOCK_CHEST_CLOSE, 1, 1);
                     break;
             }
