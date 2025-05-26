@@ -1,7 +1,10 @@
 package me.lukario.dreamRealm2.commands;
 
+import me.lukario.dreamRealm2.items.guns_and_crates.Medkit;
+
 import me.lukario.dreamRealm2.items.armor.Ferocity;
 import me.lukario.dreamRealm2.items.gui.GUIItem;
+import me.lukario.dreamRealm2.items.guns_and_crates.Medkit;
 import me.lukario.dreamRealm2.items.special.builder.*;
 import me.lukario.dreamRealm2.items.special.magic.*;
 import me.lukario.dreamRealm2.items.special.ranged.bow.*;
@@ -20,6 +23,7 @@ import org.bukkit.command.TabExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -325,6 +329,14 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             return true;
         }
 
+        if (args.length == 1 && args[0].equalsIgnoreCase("MedKit")) {
+            ItemStack medkitItem = Medkit.createItem();
+
+            player.getInventory().addItem(Medkit.createItem());
+            player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Mech");
+            return true;
+        }
+
 
         // Invalid argument
         player.sendMessage(ChatColor.RED + "Unknown item type. Use /get <launch sword|cat>");
@@ -349,7 +361,7 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             "Style", "YetiSword", "Link", "Wizard", "Clock", "Dagger", "SinOfSolace", "Scythe", "Terminator", "ShareHealth",
             "Chain", "Slash", "Swipe", "MidasStaff", "Shadow", "Dual", "Swift", "Satellite", "Pyromancer", "GiantSword",
             "Flame", "Ferocity", "Katana", "Wrench", "Flash", "FireWand", "Portal", "Meteor", "Termination", "Claws",
-            "Missile", "GraveYard", "SphereCage", "FireCracker", "Stack", "Freja","AirStrike", "CAS", "LaserEye", "Mech"
+            "Missile", "GraveYard", "SphereCage", "FireCracker", "Stack", "Freja","AirStrike", "CAS", "LaserEye", "Mech","Medkit"
         );
 
         // First argument suggestions

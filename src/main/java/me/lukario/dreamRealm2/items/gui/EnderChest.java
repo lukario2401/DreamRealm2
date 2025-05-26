@@ -41,7 +41,7 @@ public class EnderChest implements Listener {
     public void open(Player player) {
         UUID uuid = player.getUniqueId();
         Inventory inv = Bukkit.createInventory(null, 54, "Custom EnderChest");
-        // Load saved items
+
         if (config.contains(uuid.toString())) {
             for (String key : config.getConfigurationSection(uuid.toString()).getKeys(false)) {
                 ItemStack item = config.getItemStack(uuid + "." + key);
