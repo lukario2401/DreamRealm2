@@ -168,4 +168,46 @@ public class Misc implements Listener {
         return location;
     }
 
+    public static int ItemAmountInInventory(Player player, String itemName) {
+        int count = 0;
+
+        Material material;
+        try {
+            material = Material.valueOf(itemName.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            return -1;
+        }
+
+        for (ItemStack item : player.getInventory().getContents()) {
+            if (item == null || item.getType() != material) continue;
+
+            ItemMeta meta = item.getItemMeta();
+            if (meta != null) {
+                count += item.getAmount();
+            }
+        }
+
+        return count;
+    }
+    public static int ItemAmountInInventory(Player player, String itemName, int customModelData) {
+        int count = 0;
+
+        Material material;
+        try {
+            material = Material.valueOf(itemName.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            return -1;
+        }
+
+        for (ItemStack item : player.getInventory().getContents()) {
+            if (item == null || item.getType() != material) continue;
+
+            ItemMeta meta = item.getItemMeta();
+            if (meta != null && meta.hasCustomModelData() && meta.getCustomModelData() == customModelData) {
+                count += item.getAmount();
+            }
+        }
+        return count;
+    }
+
 }

@@ -8,6 +8,7 @@ import me.lukario.dreamRealm2.commands.SumCommand;
 import me.lukario.dreamRealm2.items.armor.Ferocity;
 import me.lukario.dreamRealm2.items.gui.*;
 import me.lukario.dreamRealm2.items.guns_and_crates.Medkit;
+import me.lukario.dreamRealm2.items.guns_and_crates.guns.Glock;
 import me.lukario.dreamRealm2.items.special.builder.*;
 import me.lukario.dreamRealm2.items.special.magic.*;
 import me.lukario.dreamRealm2.items.special.ranged.bow.*;
@@ -44,6 +45,7 @@ public final class DreamRealm2 extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new CustomSword(), this);
         getServer().getPluginManager().registerEvents(new CookWithSneak(), this);
         getServer().getPluginManager().registerEvents(new GiantSword(), this);
+        getServer().getPluginManager().registerEvents(new Glock(this), this);
         getServer().getPluginManager().registerEvents(new Medkit(this), this);
         getServer().getPluginManager().registerEvents(new Mech(this), this);
         getServer().getPluginManager().registerEvents(new LaserEye(this), this);
