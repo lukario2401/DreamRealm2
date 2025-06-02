@@ -14,10 +14,7 @@ import me.lukario.dreamRealm2.items.special.Clock;
 import me.lukario.dreamRealm2.items.special.JetSu;
 import me.lukario.dreamRealm2.items.swords.Claws;
 import me.lukario.dreamRealm2.items.swords.GiantSword;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Particle;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.TabExecutor;
@@ -25,6 +22,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -342,6 +340,22 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Glock");
             return true;
         }
+        if (args.length == 1 && args[0].equalsIgnoreCase("ammo")) {
+            for (int i = 0; i < 5; i++){
+                ItemStack item = new ItemStack(Material.COPPER_INGOT);
+                ItemMeta metaa = item.getItemMeta();
+                metaa.setCustomModelData(2);
+                item.setItemMeta(metaa);
+
+                player.getInventory().addItem(item);
+            }
+
+            return true;
+        }
+
+
+
+
 
         // Invalid argument
         player.sendMessage(ChatColor.RED + "Unknown item type. Use /get <launch sword|cat>");
@@ -367,7 +381,7 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             "Chain", "Slash", "Swipe", "MidasStaff", "Shadow", "Dual", "Swift", "Satellite", "Pyromancer", "GiantSword",
             "Flame", "Ferocity", "Katana", "Wrench", "Flash", "FireWand", "Portal", "Meteor", "Termination", "Claws",
             "Missile", "GraveYard", "SphereCage", "FireCracker", "Stack", "Freja","AirStrike", "CAS", "LaserEye", "Mech","Medkit",
-                "Glock"
+                "Glock", "ammo"
         );
 
         // First argument suggestions

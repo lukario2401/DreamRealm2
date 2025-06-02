@@ -89,29 +89,34 @@ public class Glock implements Listener {
                  cooldownLeft.put(uuid,4f);
                  if (Misc.ItemAmountInInventory(player,"copper_ingot",2)>0){
                     rayCast(player);
-
-                    ItemStack[] contents = player.getInventory().getContents();
-
-                    for (int i = 0; i < contents.length; i++) {
-                        ItemStack current = contents[i];
-                        if (current == null || current.getType() != Material.COPPER_INGOT) continue;
-
-                        ItemMeta meta = current.getItemMeta();
-                        if (meta != null && meta.hasCustomModelData() && meta.getCustomModelData() == 2) {
-                            if (current.getAmount() > 1) {
-                                current.setAmount(current.getAmount() - 1);
-                            } else {
-                                contents[i] = null;
-                            }
-                            break;
-                        }
-                    }
-
-                    player.getInventory().setContents(contents);
-
+                    itemToRemove(player,1);
                  }
              }
          }
+     }
+
+     private void itemToRemove(Player player, int amountToRemove){
+
+         for (int j = 0; j < amountToRemove; j++){
+             ItemStack[] contents = player.getInventory().getContents();
+
+                for (int i = 0; i < contents.length; i++) {
+                    ItemStack current = contents[i];
+                    if (current == null || current.getType() != Material.COPPER_INGOT) continue;
+
+                    ItemMeta meta = current.getItemMeta();
+                    if (meta != null && meta.hasCustomModelData() && meta.getCustomModelData() == 2) {
+                        if (current.getAmount() > 1) {
+                            current.setAmount(current.getAmount() - 1);
+                        } else {
+                            contents[i] = null;
+                        }
+                        break;
+                    }
+                }
+
+            player.getInventory().setContents(contents);
+        }
      }
 
      private void rayCast(Player player){
