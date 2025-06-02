@@ -132,6 +132,7 @@ public class Glock implements Listener {
              for (LivingEntity livingEntity : current.getNearbyLivingEntities(1)){
                  if (!livingEntity.equals(player)){
                      Misc.damageNoTicks(livingEntity,9,player);
+                     return;
                  }
              }
          }
