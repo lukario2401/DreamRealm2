@@ -93,17 +93,24 @@ public class Glock implements Listener {
              }
 
              PersistentDataContainer data = meta.getPersistentDataContainer();
+
              int amountOfBullets = data.getOrDefault(AMMO_KEY, PersistentDataType.INTEGER, 0);
+             int maxAmmo = 12;
+             int availableAmmo = Misc.ItemAmountInInventory(player, "copper_ingot", 2);
 
-             if (amountOfBullets<12){
-                 if (Misc.ItemAmountInInventory(player,"copper_ingot",2)>0){
+//             player.sendMessage(Misc.ItemAmountInInventory(player, "copper_ingot", 2) +" availableAmmo");
+//             player.sendMessage(maxAmmo - amountOfBullets + "maxAmmo - amountOfBullets");
 
-                     meta.getPersistentDataContainer().set(AMMO_KEY, PersistentDataType.INTEGER, amountOfBullets+1);
-                     gun.setItemMeta(meta);
-                     player.sendMessage(amountOfBullets+1 + " amount of bullets");
+             int loadAmount = Math.min(availableAmmo, maxAmmo - amountOfBullets);
 
-                     itemToRemove(player,1);
-                 }
+             if (loadAmount>0){
+
+                 meta.getPersistentDataContainer().set(AMMO_KEY, PersistentDataType.INTEGER, amountOfBullets+loadAmount);
+                 gun.setItemMeta(meta);
+                 player.sendMessage(amountOfBullets+loadAmount + " amount of bullets");
+
+                 itemToRemove(player,loadAmount);
+
              }
          }
 
