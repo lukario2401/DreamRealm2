@@ -94,33 +94,37 @@ public class Glock implements Listener {
 
              PersistentDataContainer data = meta.getPersistentDataContainer();
              int amountOfBullets = data.getOrDefault(AMMO_KEY, PersistentDataType.INTEGER, 0);
-             if (amountOfBullets<12){
 
-                 meta.getPersistentDataContainer().set(AMMO_KEY, PersistentDataType.INTEGER, amountOfBullets+1);
-                 gun.setItemMeta(meta);
+             if (amountOfBullets<12){
+                 if (Misc.ItemAmountInInventory(player,"copper_ingot",2)>0){
+                     itemToRemove(player,1);
+
+                     meta.getPersistentDataContainer().set(AMMO_KEY, PersistentDataType.INTEGER, amountOfBullets+1);
+                     gun.setItemMeta(meta);
+                     player.sendMessage(amountOfBullets+1 + " amount of bullets");
+                 }
              }
          }
+
          if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK){
-
-             ItemStack gun = player.getInventory().getItemInMainHand();
-             ItemMeta meta = gun.getItemMeta();
-
-             PersistentDataContainer data = meta.getPersistentDataContainer();
-            int bullets = data.getOrDefault(AMMO_KEY, PersistentDataType.INTEGER, 0);
-
-            player.sendMessage(bullets + " bullets left");
-
 
              if (cooldownLeft.get(uuid)==0){
                  cooldownLeft.put(uuid,4f);
-                 if (Misc.ItemAmountInInventory(player,"copper_ingot",2)>0){
-                    rayCast(player);
-                    itemToRemove(player,1);
+                     ItemStack gun = player.getInventory().getItemInMainHand();
+                     ItemMeta meta = gun.getItemMeta();
 
+                     PersistentDataContainer data = meta.getPersistentDataContainer();
+                     int bullets = data.getOrDefault(AMMO_KEY, PersistentDataType.INTEGER, 0);
 
-                 }
-             }else{
-                 player.sendMessage("cooldown");
+                     if (bullets>0) {
+                         rayCast(player);
+                         meta.getPersistentDataContainer().set(AMMO_KEY, PersistentDataType.INTEGER, bullets-1);
+                         gun.setItemMeta(meta);
+
+                         player.sendMessage(bullets + " bullets left");
+                     }else{
+                         player.sendMessage("out of ammo");
+                     }
              }
          }
      }
