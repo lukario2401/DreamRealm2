@@ -26,6 +26,7 @@ me\lukario\dreamRealm2\items\swords\Dagger$1.class
 me\lukario\dreamRealm2\items\special\builder\Portal.class
 me\lukario\dreamRealm2\items\special\ranged\bow\Arch$2.class
 me\lukario\dreamRealm2\items\special\ranged\bow\Freja$1.class
+me\lukario\dreamRealm2\items\guns_and_crates\guns\Glock$1.class
 me\lukario\dreamRealm2\items\special\ranged\bow\JujuShortBow.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Satellite.class
 me\lukario\dreamRealm2\items\special\magic\WizardWand$1.class
@@ -76,6 +77,7 @@ me\lukario\dreamRealm2\items\special\ranged\misc\Pyromancer.class
 me\lukario\dreamRealm2\items\swords\Claws$2.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Pyromancer$6.class
 me\lukario\dreamRealm2\items\special\ranged\bow\Freja$5.class
+me\lukario\dreamRealm2\items\guns_and_crates\guns\Glock.class
 me\lukario\dreamRealm2\items\gui\EnderChest.class
 me\lukario\dreamRealm2\items\special\JetSu.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Meteor$1.class

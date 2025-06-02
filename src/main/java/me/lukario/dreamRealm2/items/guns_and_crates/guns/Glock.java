@@ -4,7 +4,6 @@ import me.lukario.dreamRealm2.Misc;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -14,8 +13,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -69,90 +66,53 @@ public class Glock implements Listener {
      }
 
      @EventHandler
-public void glockUsed(PlayerInteractEvent event){
-    Player player = event.getPlayer();
-    UUID uuid = player.getUniqueId();
+     public void glockUsed(PlayerInteractEvent event){
+         Player player = event.getPlayer();
+         UUID uuid = player.getUniqueId();
 
-    if (cooldownLeft.get(uuid) == null){
-        cooldownLeft.put(uuid,0f);
-    }
+         if (cooldownLeft.get(uuid) == null){
+             cooldownLeft.put(uuid,0f);
+         }
 
-    if (!isHoldingTheCorrectItem(player)) return;
+         if (!isHoldingTheCorrectItem(player)){return;}
+         if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK){
 
-    ItemStack gun = player.getInventory().getItemInMainHand();
-    if (!isHoldingTheCorrectItem(player)) {
-        return;
-    }
-
-    if (gun == null) return;
-
-    ItemMeta gunMeta = gun.getItemMeta();
-    NamespacedKey ammoKey = new NamespacedKey(plugin, "ammo_count");
-    PersistentDataContainer data = gunMeta.getPersistentDataContainer();
-
-    // Right-click: Load ammo
-    if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK){
-        int loaded = data.getOrDefault(ammoKey, PersistentDataType.INTEGER, 0);
-        int toLoad = Math.min(12 - loaded, Misc.ItemAmountInInventory(player, "copper_ingot", 12));
-
-        if (toLoad > 0){
-            RemoveCustomCopperAmmo(player, toLoad); // You'll define this method
-            data.set(ammoKey, PersistentDataType.INTEGER, loaded + toLoad);
-            gun.setItemMeta(gunMeta);
-            player.sendMessage("Loaded " + toLoad + " bullets. Now loaded: " + (loaded + toLoad));
-        } else {
-            player.sendMessage("No ammo to load.");
-        }
-
-         ItemStack item = new ItemStack(Material.COPPER_INGOT);
+            ItemStack item = new ItemStack(Material.COPPER_INGOT);
             ItemMeta meta = item.getItemMeta();
             meta.setCustomModelData(2);
             item.setItemMeta(meta);
 
              player.getInventory().addItem(item);
-    }
+         }
+         if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK){
+             if (cooldownLeft.get(uuid)==0){
+                 cooldownLeft.put(uuid,4f);
+                 if (Misc.ItemAmountInInventory(player,"copper_ingot",2)>0){
+                    rayCast(player);
 
-    // Left-click: Shoot
-    if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK){
-        if (cooldownLeft.get(uuid)==0){
-            cooldownLeft.put(uuid, 4f);
+                    ItemStack[] contents = player.getInventory().getContents();
 
-            int loaded = data.getOrDefault(ammoKey, PersistentDataType.INTEGER, 0);
-            if (loaded > 0){
-                rayCast(player);
-                data.set(ammoKey, PersistentDataType.INTEGER, loaded - 1);
-                gun.setItemMeta(gunMeta);
-                player.sendMessage("Fired! Remaining bullets: " + (loaded - 1));
-            } else {
-                player.sendMessage("Out of ammo!");
-            }
-        }
-    }
-}
+                    for (int i = 0; i < contents.length; i++) {
+                        ItemStack current = contents[i];
+                        if (current == null || current.getType() != Material.COPPER_INGOT) continue;
 
-public static void RemoveCustomCopperAmmo(Player player, int amountToRemove) {
-    ItemStack[] contents = player.getInventory().getContents();
+                        ItemMeta meta = current.getItemMeta();
+                        if (meta != null && meta.hasCustomModelData() && meta.getCustomModelData() == 2) {
+                            if (current.getAmount() > 1) {
+                                current.setAmount(current.getAmount() - 1);
+                            } else {
+                                contents[i] = null;
+                            }
+                            break;
+                        }
+                    }
 
-    for (int i = 0; i < contents.length && amountToRemove > 0; i++) {
-        ItemStack current = contents[i];
-        if (current == null || current.getType() != Material.COPPER_INGOT) continue;
+                    player.getInventory().setContents(contents);
 
-        ItemMeta meta = current.getItemMeta();
-        if (meta != null && meta.hasCustomModelData() && meta.getCustomModelData() == 2) {
-            int stackAmount = current.getAmount();
-            if (stackAmount <= amountToRemove) {
-                amountToRemove -= stackAmount;
-                contents[i] = null;
-            } else {
-                current.setAmount(stackAmount - amountToRemove);
-                amountToRemove = 0;
-            }
-        }
-    }
-
-    player.getInventory().setContents(contents);
-}
-
+                 }
+             }
+         }
+     }
 
      private void rayCast(Player player){
          Location location = player.getEyeLocation();
