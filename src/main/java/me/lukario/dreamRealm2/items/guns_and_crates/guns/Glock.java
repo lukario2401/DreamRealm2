@@ -97,11 +97,12 @@ public class Glock implements Listener {
 
              if (amountOfBullets<12){
                  if (Misc.ItemAmountInInventory(player,"copper_ingot",2)>0){
-                     itemToRemove(player,1);
 
                      meta.getPersistentDataContainer().set(AMMO_KEY, PersistentDataType.INTEGER, amountOfBullets+1);
                      gun.setItemMeta(meta);
                      player.sendMessage(amountOfBullets+1 + " amount of bullets");
+
+                     itemToRemove(player,1);
                  }
              }
          }
