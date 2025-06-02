@@ -4,6 +4,7 @@ import me.lukario.dreamRealm2.Misc;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -13,6 +14,8 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -37,6 +40,9 @@ public class Glock implements Listener {
      private static final Material ITEM_MATERIAL = Material.STONE_HOE;
 
      private static final HashMap<UUID,Float> cooldownLeft = new HashMap<>();
+
+     public static NamespacedKey AMMO_KEY;
+
 
      private void cooldownManagement(){
          new BukkitRunnable(){
@@ -70,6 +76,8 @@ public class Glock implements Listener {
          Player player = event.getPlayer();
          UUID uuid = player.getUniqueId();
 
+         AMMO_KEY = new NamespacedKey(plugin, "ammo_count");
+
          if (cooldownLeft.get(uuid) == null){
              cooldownLeft.put(uuid,0f);
          }
@@ -77,20 +85,42 @@ public class Glock implements Listener {
          if (!isHoldingTheCorrectItem(player)){return;}
          if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK){
 
-            ItemStack item = new ItemStack(Material.COPPER_INGOT);
-            ItemMeta meta = item.getItemMeta();
-            meta.setCustomModelData(2);
-            item.setItemMeta(meta);
+             ItemStack gun = player.getInventory().getItemInMainHand();
+             ItemMeta meta = gun.getItemMeta();
+             if (meta == null){
+                 player.sendMessage("meta is null");
+                 return;
+             }
 
-             player.getInventory().addItem(item);
+             PersistentDataContainer data = meta.getPersistentDataContainer();
+             int amountOfBullets = data.getOrDefault(AMMO_KEY, PersistentDataType.INTEGER, 0);
+             if (amountOfBullets<12){
+
+                 meta.getPersistentDataContainer().set(AMMO_KEY, PersistentDataType.INTEGER, amountOfBullets+1);
+                 gun.setItemMeta(meta);
+             }
          }
          if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK){
+
+             ItemStack gun = player.getInventory().getItemInMainHand();
+             ItemMeta meta = gun.getItemMeta();
+
+             PersistentDataContainer data = meta.getPersistentDataContainer();
+            int bullets = data.getOrDefault(AMMO_KEY, PersistentDataType.INTEGER, 0);
+
+            player.sendMessage(bullets + " bullets left");
+
+
              if (cooldownLeft.get(uuid)==0){
                  cooldownLeft.put(uuid,4f);
                  if (Misc.ItemAmountInInventory(player,"copper_ingot",2)>0){
                     rayCast(player);
                     itemToRemove(player,1);
+
+
                  }
+             }else{
+                 player.sendMessage("cooldown");
              }
          }
      }
