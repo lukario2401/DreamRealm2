@@ -13,6 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -98,20 +99,31 @@ public class Glock implements Listener {
              int maxAmmo = 12;
              int availableAmmo = Misc.ItemAmountInInventory(player, "copper_ingot", 2);
 
-//             player.sendMessage(Misc.ItemAmountInInventory(player, "copper_ingot", 2) +" availableAmmo");
-//             player.sendMessage(maxAmmo - amountOfBullets + "maxAmmo - amountOfBullets");
-
              int loadAmount = Math.min(availableAmmo, maxAmmo - amountOfBullets);
 
-             if (loadAmount>0){
+            if (loadAmount > 0) {
+                int newAmmo = amountOfBullets + loadAmount;
+                meta.getPersistentDataContainer().set(AMMO_KEY, PersistentDataType.INTEGER, newAmmo);
 
-                 meta.getPersistentDataContainer().set(AMMO_KEY, PersistentDataType.INTEGER, amountOfBullets+loadAmount);
-                 gun.setItemMeta(meta);
-                 player.sendMessage(amountOfBullets+loadAmount + " amount of bullets");
+                // Cast to Damageable properly
+                if (gun.getItemMeta() instanceof Damageable) {
+                    Damageable damageable = (Damageable) gun.getItemMeta();
+                    int maxDurability = 131;
+                    int visualDamage = maxDurability - (int) ((newAmmo / 12f) * maxDurability);
+                    damageable.setDamage(visualDamage);
 
-                 itemToRemove(player,loadAmount);
+                    ItemMeta newMeta = (ItemMeta) damageable;
+                    newMeta.setUnbreakable(false); // Make durability bar visible
+                    newMeta.setDisplayName(meta.getDisplayName());
+                    newMeta.setLore(meta.getLore());
+                    newMeta.setCustomModelData(meta.getCustomModelData());
+                    newMeta.getPersistentDataContainer().set(AMMO_KEY, PersistentDataType.INTEGER, newAmmo);
 
-             }
+                    gun.setItemMeta(newMeta);
+                }
+                player.sendMessage(newAmmo + " amount of bullets");
+                itemToRemove(player, loadAmount);
+            }
          }
 
          if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK){
@@ -129,13 +141,42 @@ public class Glock implements Listener {
                          meta.getPersistentDataContainer().set(AMMO_KEY, PersistentDataType.INTEGER, bullets-1);
                          gun.setItemMeta(meta);
 
-                         player.sendMessage(bullets + " bullets left");
-                     }else{
-                         player.sendMessage("out of ammo");
-                     }
-             }
-         }
-     }
+
+                     if (meta instanceof ItemMeta) {
+                          data = meta.getPersistentDataContainer();
+                          bullets = data.getOrDefault(AMMO_KEY, PersistentDataType.INTEGER, 0);
+
+                         if (bullets > 0) {
+
+
+                             // Update ammo
+                             data.set(AMMO_KEY, PersistentDataType.INTEGER, bullets);
+
+                             // Update durability
+                             if (gun.getItemMeta() instanceof Damageable) {
+                                 Damageable damageable = (Damageable) gun.getItemMeta();
+                                 int maxDurability = 131;
+                                 int visualDamage = maxDurability - (int) ((bullets / 12f) * maxDurability);
+                                 damageable.setDamage(visualDamage);
+
+                                 ItemMeta newMeta = (ItemMeta) damageable;
+                                 newMeta.setUnbreakable(false);
+                                 newMeta.setDisplayName(meta.getDisplayName());
+                                 newMeta.setLore(meta.getLore());
+                                 newMeta.setCustomModelData(meta.getCustomModelData());
+                                 newMeta.getPersistentDataContainer().set(AMMO_KEY, PersistentDataType.INTEGER, bullets);
+
+                                 gun.setItemMeta(newMeta);
+                             }
+
+                             player.sendMessage(bullets + " bullets left");
+                         } else {
+                             player.sendMessage("out of ammo");
+                         }
+                     }}}}}
+
+
+
 
      private void itemToRemove(Player player, int amountToRemove){
 
