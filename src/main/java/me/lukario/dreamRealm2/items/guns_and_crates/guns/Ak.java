@@ -137,8 +137,6 @@ public class Ak implements Listener {
                           data = meta.getPersistentDataContainer();
                           bullets = data.getOrDefault(AMMO_AK_KEY, PersistentDataType.INTEGER, 0);
 
-
-
                              // Update durability
                              if (gun.getItemMeta() instanceof Damageable) {
                                  Damageable damageable = (Damageable) gun.getItemMeta();
@@ -164,9 +162,6 @@ public class Ak implements Listener {
              }
          }
      }
-
-
-
 
      private void itemToRemove(Player player, int customModelData, int amountToRemove){
 
@@ -201,6 +196,9 @@ public class Ak implements Listener {
 
              current.getWorld().spawnParticle(Particle.ASH, current, 1 ,0,0,0,0);
 
+            if (current.getBlock().getType()!=Material.AIR){
+                 return;
+             }
 
              for (LivingEntity livingEntity : current.getNearbyLivingEntities(1)){
                  if (!livingEntity.equals(player)){

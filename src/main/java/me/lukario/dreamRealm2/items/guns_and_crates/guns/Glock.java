@@ -33,7 +33,7 @@ public class Glock implements Listener {
          cooldownManagement();
      }
 
-     private static final String ITEM_NAME = ChatColor.of("#D88F07") + "Glock";
+     private static final String ITEM_NAME = ChatColor.of("#D88F07") + "Glock 19";
      private static final String ITEM_LORE = ChatColor.YELLOW + "###########";
      private static final Material ITEM_MATERIAL = Material.STONE_HOE;
 
@@ -213,6 +213,9 @@ public class Glock implements Listener {
 
              current.getWorld().spawnParticle(Particle.ASH, current, 1 ,0,0,0,0);
 
+             if (current.getBlock().getType()!=Material.AIR){
+                 return;
+             }
 
              for (LivingEntity livingEntity : current.getNearbyLivingEntities(1)){
                  if (!livingEntity.equals(player)){
