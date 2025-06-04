@@ -5,6 +5,7 @@ import me.lukario.dreamRealm2.items.guns_and_crates.Medkit;
 import me.lukario.dreamRealm2.items.armor.Ferocity;
 import me.lukario.dreamRealm2.items.gui.GUIItem;
 import me.lukario.dreamRealm2.items.guns_and_crates.Medkit;
+import me.lukario.dreamRealm2.items.guns_and_crates.guns.Ak;
 import me.lukario.dreamRealm2.items.guns_and_crates.guns.Glock;
 import me.lukario.dreamRealm2.items.special.builder.*;
 import me.lukario.dreamRealm2.items.special.magic.*;
@@ -340,7 +341,7 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Glock");
             return true;
         }
-        if (args.length == 1 && args[0].equalsIgnoreCase("ammo")) {
+        if (args.length == 1 && args[0].equalsIgnoreCase("ammo_9mm")) {
             for (int i = 0; i < 5; i++){
                 ItemStack item = new ItemStack(Material.COPPER_INGOT);
                 ItemMeta metaa = item.getItemMeta();
@@ -352,9 +353,23 @@ public class GetCommand implements CommandExecutor, TabExecutor {
 
             return true;
         }
+        if (args.length == 1 && args[0].equalsIgnoreCase("Ak47")) {
+            player.getInventory().addItem(Ak.createItem());
+            player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Ak47");
+            return true;
+        }
+        if (args.length == 1 && args[0].equalsIgnoreCase("ammo_7.62")) {
+            for (int i = 0; i < 4; i++){
+                ItemStack item = new ItemStack(Material.COPPER_INGOT);
+                ItemMeta metaa = item.getItemMeta();
+                metaa.setCustomModelData(3);
+                item.setItemMeta(metaa);
 
+                player.getInventory().addItem(item);
+            }
 
-
+            return true;
+        }
 
 
         // Invalid argument
@@ -381,7 +396,7 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             "Chain", "Slash", "Swipe", "MidasStaff", "Shadow", "Dual", "Swift", "Satellite", "Pyromancer", "GiantSword",
             "Flame", "Ferocity", "Katana", "Wrench", "Flash", "FireWand", "Portal", "Meteor", "Termination", "Claws",
             "Missile", "GraveYard", "SphereCage", "FireCracker", "Stack", "Freja","AirStrike", "CAS", "LaserEye", "Mech","Medkit",
-                "Glock", "ammo"
+                "Glock", "ammo", "Ak47"
         );
 
         // First argument suggestions
