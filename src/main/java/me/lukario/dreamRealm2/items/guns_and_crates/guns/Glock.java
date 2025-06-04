@@ -2,10 +2,7 @@ package me.lukario.dreamRealm2.items.guns_and_crates.guns;
 
 import me.lukario.dreamRealm2.Misc;
 import net.md_5.bungee.api.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.Particle;
+import org.bukkit.*;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -102,6 +99,8 @@ public class Glock implements Listener {
              int loadAmount = Math.min(availableAmmo, maxAmmo - amountOfBullets);
 
             if (loadAmount > 0) {
+                player.playSound(player, Sound.ITEM_ARMOR_EQUIP_IRON,3,1);
+
                 int newAmmo = amountOfBullets + loadAmount;
                 meta.getPersistentDataContainer().set(AMMO_KEY, PersistentDataType.INTEGER, newAmmo);
 
@@ -123,6 +122,8 @@ public class Glock implements Listener {
                 }
                 player.sendMessage(newAmmo + " amount of bullets");
                 itemToRemove(player, loadAmount);
+            }else{
+                player.playSound(player, Sound.ENTITY_ENDERMAN_TELEPORT, 3,1);
             }
          }
 
@@ -137,6 +138,7 @@ public class Glock implements Listener {
                      int bullets = data.getOrDefault(AMMO_KEY, PersistentDataType.INTEGER, 0);
 
                      if (bullets>0) {
+                         player.playSound(player,Sound.ENTITY_BLAZE_SHOOT, 3 ,1);
                          rayCast(player);
                          meta.getPersistentDataContainer().set(AMMO_KEY, PersistentDataType.INTEGER, bullets-1);
                          gun.setItemMeta(meta);
@@ -206,7 +208,7 @@ public class Glock implements Listener {
          Location location = player.getEyeLocation();
          Vector direction = location.getDirection().normalize();
 
-         for (float i = 0; i < 64; i+=0.5f){
+         for (float i = 0; i < 48; i+=0.5f){
              Location current = location.clone().add(direction.clone().multiply(i));
 
              current.getWorld().spawnParticle(Particle.ASH, current, 1 ,0,0,0,0);
@@ -215,6 +217,8 @@ public class Glock implements Listener {
              for (LivingEntity livingEntity : current.getNearbyLivingEntities(1)){
                  if (!livingEntity.equals(player)){
                      Misc.damageNoTicks(livingEntity,9,player);
+                     player.playSound(player,Sound.ENTITY_GENERIC_EXPLODE,1,1);
+                     livingEntity.getWorld().spawnParticle(Particle.EXPLOSION,livingEntity.getLocation(),1,0,0,0,0);
                      return;
                  }
              }

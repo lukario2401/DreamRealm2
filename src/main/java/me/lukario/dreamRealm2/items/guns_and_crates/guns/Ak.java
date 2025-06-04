@@ -2,10 +2,7 @@ package me.lukario.dreamRealm2.items.guns_and_crates.guns;
 
 import me.lukario.dreamRealm2.Misc;
 import net.md_5.bungee.api.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.Particle;
+import org.bukkit.*;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -95,31 +92,35 @@ public class Ak implements Listener {
 
 
              if (availableAmmo > 0) {
-                meta.getPersistentDataContainer().set(AMMO_AK_KEY, PersistentDataType.INTEGER, 30);
+                 meta.getPersistentDataContainer().set(AMMO_AK_KEY, PersistentDataType.INTEGER, 30);
+                 player.playSound(player, Sound.ITEM_ARMOR_EQUIP_IRON,3,1);
 
                 // Cast to Damageable properly
                 if (gun.getItemMeta() instanceof Damageable) {
                     Damageable damageable = (Damageable) gun.getItemMeta();
-                    damageable.setDamage(2031);
+                    damageable.setDamage(0);
 
                     ItemMeta newMeta = (ItemMeta) damageable;
                     newMeta.setUnbreakable(false); // Make durability bar visible
                     newMeta.setDisplayName(meta.getDisplayName());
                     newMeta.setLore(meta.getLore());
+                    newMeta.getPersistentDataContainer().set(AMMO_AK_KEY, PersistentDataType.INTEGER, 30);
                     newMeta.setCustomModelData(meta.getCustomModelData());
 
                     gun.setItemMeta(newMeta);
                 }
-                gun.setItemMeta(meta);
+
                 itemToRemove(player, 3,1);
                 player.sendMessage("Reloaded");
-            }
+            }else{
+                 player.playSound(player, Sound.ENTITY_ENDERMAN_TELEPORT, 3,1);
+             }
          }
 
          if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK){
 
              if (cooldownLeft.get(uuid)==0){
-                 cooldownLeft.put(uuid,4f);
+                 cooldownLeft.put(uuid,2f);
                  ItemStack gun = player.getInventory().getItemInMainHand();
                  ItemMeta meta = gun.getItemMeta();
 
@@ -128,6 +129,7 @@ public class Ak implements Listener {
 
                  if (bullets>0) {
                      rayCast(player);
+                     player.playSound(player,Sound.ENTITY_BLAZE_SHOOT, 3 ,1);
                      meta.getPersistentDataContainer().set(AMMO_AK_KEY, PersistentDataType.INTEGER, bullets-1);
                      gun.setItemMeta(meta);
 
@@ -135,7 +137,7 @@ public class Ak implements Listener {
                           data = meta.getPersistentDataContainer();
                           bullets = data.getOrDefault(AMMO_AK_KEY, PersistentDataType.INTEGER, 0);
 
-                         if (bullets > 0) {
+
 
                              // Update durability
                              if (gun.getItemMeta() instanceof Damageable) {
@@ -155,10 +157,9 @@ public class Ak implements Listener {
                              }
 
                              player.sendMessage(bullets + " bullets left");
-                         } else {
-                             player.sendMessage("out of ammo");
-                         }
-                     }
+                        }
+                 }else{
+                     player.sendMessage("out of ammo");
                  }
              }
          }
@@ -203,12 +204,14 @@ public class Ak implements Listener {
 
              for (LivingEntity livingEntity : current.getNearbyLivingEntities(1)){
                  if (!livingEntity.equals(player)){
-                     Misc.damageNoTicks(livingEntity,9,player);
+                     Misc.damageNoTicks(livingEntity,7,player);
+                     player.playSound(player, Sound.ENTITY_GENERIC_EXPLODE,1,1);
+                     livingEntity.getWorld().spawnParticle(Particle.EXPLOSION,livingEntity.getLocation(),1,0,0,0,0);
                      return;
                  }
              }
          }
-     }
+    }
 
      private static boolean isHoldingTheCorrectItem(Player player) {
          ItemStack mainHandItem = player.getInventory().getItemInMainHand();

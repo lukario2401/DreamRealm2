@@ -2,6 +2,7 @@ me\lukario\dreamRealm2\items\special\Clock.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Pyromancer$3.class
 me\lukario\dreamRealm2\items\gui\GUIItem$2.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Meteor.class
+me\lukario\dreamRealm2\items\guns_and_crates\guns\Ak$1.class
 me\lukario\dreamRealm2\items\special\ranged\misc\YetiSword.class
 me\lukario\dreamRealm2\items\special\ranged\bow\Terminator.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Missile$1.class
@@ -32,6 +33,7 @@ me\lukario\dreamRealm2\items\special\ranged\misc\Satellite.class
 me\lukario\dreamRealm2\items\special\magic\WizardWand$1.class
 me\lukario\dreamRealm2\items\special\ranged\misc\FlameThrower$2.class
 me\lukario\dreamRealm2\items\special\builder\Wrench$2.class
+me\lukario\dreamRealm2\items\guns_and_crates\guns\Ak.class
 me\lukario\dreamRealm2\items\special\ranged\bow\Stack$3.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Satellite$2.class
 me\lukario\dreamRealm2\items\special\builder\Portal$1.class
