@@ -6,6 +6,7 @@ import me.lukario.dreamRealm2.items.armor.Ferocity;
 import me.lukario.dreamRealm2.items.gui.GUIItem;
 import me.lukario.dreamRealm2.items.guns_and_crates.Medkit;
 import me.lukario.dreamRealm2.items.guns_and_crates.guns.Ak;
+import me.lukario.dreamRealm2.items.guns_and_crates.guns.Aug;
 import me.lukario.dreamRealm2.items.guns_and_crates.guns.Glock;
 import me.lukario.dreamRealm2.items.special.builder.*;
 import me.lukario.dreamRealm2.items.special.magic.*;
@@ -341,11 +342,12 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Glock");
             return true;
         }
-        if (args.length == 1 && args[0].equalsIgnoreCase("ammo_9mm")) {
+        if (args.length == 1 && args[0].equalsIgnoreCase("ammo_9x19mm")) {
             for (int i = 0; i < 5; i++){
                 ItemStack item = new ItemStack(Material.COPPER_INGOT);
                 ItemMeta metaa = item.getItemMeta();
                 metaa.setCustomModelData(2);
+                metaa.setDisplayName("9x19mm");
                 item.setItemMeta(metaa);
 
                 player.getInventory().addItem(item);
@@ -363,6 +365,7 @@ public class GetCommand implements CommandExecutor, TabExecutor {
                 ItemStack item = new ItemStack(Material.COPPER_INGOT);
                 ItemMeta metaa = item.getItemMeta();
                 metaa.setCustomModelData(3);
+                metaa.setDisplayName("7.62");
                 item.setItemMeta(metaa);
 
                 player.getInventory().addItem(item);
@@ -370,7 +373,24 @@ public class GetCommand implements CommandExecutor, TabExecutor {
 
             return true;
         }
+        if (args.length == 1 && args[0].equalsIgnoreCase("Aug")) {
+            player.getInventory().addItem(Aug.createItem());
+            player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Aug");
+            return true;
+        }
+        if (args.length == 1 && args[0].equalsIgnoreCase("ammo_5.56")) {
+            for (int i = 0; i < 4; i++){
+                ItemStack item = new ItemStack(Material.COPPER_INGOT);
+                ItemMeta metaa = item.getItemMeta();
+                metaa.setCustomModelData(4);
+                metaa.setDisplayName("5.56");
+                item.setItemMeta(metaa);
 
+                player.getInventory().addItem(item);
+            }
+
+            return true;
+        }
 
         // Invalid argument
         player.sendMessage(ChatColor.RED + "Unknown item type. Use /get <launch sword|cat>");
@@ -396,7 +416,7 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             "Chain", "Slash", "Swipe", "MidasStaff", "Shadow", "Dual", "Swift", "Satellite", "Pyromancer", "GiantSword",
             "Flame", "Ferocity", "Katana", "Wrench", "Flash", "FireWand", "Portal", "Meteor", "Termination", "Claws",
             "Missile", "GraveYard", "SphereCage", "FireCracker", "Stack", "Freja","AirStrike", "CAS", "LaserEye", "Mech","Medkit",
-                "Glock", "ammo", "Ak47"
+                "Glock", "ammo", "Ak47", "Aug"
         );
 
         // First argument suggestions
