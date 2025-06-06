@@ -8,6 +8,7 @@ import me.lukario.dreamRealm2.items.guns_and_crates.Medkit;
 import me.lukario.dreamRealm2.items.guns_and_crates.guns.Ak;
 import me.lukario.dreamRealm2.items.guns_and_crates.guns.Aug;
 import me.lukario.dreamRealm2.items.guns_and_crates.guns.Glock;
+import me.lukario.dreamRealm2.items.guns_and_crates.guns.Remington;
 import me.lukario.dreamRealm2.items.special.builder.*;
 import me.lukario.dreamRealm2.items.special.magic.*;
 import me.lukario.dreamRealm2.items.special.ranged.bow.*;
@@ -391,6 +392,24 @@ public class GetCommand implements CommandExecutor, TabExecutor {
 
             return true;
         }
+        if (args.length == 1 && args[0].equalsIgnoreCase("Remington")) {
+            player.getInventory().addItem(Remington.createItem());
+            player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Remington 870");
+            return true;
+        }
+        if (args.length == 1 && args[0].equalsIgnoreCase("ammo_12G")) {
+            for (int i = 0; i < 4; i++){
+                ItemStack item = new ItemStack(Material.COPPER_INGOT);
+                ItemMeta metaa = item.getItemMeta();
+                metaa.setCustomModelData(5);
+                metaa.setDisplayName("12-gauge");
+                item.setItemMeta(metaa);
+
+                player.getInventory().addItem(item);
+            }
+
+            return true;
+        }
 
         // Invalid argument
         player.sendMessage(ChatColor.RED + "Unknown item type. Use /get <launch sword|cat>");
@@ -416,7 +435,7 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             "Chain", "Slash", "Swipe", "MidasStaff", "Shadow", "Dual", "Swift", "Satellite", "Pyromancer", "GiantSword",
             "Flame", "Ferocity", "Katana", "Wrench", "Flash", "FireWand", "Portal", "Meteor", "Termination", "Claws",
             "Missile", "GraveYard", "SphereCage", "FireCracker", "Stack", "Freja","AirStrike", "CAS", "LaserEye", "Mech","Medkit",
-                "Glock", "ammo", "Ak47", "Aug"
+                "Glock", "ammo", "Ak47", "Aug", "Remington", "ammo_5.56", "ammo_7.62", "ammo_12G"
         );
 
         // First argument suggestions

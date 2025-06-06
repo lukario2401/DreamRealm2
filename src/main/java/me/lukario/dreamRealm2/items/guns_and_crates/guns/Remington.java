@@ -20,19 +20,28 @@ import org.bukkit.util.Vector;
 
 import java.util.*;
 
-public class Aug implements Listener{
+public class Remington implements Listener {
 
     private final Plugin plugin;
 
-     public Aug(Plugin plugin) {
+     public Remington(Plugin plugin) {
          this.plugin = plugin;
          cooldownManagement();
      }
 
-     private static final String ITEM_NAME = ChatColor.of("#D88F07") + "Aug A3";
-     private static final String ITEM_LORE = ChatColor.YELLOW + "fires 5.56";
+     private static final String ITEM_NAME = ChatColor.of("#D88F07") + "Remington 870";
+     private static final String ITEM_LORE = ChatColor.YELLOW + "fires 12-gauge";
      private static final Material ITEM_MATERIAL = Material.NETHERITE_HOE;
 
+    private static int bullet_custom_model_data = 5;
+    private static float cooldownBetweenShots = 12f;
+    private static float damage_per_bullet = 2f;
+    private static float range_of_bullets = 16f;
+    private static int max_bullet_count = 8;
+    private static int bullet_spread = 65;
+    private static int bullet_amount = 20;
+    private static int bullet_delay = 0;
+    private static int bullets_cost_per_shot = 1;
 
      private static final HashMap<UUID,Float> cooldownLeft = new HashMap<>();
 
@@ -66,7 +75,8 @@ public class Aug implements Listener{
      }
 
      @EventHandler
-     public void augUsed(PlayerInteractEvent event){
+     public void remingtonUsed(PlayerInteractEvent event){
+
          Player player = event.getPlayer();
          UUID uuid = player.getUniqueId();
 
@@ -86,11 +96,11 @@ public class Aug implements Listener{
                  return;
              }
 
-             int availableAmmo = Misc.ItemAmountInInventory(player, "copper_ingot", 4);
+             int availableAmmo = Misc.ItemAmountInInventory(player, "copper_ingot", bullet_custom_model_data);
 
 
              if (availableAmmo > 0) {
-                 meta.getPersistentDataContainer().set(AMMO_AUG_KEY, PersistentDataType.INTEGER, 42);
+                 meta.getPersistentDataContainer().set(AMMO_AUG_KEY, PersistentDataType.INTEGER, max_bullet_count);
                  player.playSound(player, Sound.ITEM_ARMOR_EQUIP_IRON,3,1);
 
                 // Cast to Damageable properly
@@ -102,13 +112,13 @@ public class Aug implements Listener{
                     newMeta.setUnbreakable(false); // Make durability bar visible
                     newMeta.setDisplayName(meta.getDisplayName());
                     newMeta.setLore(meta.getLore());
-                    newMeta.getPersistentDataContainer().set(AMMO_AUG_KEY, PersistentDataType.INTEGER, 42);
+                    newMeta.getPersistentDataContainer().set(AMMO_AUG_KEY, PersistentDataType.INTEGER, max_bullet_count);
                     newMeta.setCustomModelData(meta.getCustomModelData());
 
                     gun.setItemMeta(newMeta);
                 }
 
-                itemToRemove(player, 4,1);
+                itemToRemove(player, bullet_custom_model_data,1);
                 player.sendMessage("Reloaded");
             }else{
                  player.playSound(player, Sound.ENTITY_ENDERMAN_TELEPORT, 3,1);
@@ -118,7 +128,7 @@ public class Aug implements Listener{
          if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK){
 
              if (cooldownLeft.get(uuid)==0){
-                 cooldownLeft.put(uuid,5f);
+                 cooldownLeft.put(uuid,cooldownBetweenShots);
                  ItemStack gun = player.getInventory().getItemInMainHand();
                  ItemMeta meta = gun.getItemMeta();
 
@@ -127,7 +137,7 @@ public class Aug implements Listener{
 
                  if (bullets>0) {
                      player.playSound(player,Sound.ENTITY_BLAZE_SHOOT, 3 ,1);
-                     meta.getPersistentDataContainer().set(AMMO_AUG_KEY, PersistentDataType.INTEGER, bullets-3);
+                     meta.getPersistentDataContainer().set(AMMO_AUG_KEY, PersistentDataType.INTEGER, bullets-bullets_cost_per_shot);
                      gun.setItemMeta(meta);
 
                      if (meta instanceof ItemMeta) {
@@ -138,7 +148,10 @@ public class Aug implements Listener{
                              if (gun.getItemMeta() instanceof Damageable) {
                                  Damageable damageable = (Damageable) gun.getItemMeta();
                                  int maxDurability = 2031;
-                                 int visualDamage = maxDurability - (int) ((bullets / 42f) * maxDurability);
+
+                                 float maxbulletCount = max_bullet_count;
+
+                                 int visualDamage = maxDurability - (int) ((bullets / maxbulletCount) * maxDurability);
                                  damageable.setDamage(visualDamage);
 
                                  ItemMeta newMeta = (ItemMeta) damageable;
@@ -153,27 +166,24 @@ public class Aug implements Listener{
 
 //                             player.sendMessage(bullets + " bullets left");
                         }
-                     rayCast(player,5);
-                     new BukkitRunnable(){
-                         @Override
-                         public void run(){
-                             rayCast(player,5);
-                             this.cancel();
-                         }
-                     }.runTaskTimer(plugin,2,1);
-                      new BukkitRunnable(){
-                         @Override
-                         public void run(){
-                             rayCast(player,5);
-                             this.cancel();
-                         }
-                     }.runTaskTimer(plugin,4,1);
+
+                     for (int k = 0; k < bullet_amount; k++){
+                        new BukkitRunnable(){
+                            @Override
+                            public void run(){
+                                rayCast(player, bullet_spread);
+                                this.cancel();
+                            }
+                        }.runTaskTimer(plugin,bullet_delay,1);
+                     }
 
                  }else{
                      player.sendMessage("out of ammo");
                  }
              }
          }
+
+         event.setCancelled(true);
      }
 
      private void itemToRemove(Player player, int customModelData, int amountToRemove){
@@ -209,7 +219,7 @@ public class Aug implements Listener{
 
          Vector direction = location.getDirection().normalize();
 
-         for (float i = 0; i < 64; i+=0.5f){
+         for (float i = 0; i < range_of_bullets; i+=0.5f){
              Location current = location.clone().add(direction.clone().multiply(i));
 
              current.getWorld().spawnParticle(Particle.ASH, current, 1 ,0,0,0,0);
@@ -220,7 +230,7 @@ public class Aug implements Listener{
 
             for (LivingEntity livingEntity : current.getNearbyLivingEntities(1)){
                 if (!livingEntity.equals(player)){
-                    Misc.damageNoTicks(livingEntity,5,player);
+                    Misc.damageNoTicks(livingEntity,damage_per_bullet,player);
                     player.playSound(player, Sound.ENTITY_GENERIC_EXPLODE,1,1);
                     livingEntity.getWorld().spawnParticle(Particle.EXPLOSION,livingEntity.getLocation(),1,0,0,0,0);
                     return;
@@ -257,5 +267,6 @@ public class Aug implements Listener{
          }
          return false;
      }
+
 
 }
