@@ -39,7 +39,7 @@ public class Remington implements Listener {
     private static float range_of_bullets = 16f;
     private static int max_bullet_count = 8;
     private static int bullet_spread = 65;
-    private static int bullet_amount = 20;
+    private static int bullet_amount_per_fire = 20;
     private static int bullet_delay = 0;
     private static int bullets_cost_per_shot = 1;
 
@@ -167,7 +167,7 @@ public class Remington implements Listener {
 //                             player.sendMessage(bullets + " bullets left");
                         }
 
-                     for (int k = 0; k < bullet_amount; k++){
+                     for (int k = 0; k < bullet_amount_per_fire; k++){
                         new BukkitRunnable(){
                             @Override
                             public void run(){

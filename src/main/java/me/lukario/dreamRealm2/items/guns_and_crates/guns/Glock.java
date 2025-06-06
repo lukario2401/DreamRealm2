@@ -94,7 +94,7 @@ public class Glock implements Listener {
 
              int amountOfBullets = data.getOrDefault(AMMO_KEY, PersistentDataType.INTEGER, 0);
              int maxAmmo = 12;
-             int availableAmmo = Misc.ItemAmountInInventory(player, "copper_ingot", 2);
+             int availableAmmo = Misc.ItemAmountInInventory(player, "copper_ingot", 6);
 
              int loadAmount = Math.min(availableAmmo, maxAmmo - amountOfBullets);
 
@@ -190,7 +190,7 @@ public class Glock implements Listener {
                     if (current == null || current.getType() != Material.COPPER_INGOT) continue;
 
                     ItemMeta meta = current.getItemMeta();
-                    if (meta != null && meta.hasCustomModelData() && meta.getCustomModelData() == 2) {
+                    if (meta != null && meta.hasCustomModelData() && meta.getCustomModelData() == 6) {
                         if (current.getAmount() > 1) {
                             current.setAmount(current.getAmount() - 1);
                         } else {

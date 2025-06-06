@@ -20,28 +20,28 @@ import org.bukkit.util.Vector;
 
 import java.util.*;
 
-public class Mp implements Listener {
+public class Mp5 implements Listener {
 
     private final Plugin plugin;
 
-    public Mp(Plugin plugin) {
+    public Mp5(Plugin plugin) {
         this.plugin = plugin;
         cooldownManagement();
     }
 
-    private static final String ITEM_NAME = ChatColor.of("#D88F07") + "Remington 870";
-    private static final String ITEM_LORE = ChatColor.YELLOW + "fires 12-gauge";
+    private static final String ITEM_NAME = ChatColor.of("#D88F07") + "MP5";
+    private static final String ITEM_LORE = ChatColor.YELLOW + "fires 9×19mm";
     private static final Material ITEM_MATERIAL = Material.NETHERITE_HOE;
 
-    private static int bullet_custom_model_data = 5;
-    private static float cooldownBetweenShots = 12f;
-    private static float damage_per_bullet = 2f;
-    private static float range_of_bullets = 16f;
-    private static int max_bullet_count = 8;
-    private static int bullet_spread = 65;
-    private static int bullet_amount = 20;
-    private static int bullet_delay = 0;
-    private static int bullets_cost_per_shot = 1;
+    private static int bullet_custom_model_data = 2;
+    private static float cooldownBetweenShots = 0f;
+    private static float damage_per_bullet = 4f;
+    private static float range_of_bullets = 24;
+    private static int max_bullet_count = 30;
+    private static int bullet_spread = 20;
+    private static int bullet_amount_per_fire = 2;
+    private static int bullet_delay = 2;
+    private static int bullets_cost_per_shot = 2;
 
     private static final HashMap<UUID,Float> cooldownLeft = new HashMap<>();
 
@@ -165,7 +165,7 @@ public class Mp implements Listener {
                         }
                     }
 
-                    for (int k = 0; k < bullet_amount; k++){
+                    for (int k = 0; k < bullet_amount_per_fire; k++){
                         new BukkitRunnable(){
                             @Override
                             public void run(){
