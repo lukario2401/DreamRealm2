@@ -421,6 +421,16 @@ public class GetCommand implements CommandExecutor, TabExecutor {
 
             return true;
         }
+        if (args.length == 1 && args[0].equalsIgnoreCase("M249")) {
+            player.getInventory().addItem(Lmg.createItem());
+            player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Lmg");
+            return true;
+        }
+        if (args.length == 1 && args[0].equalsIgnoreCase("M24")) {
+            player.getInventory().addItem(M24.createItem());
+            player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "M24");
+            return true;
+        }
         // Invalid argument
         player.sendMessage(ChatColor.RED + "Unknown item type. Use /get <launch sword|cat>");
         return false;
@@ -445,7 +455,8 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             "Chain", "Slash", "Swipe", "MidasStaff", "Shadow", "Dual", "Swift", "Satellite", "Pyromancer", "GiantSword",
             "Flame", "Ferocity", "Katana", "Wrench", "Flash", "FireWand", "Portal", "Meteor", "Termination", "Claws",
             "Missile", "GraveYard", "SphereCage", "FireCracker", "Stack", "Freja","AirStrike", "CAS", "LaserEye", "Mech","Medkit",
-                "Glock", "ammo", "Ak47", "Aug", "Remington", "ammo_5.56", "ammo_7.62", "ammo_12G", "ammo_9x19mm","Mp5","ammo_glock"
+            "Glock", "ammo", "Ak47", "Aug", "Remington", "ammo_5.56", "ammo_7.62", "ammo_12G", "ammo_9x19mm","Mp5","ammo_glock",
+            "M249", "M24"
         );
 
         // First argument suggestions

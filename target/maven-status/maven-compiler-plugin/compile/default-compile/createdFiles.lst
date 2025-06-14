@@ -19,6 +19,7 @@ me\lukario\dreamRealm2\commands\SumCommand.class
 me\lukario\dreamRealm2\items\gui\ShopGUI.class
 me\lukario\dreamRealm2\DoubleJump.class
 me\lukario\dreamRealm2\items\swords\Style$3.class
+me\lukario\dreamRealm2\items\guns_and_crates\guns\M24.class
 me\lukario\dreamRealm2\items\special\magic\Theather.class
 me\lukario\dreamRealm2\items\swords\ShadowDance$2.class
 me\lukario\dreamRealm2\items\special\ranged\misc\MidasStaff$2.class
@@ -74,6 +75,7 @@ me\lukario\dreamRealm2\items\swords\Style$4.class
 me\lukario\dreamRealm2\items\special\builder\CAS.class
 me\lukario\dreamRealm2\items\swords\Hyperion.class
 me\lukario\dreamRealm2\items\special\Clock$4.class
+me\lukario\dreamRealm2\items\guns_and_crates\guns\Lmg.class
 me\lukario\dreamRealm2\items\guns_and_crates\guns\Mp5.class
 me\lukario\dreamRealm2\items\guns_and_crates\guns\Aug$2.class
 me\lukario\dreamRealm2\commands\GetCommand.class
@@ -95,6 +97,7 @@ me\lukario\dreamRealm2\items\special\builder\CAS$2.class
 me\lukario\dreamRealm2\items\special\ranged\misc\GraveYard$1.class
 me\lukario\dreamRealm2\items\swords\GiantSword.class
 me\lukario\dreamRealm2\items\swords\Rapier.class
+me\lukario\dreamRealm2\items\guns_and_crates\guns\M24$2.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Link.class
 me\lukario\dreamRealm2\items\guns_and_crates\guns\Mp5$1.class
 me\lukario\dreamRealm2\RayCast$1.class
@@ -128,9 +131,11 @@ me\lukario\dreamRealm2\items\swords\Style.class
 me\lukario\dreamRealm2\items\swords\Claws$2.class
 me\lukario\dreamRealm2\items\gui\EnderChest.class
 me\lukario\dreamRealm2\items\special\JetSu.class
+me\lukario\dreamRealm2\items\guns_and_crates\guns\M24$1.class
 me\lukario\dreamRealm2\items\swords\Scythe$1.class
 me\lukario\dreamRealm2\items\special\ranged\misc\FireCracker$2.class
 me\lukario\dreamRealm2\items\special\builder\Mech$1.class
+me\lukario\dreamRealm2\items\guns_and_crates\guns\Lmg$1.class
 me\lukario\dreamRealm2\items\swords\Dagger.class
 me\lukario\dreamRealm2\items\swords\ShadowDance$4.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Satellite$3.class
@@ -174,6 +179,7 @@ me\lukario\dreamRealm2\items\special\ranged\bow\Terminator$3.class
 me\lukario\dreamRealm2\items\swords\SinOfSolace$1.class
 me\lukario\dreamRealm2\items\guns_and_crates\guns\Remington.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Missile$2.class
+me\lukario\dreamRealm2\items\guns_and_crates\guns\Lmg$2.class
 me\lukario\dreamRealm2\items\special\magic\Theather$1.class
 me\lukario\dreamRealm2\items\swords\Flash.class
 me\lukario\dreamRealm2\items\special\ranged\misc\FlameThrower.class
