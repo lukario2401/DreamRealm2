@@ -13,6 +13,7 @@ import me.lukario.dreamRealm2.items.special.Clock;
 import me.lukario.dreamRealm2.items.special.JetSu;
 import me.lukario.dreamRealm2.items.swords.Claws;
 import me.lukario.dreamRealm2.items.swords.GiantSword;
+import me.lukario.dreamRealm2.items.swords.cultivation.JadeSword;
 import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -431,6 +432,11 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "M24");
             return true;
         }
+        if (args.length == 1 && args[0].equalsIgnoreCase("JadeBlade")) {
+            player.getInventory().addItem(JadeSword.createItem());
+            player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "M24");
+            return true;
+        }
         // Invalid argument
         player.sendMessage(ChatColor.RED + "Unknown item type. Use /get <launch sword|cat>");
         return false;
@@ -456,7 +462,7 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             "Flame", "Ferocity", "Katana", "Wrench", "Flash", "FireWand", "Portal", "Meteor", "Termination", "Claws",
             "Missile", "GraveYard", "SphereCage", "FireCracker", "Stack", "Freja","AirStrike", "CAS", "LaserEye", "Mech","Medkit",
             "Glock", "ammo", "Ak47", "Aug", "Remington", "ammo_5.56", "ammo_7.62", "ammo_12G", "ammo_9x19mm","Mp5","ammo_glock",
-            "M249", "M24"
+            "M249", "M24", "JadeBlade"
         );
 
         // First argument suggestions

@@ -17,6 +17,7 @@ import me.lukario.dreamRealm2.items.swords.*;
 import me.lukario.dreamRealm2.items.special.Clock;
 import me.lukario.dreamRealm2.items.special.JetSu;
 import me.lukario.dreamRealm2.items.special.ranged.misc.MidasStaff;
+import me.lukario.dreamRealm2.items.swords.cultivation.JadeSword;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class DreamRealm2 extends JavaPlugin {
@@ -49,6 +50,7 @@ public final class DreamRealm2 extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Remington(this), this);
         getServer().getPluginManager().registerEvents(new Mp5(this), this);
         getServer().getPluginManager().registerEvents(new Lmg(this), this);
+        getServer().getPluginManager().registerEvents(new JadeSword(this), this);
         getServer().getPluginManager().registerEvents(new M24(this), this);
         getServer().getPluginManager().registerEvents(new GiantSword(), this);
         getServer().getPluginManager().registerEvents(new Glock(this), this);

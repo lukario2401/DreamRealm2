@@ -9,6 +9,7 @@ me\lukario\dreamRealm2\items\swords\ShadowDance$3.class
 me\lukario\dreamRealm2\items\special\ranged\bow\Arch$2.class
 me\lukario\dreamRealm2\items\guns_and_crates\guns\Glock$1.class
 me\lukario\dreamRealm2\items\special\ranged\bow\JujuShortBow.class
+me\lukario\dreamRealm2\items\swords\cultivation\JadeSword$2.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Satellite.class
 me\lukario\dreamRealm2\items\special\ranged\misc\FlameThrower$2.class
 me\lukario\dreamRealm2\items\special\builder\Wrench$2.class
@@ -128,6 +129,7 @@ me\lukario\dreamRealm2\items\special\ranged\misc\Satellite$1.class
 me\lukario\dreamRealm2\items\special\builder\Fence$1.class
 me\lukario\dreamRealm2\items\special\magic\LaserEye$1.class
 me\lukario\dreamRealm2\items\swords\Style.class
+me\lukario\dreamRealm2\items\swords\cultivation\JadeSword.class
 me\lukario\dreamRealm2\items\swords\Claws$2.class
 me\lukario\dreamRealm2\items\gui\EnderChest.class
 me\lukario\dreamRealm2\items\special\JetSu.class
@@ -164,6 +166,7 @@ me\lukario\dreamRealm2\items\gui\CommandGUI$1.class
 me\lukario\dreamRealm2\items\special\magic\SphereCage$1.class
 me\lukario\dreamRealm2\items\swords\Slash$1.class
 me\lukario\dreamRealm2\items\special\ranged\bow\Freja$2.class
+me\lukario\dreamRealm2\items\swords\cultivation\JadeSword$1.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Missile$3.class
 me\lukario\dreamRealm2\items\special\ranged\bow\Freja.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Pyromancer$1.class
