@@ -302,44 +302,66 @@ public class JadeSword implements Listener {
         }.runTaskTimer(plugin,0,1);
     }
 
-    private void runEveryTickForPlayers() {
-    new BukkitRunnable() {
-        @Override
-        public void run() {
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                UUID uuid = player.getUniqueId();
+        // Predefined offsets for each sword (x = left/right, y = up, z = forward)
+    private final Vector[] swordOffsets = new Vector[]{
+        new Vector(0.8, 1.2, 0.4),    // 1: up + right
+        new Vector(-0.8, 1.2, 0.4),   // 2: up + left
+        new Vector(1.2, 1.4, 0.8),    // 3: further right + up
+        new Vector(-1.2, 1.4, 0.8),   // 4: further left + up
+        new Vector(1.6, 1.6, 1.2),    // 5: even further right
+        new Vector(-1.6, 1.6, 1.2)    // 6: even further left
+    };
 
-                if (isHoldingTheCorrectItem(player)){
+    private void runEveryTickForPlayers() {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    UUID uuid = player.getUniqueId();
+
+                    // Update action bar
                     player.sendActionBar(
                         net.kyori.adventure.text.Component.text(
                             "Cooldown: " + newSwordCooldown.getOrDefault(uuid, 0f)
                             + " | Stands: " + amountOfArmorStands.getOrDefault(uuid, 0f)
                         )
                     );
-                }
 
-                // Make their armor stands follow them
-                List<ArmorStand> stands = playerArmorStands.get(uuid);
-                if (stands != null && !stands.isEmpty()) {
-                    double radius = 3; // distance around player
-                    double height = 1.0; // height above ground
-                    double angleStep = (2 * Math.PI) / stands.size(); // even spacing
+                    // Update armor stand positions
+                    List<ArmorStand> stands = playerArmorStands.get(uuid);
+                    if (stands != null && !stands.isEmpty()) {
+                        Location baseLoc = player.getLocation();
+                        baseLoc.setY(baseLoc.getY() + 0.5); // slight height offset
 
-                    for (int i = 0; i < stands.size(); i++) {
-                        ArmorStand stand = stands.get(i);
-                        double angle = i * angleStep + (System.currentTimeMillis() / 200.0); // also rotates
-                        double x = player.getLocation().getX() + radius * Math.cos(angle);
-                        double z = player.getLocation().getZ() + radius * Math.sin(angle);
-                        double y = player.getLocation().getY() + height;
+                        for (int i = 0; i < stands.size() && i < swordOffsets.length; i++) {
+                            ArmorStand stand = stands.get(i);
+                            Vector offset = swordOffsets[i];
 
-                        Location newLoc = new Location(player.getWorld(), x, y, z);
-                        stand.teleport(newLoc);
+                            // Optional: floating animation (sine wave)
+                            double floatY = Math.sin((System.currentTimeMillis() / 200.0) + i) * 0.1;
+                            Vector animatedOffset = offset.clone();
+                            animatedOffset.setY(animatedOffset.getY() + floatY);
+
+                            // Rotate offset based on player yaw
+                            Location swordLoc = baseLoc.clone().add(rotateVector(animatedOffset, baseLoc.getYaw()));
+                            stand.teleport(swordLoc);
+                        }
                     }
                 }
             }
-        }
-    }.runTaskTimer(plugin, 0, 1); // Run every tick
-}
+        }.runTaskTimer(plugin, 0, 1); // Runs every tick
+    }
+
+    // Rotates a vector by yaw (so it stays relative to player's facing)
+    private Vector rotateVector(Vector v, float yawDegrees) {
+        double yaw = Math.toRadians(-yawDegrees);
+        double cos = Math.cos(yaw);
+        double sin = Math.sin(yaw);
+        double x = v.getX() * cos - v.getZ() * sin;
+        double z = v.getX() * sin + v.getZ() * cos;
+        return new Vector(x, v.getY(), z);
+    }
+
 
 
     private static boolean isHoldingTheCorrectItem(Player player) {
