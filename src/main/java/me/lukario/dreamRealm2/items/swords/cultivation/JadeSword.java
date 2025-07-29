@@ -66,7 +66,7 @@ public class JadeSword implements Listener {
                         Player player = Bukkit.getPlayer(uuid);
                         if (player!=null){
                             if (amountOfArmorStands.get(uuid)<6){
-                                newSwordCooldown.put(uuid,60f);
+                                newSwordCooldown.put(uuid,40f);
                                 amountOfArmorStands.put(uuid,amountOfArmorStands.get(uuid)+1);
 
                                 ArmorStand stand = player.getWorld().spawn(player.getLocation(), ArmorStand.class);
@@ -123,6 +123,8 @@ public class JadeSword implements Listener {
 
     @EventHandler
     public void jadeSwordUsed(PlayerInteractEvent event){
+        if (event.getHand() != org.bukkit.inventory.EquipmentSlot.HAND) return;
+
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
 
@@ -164,7 +166,7 @@ public class JadeSword implements Listener {
             Location current = location.clone().add(direction.clone().multiply(i));
             current.getWorld().spawnParticle(Particle.SOUL,current,1,0,0,0,0);
 
-            if (current.getBlock().getType()!=Material.AIR){
+            if (current.getBlock().isSolid()){
                 i+=256;
             }
 
@@ -200,7 +202,7 @@ public class JadeSword implements Listener {
         for (float i = 0; i <= 48; i +=0.5f){
             Location current = location.clone().add(direction.clone().multiply(i));
 
-            if (current.getBlock().getType()!=Material.AIR){
+            if (current.getBlock().isSolid()){
                 finalLocation=current;
                 i+=256;
             }
