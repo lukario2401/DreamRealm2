@@ -1,5 +1,6 @@
 package me.lukario.dreamRealm2.items.swords.cultivation;
 
+import com.comphenix.protocol.wrappers.EnumWrappers;
 import me.lukario.dreamRealm2.Misc;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
@@ -19,6 +20,8 @@ import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
@@ -34,6 +37,9 @@ public class JadeSword implements Listener {
 
     private static final HashMap<UUID,Float> amountOfArmorStands = new HashMap<>();
     private static final HashMap<UUID,Float> newSwordCooldown = new HashMap<>();
+
+    private final Map<UUID, List<ArmorStand>> playerArmorStands = new HashMap<>();
+
 
     public JadeSword(Plugin plugin) {
         this.plugin = plugin;
@@ -62,7 +68,10 @@ public class JadeSword implements Listener {
                             if (amountOfArmorStands.get(uuid)<6){
                                 newSwordCooldown.put(uuid,60f);
                                 amountOfArmorStands.put(uuid,amountOfArmorStands.get(uuid)+1);
-                                player.getWorld().spawn(player.getLocation(), ArmorStand.class);
+
+                                ArmorStand stand = player.getWorld().spawn(player.getLocation(), ArmorStand.class);
+                                playerArmorStands.computeIfAbsent(player.getUniqueId(), k -> new ArrayList<>()).add(stand);
+
                             }
                         }
                     }
@@ -112,19 +121,31 @@ public class JadeSword implements Listener {
         }
         if (event.getAction()== Action.RIGHT_CLICK_AIR||event.getAction()==Action.RIGHT_CLICK_BLOCK) {
            player.sendMessage("Right");
-           if (amountOfArmorStands.get(uuid)>0){
+            if (amountOfArmorStands.get(uuid)>0){
                 amountOfArmorStands.put(uuid,amountOfArmorStands.get(uuid)-1);
-           }
+
+                List<ArmorStand> stands = playerArmorStands.get(player.getUniqueId());
+                if (stands != null && !stands.isEmpty()) {
+                    rightClickJadeSword(player);
+//                    ArmorStand lastStand = stands.getLast();
+//                    lastStand.remove();
+                    stands.removeLast();
+                }
+            }
+
+            Material heldMaterial = player.getInventory().getItemInMainHand().getType();
+            player.setCooldown(heldMaterial, 1);
         }
     }
 
     private void leftClickJadeSword(Player player, Float degree){
+
         Location location = player.getEyeLocation();
         location.setYaw(location.getYaw()+degree);
         Vector direction = location.getDirection().normalize();
         UUID uuid = player.getUniqueId();
 
-        for (float i = 0; i<=4f; i+=0.5f){
+        for (float i = 0; i<=6f; i+=0.5f){
 
             Location current = location.clone().add(direction.clone().multiply(i));
             current.getWorld().spawnParticle(Particle.SOUL,current,1,0,0,0,0);
@@ -146,6 +167,77 @@ public class JadeSword implements Listener {
                 }
             }
         }
+    }
+
+    private void rightClickJadeSword(Player player){
+        ArmorStand armorStand = null;
+        Location finalLocation = null;
+
+        List<ArmorStand> stands = playerArmorStands.get(player.getUniqueId());
+        if (stands != null && !stands.isEmpty()) {
+            ArmorStand armorStandFromList = stands.getLast();
+            armorStand = armorStandFromList;
+        }
+
+
+        Location location = player.getEyeLocation();
+        Vector direction = location.getDirection().normalize();
+
+        for (float i = 0; i <= 16; i +=0.5f){
+            Location current = location.clone().add(direction.clone().multiply(i));
+
+            if (current.getBlock().getType()!=Material.AIR){
+                finalLocation=current;
+                i+=256;
+            }
+
+            if (i==16){
+                finalLocation=current;
+            }
+        }
+
+        if (armorStand != null && finalLocation != null) {
+            beamBetweenTwoEntity(armorStand, finalLocation, player);
+        }
+
+    }
+
+     private void beamBetweenTwoEntity(ArmorStand armorStand, Location finalLocation,Player player){
+        Location startLocation = armorStand.getLocation().add(0,1,0);
+        Location endLocation = finalLocation;
+
+        Vector direction = endLocation.toVector().subtract(startLocation.toVector()).normalize();
+        double distance = startLocation.distance(endLocation);
+        Location current = startLocation;
+
+        new BukkitRunnable(){
+            int timeAlive = 0;
+            @Override
+            public void run(){
+                if (armorStand.isDead()){
+                    timeAlive+=200;
+                }
+                if (timeAlive>=200){
+                    List<ArmorStand> stands = playerArmorStands.get(player.getUniqueId());
+                    if (stands != null && !stands.isEmpty()) {
+                        stands.remove(armorStand);
+                    }
+                    armorStand.remove();
+                    this.cancel();
+                }
+
+                if (current.distance(endLocation)>0.6){
+
+                    current.getWorld().spawnParticle(Particle.ENCHANTED_HIT,current,1,0,0,0,0);
+                    current.add(direction.clone().multiply(0.5));
+                    armorStand.teleport(current);
+
+                }else{
+                    timeAlive+=256;
+                }
+                timeAlive+=1;
+            }
+        }.runTaskTimer(plugin,0,1);
     }
 
     private void runEveryTickForPlayers() {
