@@ -70,6 +70,20 @@ public class JadeSword implements Listener {
                                 amountOfArmorStands.put(uuid,amountOfArmorStands.get(uuid)+1);
 
                                 ArmorStand stand = player.getWorld().spawn(player.getLocation(), ArmorStand.class);
+
+                                ItemStack customItem = new ItemStack(Material.IRON_SWORD);
+                                ItemMeta meta = customItem.getItemMeta();
+                                if (meta != null) {
+                                    meta.setCustomModelData(16);
+                                    customItem.setItemMeta(meta);
+                                }
+
+                                stand.getEquipment().setHelmet(customItem);
+                                stand.setVisible(false);
+                                stand.setMarker(true);
+                                stand.setGravity(false);
+                                stand.setSmall(false);
+
                                 playerArmorStands.computeIfAbsent(player.getUniqueId(), k -> new ArrayList<>()).add(stand);
 
                             }
@@ -88,7 +102,7 @@ public class JadeSword implements Listener {
             meta.setDisplayName(ITEM_NAME);
             meta.setLore(Arrays.asList(ITEM_LORE));
             meta.setUnbreakable(true);
-            meta.setCustomModelData(2);
+            meta.setCustomModelData(16);
             item.setItemMeta(meta);
         }
         return item;
@@ -108,7 +122,7 @@ public class JadeSword implements Listener {
     }
 
     @EventHandler
-    public void clawsUsed(PlayerInteractEvent event){
+    public void jadeSwordUsed(PlayerInteractEvent event){
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
 
@@ -120,7 +134,7 @@ public class JadeSword implements Listener {
             leftClickJadeSword(player,20f);
         }
         if (event.getAction()== Action.RIGHT_CLICK_AIR||event.getAction()==Action.RIGHT_CLICK_BLOCK) {
-           player.sendMessage("Right");
+//           player.sendMessage("Right");
             if (amountOfArmorStands.get(uuid)>0){
                 amountOfArmorStands.put(uuid,amountOfArmorStands.get(uuid)-1);
 
@@ -133,8 +147,8 @@ public class JadeSword implements Listener {
                 }
             }
 
-            Material heldMaterial = player.getInventory().getItemInMainHand().getType();
-            player.setCooldown(heldMaterial, 1);
+//            Material heldMaterial = player.getInventory().getItemInMainHand().getType();
+//            player.setCooldown(heldMaterial, 1);
         }
     }
 
@@ -183,7 +197,7 @@ public class JadeSword implements Listener {
         Location location = player.getEyeLocation();
         Vector direction = location.getDirection().normalize();
 
-        for (float i = 0; i <= 16; i +=0.5f){
+        for (float i = 0; i <= 48; i +=0.5f){
             Location current = location.clone().add(direction.clone().multiply(i));
 
             if (current.getBlock().getType()!=Material.AIR){
@@ -218,6 +232,18 @@ public class JadeSword implements Listener {
                     timeAlive+=200;
                 }
                 if (timeAlive>=200){
+
+                    for (LivingEntity livingEntity : current.getNearbyLivingEntities(3)){
+                        if (livingEntity instanceof ArmorStand){
+                        }else{
+                            Misc.damageNoTicks(livingEntity,24,player);
+                        }
+                    }
+
+                    current.getWorld().playSound(current,Sound.ENTITY_GENERIC_EXPLODE,3,1);
+                    current.getWorld().spawnParticle(Particle.EXPLOSION,current,2,0,0,0,0);
+                    current.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER,current,2,0,0,0,0);
+
                     List<ArmorStand> stands = playerArmorStands.get(player.getUniqueId());
                     if (stands != null && !stands.isEmpty()) {
                         stands.remove(armorStand);
@@ -228,7 +254,41 @@ public class JadeSword implements Listener {
 
                 if (current.distance(endLocation)>0.6){
 
-                    current.getWorld().spawnParticle(Particle.ENCHANTED_HIT,current,1,0,0,0,0);
+//                    current.getWorld().spawnParticle(Particle.ENCHANTED_HIT,current,1,0,0,0,0);
+                    current.add(direction.clone().multiply(0.5));
+                    armorStand.teleport(current);
+
+                }else{
+                    timeAlive+=256;
+                }
+                timeAlive+=1;
+                                if (armorStand.isDead()){
+                    timeAlive+=200;
+                }
+                if (timeAlive>=200){
+
+                    for (LivingEntity livingEntity : current.getNearbyLivingEntities(3)){
+                        if (livingEntity instanceof ArmorStand){
+                        }else{
+                            Misc.damageNoTicks(livingEntity,24,player);
+                        }
+                    }
+
+                    current.getWorld().playSound(current,Sound.ENTITY_GENERIC_EXPLODE,3,1);
+                    current.getWorld().spawnParticle(Particle.EXPLOSION,current,2,0,0,0,0);
+                    current.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER,current,2,0,0,0,0);
+
+                    List<ArmorStand> stands = playerArmorStands.get(player.getUniqueId());
+                    if (stands != null && !stands.isEmpty()) {
+                        stands.remove(armorStand);
+                    }
+                    armorStand.remove();
+                    this.cancel();
+                }
+
+                if (current.distance(endLocation)>0.6){
+
+//                    current.getWorld().spawnParticle(Particle.ENCHANTED_HIT,current,1,0,0,0,0);
                     current.add(direction.clone().multiply(0.5));
                     armorStand.teleport(current);
 
@@ -241,13 +301,13 @@ public class JadeSword implements Listener {
     }
 
     private void runEveryTickForPlayers() {
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                for (Player player : Bukkit.getOnlinePlayers()) {
-                    // Your code here
-                    UUID uuid = player.getUniqueId();
+    new BukkitRunnable() {
+        @Override
+        public void run() {
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                UUID uuid = player.getUniqueId();
 
+                if (isHoldingTheCorrectItem(player)){
                     player.sendActionBar(
                         net.kyori.adventure.text.Component.text(
                             "Cooldown: " + newSwordCooldown.getOrDefault(uuid, 0f)
@@ -255,9 +315,30 @@ public class JadeSword implements Listener {
                         )
                     );
                 }
+
+                // Make their armor stands follow them
+                List<ArmorStand> stands = playerArmorStands.get(uuid);
+                if (stands != null && !stands.isEmpty()) {
+                    double radius = 3; // distance around player
+                    double height = 1.0; // height above ground
+                    double angleStep = (2 * Math.PI) / stands.size(); // even spacing
+
+                    for (int i = 0; i < stands.size(); i++) {
+                        ArmorStand stand = stands.get(i);
+                        double angle = i * angleStep + (System.currentTimeMillis() / 200.0); // also rotates
+                        double x = player.getLocation().getX() + radius * Math.cos(angle);
+                        double z = player.getLocation().getZ() + radius * Math.sin(angle);
+                        double y = player.getLocation().getY() + height;
+
+                        Location newLoc = new Location(player.getWorld(), x, y, z);
+                        stand.teleport(newLoc);
+                    }
+                }
             }
-        }.runTaskTimer(plugin, 0, 1); // 0 delay, run every tick
-    }
+        }
+    }.runTaskTimer(plugin, 0, 1); // Run every tick
+}
+
 
     private static boolean isHoldingTheCorrectItem(Player player) {
         ItemStack mainHandItem = player.getInventory().getItemInMainHand();
