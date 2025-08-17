@@ -1,28 +1,22 @@
 package me.lukario.dreamRealm2.items.swords.cultivation;
 
-import com.comphenix.protocol.wrappers.EnumWrappers;
 import me.lukario.dreamRealm2.Misc;
 import net.md_5.bungee.api.ChatColor;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Particle;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerAnimationEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
-import org.bukkit.event.player.PlayerToggleSneakEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
@@ -37,24 +31,42 @@ public class JadeSword implements Listener {
     private static final Material ITEM_MATERIAL = Material.IRON_SWORD;
 
     private static final int amountOfSwords = 6;
-    private static final float cooldownForNewSword = 80;
+    private static final float cooldownForNewSword = 20;
     private static final float damageForLeftClick = 12;
-    private static final float damageForRightCLick = 24;
+    private static final float damageForRightCLick = 8;
     private static final float rangeForSword = 24;
-
-
 
     private static final HashMap<UUID,Float> amountOfArmorStands = new HashMap<>();
     private static final HashMap<UUID,Float> newSwordCooldown = new HashMap<>();
 
     private final Map<UUID, List<ArmorStand>> playerArmorStands = new HashMap<>();
+    private static Map<UUID, List<LivingEntity>> livingEntitiesHit = new HashMap<>();
 
+    NamespacedKey key = new NamespacedKey(JavaPlugin.getProvidingPlugin(getClass()), "ToBeRemoved");
 
 
     public JadeSword(Plugin plugin) {
         this.plugin = plugin;
         cooldownManagement();
         runEveryTickForPlayers();
+    }
+
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+        UUID uuid = player.getUniqueId();
+
+        if (isHoldingTheCorrectItem(player)){
+            if (newSwordCooldown.get(uuid)==null){
+                    newSwordCooldown.put(uuid,0f);
+            }
+            if (amountOfArmorStands.get(uuid)==null){
+                amountOfArmorStands.put(uuid,0f);
+            }
+            if (livingEntitiesHit.get(uuid)==null){
+                livingEntitiesHit.put(uuid, new ArrayList<>());
+            }
+        }
     }
 
     private void cooldownManagement() {
@@ -76,8 +88,8 @@ public class JadeSword implements Listener {
                         Player player = Bukkit.getPlayer(uuid);
                         if (player!=null){
                             if (amountOfArmorStands.get(uuid)<amountOfSwords){
-                                newSwordCooldown.put(uuid,cooldownForNewSword);
                                 amountOfArmorStands.put(uuid,amountOfArmorStands.get(uuid)+1);
+                                newSwordCooldown.put(uuid,amountOfArmorStands.get(uuid)*cooldownForNewSword);
 
                                 ArmorStand stand = player.getWorld().spawn(player.getLocation(), ArmorStand.class);
 
@@ -93,9 +105,9 @@ public class JadeSword implements Listener {
                                 stand.setMarker(true);
                                 stand.setGravity(false);
                                 stand.setSmall(false);
+                                stand.getPersistentDataContainer().set(key, PersistentDataType.BYTE, (byte)1);
 
                                 playerArmorStands.computeIfAbsent(player.getUniqueId(), k -> new ArrayList<>()).add(stand);
-
                             }
                         }
                     }
@@ -119,26 +131,14 @@ public class JadeSword implements Listener {
     }
 
     @EventHandler
-    public void onItemHeld(PlayerItemHeldEvent event) {
-        Player player = event.getPlayer();
-        UUID uuid = player.getUniqueId();
-        if (isHoldingTheCorrectItem(player)){
-            if (newSwordCooldown.get(uuid)==null){
-                newSwordCooldown.put(uuid,0f);
-            }
-            if (amountOfArmorStands.get(uuid)==null){
-                amountOfArmorStands.put(uuid,0f);
-            }
-        }
-    }
-
-    @EventHandler
     public void onEntityDamage(EntityDamageByEntityEvent event) {
+        if (event.getCause() == EntityDamageEvent.DamageCause.THORNS){return;}
         if (event.getDamager() instanceof Player player) {
             if (event.getEntity() instanceof org.bukkit.entity.LivingEntity target && !(target instanceof Player)) {
                 if (isHoldingTheCorrectItem(player)){
-                    leftClickJadeSword(player,-20f);
+                    livingEntitiesHit.get(player.getUniqueId()).clear();
                     leftClickJadeSword(player,0f);
+                    leftClickJadeSword(player,-20f);
                     leftClickJadeSword(player,20f);
                 }
             }
@@ -155,8 +155,9 @@ public class JadeSword implements Listener {
         if (!isHoldingTheCorrectItem(player)){return;}
 
         if (event.getAction() == Action.LEFT_CLICK_AIR||event.getAction()==Action.LEFT_CLICK_BLOCK){
-            leftClickJadeSword(player,-20f);
+            livingEntitiesHit.get(uuid).clear();
             leftClickJadeSword(player,0f);
+            leftClickJadeSword(player,-20f);
             leftClickJadeSword(player,20f);
         }
         if (event.getAction()== Action.RIGHT_CLICK_AIR||event.getAction()==Action.RIGHT_CLICK_BLOCK) {
@@ -192,11 +193,12 @@ public class JadeSword implements Listener {
                 if (!livingEntity.equals(player)){
                     if (livingEntity instanceof ArmorStand){
                     }else{
-
-                        Misc.damageNoTicks(livingEntity,amountOfArmorStands.get(uuid)*damageForLeftClick, player);
-                        player.playSound(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP,1,1);
-
-                        i+=256;
+                        if (!livingEntitiesHit.get(uuid).contains(livingEntity)){
+                            Misc.damageNoTicks(livingEntity,amountOfArmorStands.get(uuid)*damageForLeftClick, player);
+                            player.playSound(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP,1,1);
+                            livingEntitiesHit.get(uuid).add(livingEntity);
+                            i+=256;
+                        }
                     }
                 }
             }
@@ -256,7 +258,8 @@ public class JadeSword implements Listener {
                     for (LivingEntity livingEntity : current.getNearbyLivingEntities(3)){
                         if (livingEntity instanceof ArmorStand){
                         }else{
-                            Misc.damageNoTicks(livingEntity,damageForRightCLick,player);
+                            UUID uuid = player.getUniqueId();
+                            Misc.damageNoTicks(livingEntity,(amountOfArmorStands.get(uuid)+1)*damageForRightCLick,player);
                         }
                     }
 
@@ -289,7 +292,8 @@ public class JadeSword implements Listener {
                     for (LivingEntity livingEntity : current.getNearbyLivingEntities(3)){
                         if (livingEntity instanceof ArmorStand){
                         }else{
-                            Misc.damageNoTicks(livingEntity,damageForRightCLick,player);
+                            UUID uuid = player.getUniqueId();
+                            Misc.damageNoTicks(livingEntity,(amountOfArmorStands.get(uuid)+1)*damageForRightCLick,player);
                         }
                     }
 
