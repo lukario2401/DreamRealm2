@@ -12,6 +12,7 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerAnimationEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -35,10 +36,19 @@ public class JadeSword implements Listener {
     private static final String ITEM_LORE  = ChatColor.YELLOW + "Summons six spinning swords";
     private static final Material ITEM_MATERIAL = Material.IRON_SWORD;
 
+    private static final int amountOfSwords = 6;
+    private static final float cooldownForNewSword = 80;
+    private static final float damageForLeftClick = 12;
+    private static final float damageForRightCLick = 24;
+    private static final float rangeForSword = 24;
+
+
+
     private static final HashMap<UUID,Float> amountOfArmorStands = new HashMap<>();
     private static final HashMap<UUID,Float> newSwordCooldown = new HashMap<>();
 
     private final Map<UUID, List<ArmorStand>> playerArmorStands = new HashMap<>();
+
 
 
     public JadeSword(Plugin plugin) {
@@ -57,7 +67,7 @@ public class JadeSword implements Listener {
                         Player player = Bukkit.getPlayer(uuid);
                         if (player!=null){
                             if (isHoldingTheCorrectItem(player)){
-                                if (amountOfArmorStands.get(uuid)<6){
+                                if (amountOfArmorStands.get(uuid)<amountOfSwords){
                                     newSwordCooldown.put(uuid, newSwordCooldown.get(uuid) - 1);
                                 }
                             }
@@ -65,8 +75,8 @@ public class JadeSword implements Listener {
                     }else{
                         Player player = Bukkit.getPlayer(uuid);
                         if (player!=null){
-                            if (amountOfArmorStands.get(uuid)<6){
-                                newSwordCooldown.put(uuid,40f);
+                            if (amountOfArmorStands.get(uuid)<amountOfSwords){
+                                newSwordCooldown.put(uuid,cooldownForNewSword);
                                 amountOfArmorStands.put(uuid,amountOfArmorStands.get(uuid)+1);
 
                                 ArmorStand stand = player.getWorld().spawn(player.getLocation(), ArmorStand.class);
@@ -112,12 +122,26 @@ public class JadeSword implements Listener {
     public void onItemHeld(PlayerItemHeldEvent event) {
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
-
-        if (newSwordCooldown.get(uuid)==null){
-            newSwordCooldown.put(uuid,0f);
+        if (isHoldingTheCorrectItem(player)){
+            if (newSwordCooldown.get(uuid)==null){
+                newSwordCooldown.put(uuid,0f);
+            }
+            if (amountOfArmorStands.get(uuid)==null){
+                amountOfArmorStands.put(uuid,0f);
+            }
         }
-        if (amountOfArmorStands.get(uuid)==null){
-            amountOfArmorStands.put(uuid,0f);
+    }
+
+    @EventHandler
+    public void onEntityDamage(EntityDamageByEntityEvent event) {
+        if (event.getDamager() instanceof Player player) {
+            if (event.getEntity() instanceof org.bukkit.entity.LivingEntity target && !(target instanceof Player)) {
+                if (isHoldingTheCorrectItem(player)){
+                    leftClickJadeSword(player,-20f);
+                    leftClickJadeSword(player,0f);
+                    leftClickJadeSword(player,20f);
+                }
+            }
         }
     }
 
@@ -130,27 +154,21 @@ public class JadeSword implements Listener {
 
         if (!isHoldingTheCorrectItem(player)){return;}
 
-        if (event.getAction()== Action.LEFT_CLICK_AIR||event.getAction()==Action.LEFT_CLICK_BLOCK){
+        if (event.getAction() == Action.LEFT_CLICK_AIR||event.getAction()==Action.LEFT_CLICK_BLOCK){
             leftClickJadeSword(player,-20f);
             leftClickJadeSword(player,0f);
             leftClickJadeSword(player,20f);
         }
         if (event.getAction()== Action.RIGHT_CLICK_AIR||event.getAction()==Action.RIGHT_CLICK_BLOCK) {
-//           player.sendMessage("Right");
             if (amountOfArmorStands.get(uuid)>0){
                 amountOfArmorStands.put(uuid,amountOfArmorStands.get(uuid)-1);
 
                 List<ArmorStand> stands = playerArmorStands.get(player.getUniqueId());
                 if (stands != null && !stands.isEmpty()) {
                     rightClickJadeSword(player);
-//                    ArmorStand lastStand = stands.getLast();
-//                    lastStand.remove();
                     stands.removeLast();
                 }
             }
-
-//            Material heldMaterial = player.getInventory().getItemInMainHand().getType();
-//            player.setCooldown(heldMaterial, 1);
         }
     }
 
@@ -175,7 +193,7 @@ public class JadeSword implements Listener {
                     if (livingEntity instanceof ArmorStand){
                     }else{
 
-                        Misc.damageNoTicks(livingEntity,amountOfArmorStands.get(uuid)*12, player);
+                        Misc.damageNoTicks(livingEntity,amountOfArmorStands.get(uuid)*damageForLeftClick, player);
                         player.playSound(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP,1,1);
 
                         i+=256;
@@ -199,7 +217,7 @@ public class JadeSword implements Listener {
         Location location = player.getEyeLocation();
         Vector direction = location.getDirection().normalize();
 
-        for (float i = 0; i <= 48; i +=0.5f){
+        for (float i = 0; i <= rangeForSword; i +=0.5f){
             Location current = location.clone().add(direction.clone().multiply(i));
 
             if (current.getBlock().isSolid()){
@@ -218,7 +236,7 @@ public class JadeSword implements Listener {
 
     }
 
-     private void beamBetweenTwoEntity(ArmorStand armorStand, Location finalLocation,Player player){
+     private void beamBetweenTwoEntity(ArmorStand armorStand, Location finalLocation, Player player){
         Location startLocation = armorStand.getLocation().add(0,1,0);
         Location endLocation = finalLocation;
 
@@ -238,7 +256,7 @@ public class JadeSword implements Listener {
                     for (LivingEntity livingEntity : current.getNearbyLivingEntities(3)){
                         if (livingEntity instanceof ArmorStand){
                         }else{
-                            Misc.damageNoTicks(livingEntity,24,player);
+                            Misc.damageNoTicks(livingEntity,damageForRightCLick,player);
                         }
                     }
 
@@ -256,7 +274,6 @@ public class JadeSword implements Listener {
 
                 if (current.distance(endLocation)>0.6){
 
-//                    current.getWorld().spawnParticle(Particle.ENCHANTED_HIT,current,1,0,0,0,0);
                     current.add(direction.clone().multiply(0.5));
                     armorStand.teleport(current);
 
@@ -272,7 +289,7 @@ public class JadeSword implements Listener {
                     for (LivingEntity livingEntity : current.getNearbyLivingEntities(3)){
                         if (livingEntity instanceof ArmorStand){
                         }else{
-                            Misc.damageNoTicks(livingEntity,24,player);
+                            Misc.damageNoTicks(livingEntity,damageForRightCLick,player);
                         }
                     }
 
@@ -289,8 +306,6 @@ public class JadeSword implements Listener {
                 }
 
                 if (current.distance(endLocation)>0.6){
-
-//                    current.getWorld().spawnParticle(Particle.ENCHANTED_HIT,current,1,0,0,0,0);
                     current.add(direction.clone().multiply(0.5));
                     armorStand.teleport(current);
 
@@ -302,15 +317,7 @@ public class JadeSword implements Listener {
         }.runTaskTimer(plugin,0,1);
     }
 
-        // Predefined offsets for each sword (x = left/right, y = up, z = forward)
-    private final Vector[] swordOffsets = new Vector[]{
-        new Vector(0.8, 1.2, 0.4),    // 1: up + right
-        new Vector(-0.8, 1.2, 0.4),   // 2: up + left
-        new Vector(1.2, 1.4, 0.8),    // 3: further right + up
-        new Vector(-1.2, 1.4, 0.8),   // 4: further left + up
-        new Vector(1.6, 1.6, 1.2),    // 5: even further right
-        new Vector(-1.6, 1.6, 1.2)    // 6: even further left
-    };
+
 
     private void runEveryTickForPlayers() {
         new BukkitRunnable() {
@@ -319,50 +326,42 @@ public class JadeSword implements Listener {
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     UUID uuid = player.getUniqueId();
 
-                    // Update action bar
-                    player.sendActionBar(
-                        net.kyori.adventure.text.Component.text(
-                            "Cooldown: " + newSwordCooldown.getOrDefault(uuid, 0f)
-                            + " | Stands: " + amountOfArmorStands.getOrDefault(uuid, 0f)
-                        )
-                    );
+                    if (isHoldingTheCorrectItem(player)){
+                        player.sendActionBar(
+                            net.kyori.adventure.text.Component.text(
+                                "Cooldown: " + newSwordCooldown.getOrDefault(uuid, 0f)
+                                + " | Stands: " + amountOfArmorStands.getOrDefault(uuid, 0f)
+                            )
+                        );
+                    }
 
-                    // Update armor stand positions
+                    // Make their armor stands follow them
                     List<ArmorStand> stands = playerArmorStands.get(uuid);
                     if (stands != null && !stands.isEmpty()) {
-                        Location baseLoc = player.getLocation();
-                        baseLoc.setY(baseLoc.getY() + 0.5); // slight height offset
+                        double radius = 3; // distance around player
+                        double height = 1.0; // height above ground
+                        double angleStep = (2 * Math.PI) / stands.size(); // even spacing
 
-                        for (int i = 0; i < stands.size() && i < swordOffsets.length; i++) {
+                        for (int i = 0; i < stands.size(); i++) {
                             ArmorStand stand = stands.get(i);
-                            Vector offset = swordOffsets[i];
+                            double angle = i * angleStep + (System.currentTimeMillis() / 200.0); // also rotates
+                            double x = player.getLocation().getX() + radius * Math.cos(angle);
+                            double z = player.getLocation().getZ() + radius * Math.sin(angle);
+                            double y = player.getLocation().getY() + height;
 
-                            // Optional: floating animation (sine wave)
-                            double floatY = Math.sin((System.currentTimeMillis() / 200.0) + i) * 0.1;
-                            Vector animatedOffset = offset.clone();
-                            animatedOffset.setY(animatedOffset.getY() + floatY);
-
-                            // Rotate offset based on player yaw
-                            Location swordLoc = baseLoc.clone().add(rotateVector(animatedOffset, baseLoc.getYaw()));
-                            stand.teleport(swordLoc);
+                            Location newLoc = new Location(player.getWorld(), x, y, z);
+                            if (isHoldingTheCorrectItem(player)){
+                                stand.teleport(newLoc);
+                            }else{
+                                newLoc.setY(newLoc.getY()+600);
+                                stand.teleport(newLoc);
+                            }
                         }
                     }
                 }
             }
-        }.runTaskTimer(plugin, 0, 1); // Runs every tick
+        }.runTaskTimer(plugin, 0, 1);
     }
-
-    // Rotates a vector by yaw (so it stays relative to player's facing)
-    private Vector rotateVector(Vector v, float yawDegrees) {
-        double yaw = Math.toRadians(-yawDegrees);
-        double cos = Math.cos(yaw);
-        double sin = Math.sin(yaw);
-        double x = v.getX() * cos - v.getZ() * sin;
-        double z = v.getX() * sin + v.getZ() * cos;
-        return new Vector(x, v.getY(), z);
-    }
-
-
 
     private static boolean isHoldingTheCorrectItem(Player player) {
         ItemStack mainHandItem = player.getInventory().getItemInMainHand();
