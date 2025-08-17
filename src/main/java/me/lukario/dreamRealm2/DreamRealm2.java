@@ -18,6 +18,9 @@ import me.lukario.dreamRealm2.items.special.Clock;
 import me.lukario.dreamRealm2.items.special.JetSu;
 import me.lukario.dreamRealm2.items.special.ranged.misc.MidasStaff;
 import me.lukario.dreamRealm2.items.swords.cultivation.JadeSword;
+import org.bukkit.NamespacedKey;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class DreamRealm2 extends JavaPlugin {
@@ -133,5 +136,20 @@ public final class DreamRealm2 extends JavaPlugin {
         shopGUI.saveData();
         teleportGUI.saveData();
         System.out.println("--- You have left the Dream Realm ---");
+
+        NamespacedKey key = new NamespacedKey(this, "ToBeRemoved"); // same key used when tagging
+
+        // Loop through all worlds
+        for (var world : getServer().getWorlds()) {
+            // Loop through all entities in each world
+            for (var entity : world.getEntities()) {
+                // Check if entity is an ArmorStand and has the tag
+                if (entity instanceof ArmorStand stand) {
+                    if (stand.getPersistentDataContainer().has(key, PersistentDataType.BYTE)) {
+                        stand.remove(); // remove the armor stand
+                    }
+                }
+            }
+        }
     }
 }
