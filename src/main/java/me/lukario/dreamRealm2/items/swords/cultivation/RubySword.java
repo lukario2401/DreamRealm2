@@ -3,14 +3,15 @@ package me.lukario.dreamRealm2.items.swords.cultivation;
 import me.lukario.dreamRealm2.Misc;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.*;
-import org.bukkit.entity.*;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -22,19 +23,19 @@ import org.bukkit.util.Vector;
 
 import java.util.*;
 
-public class JadeSword implements Listener {
+public class RubySword implements Listener {
 
-    private final Plugin plugin;
+     private final Plugin plugin;
 
-    private static final String ITEM_NAME  = ChatColor.of("#D88F07") + "Jade Blade";
-    private static final String ITEM_LORE  = ChatColor.YELLOW + "Summons six spinning swords";
+    private static final String ITEM_NAME  = ChatColor.of("#D88F07") + "Ruby Blade";
+    private static final String ITEM_LORE  = ChatColor.YELLOW + "Summons eight spinning swords";
     private static final Material ITEM_MATERIAL = Material.IRON_SWORD;
 
-    private static final int amountOfSwords = 6;
-    private static final float cooldownForNewSword = 20;
+    private static final int amountOfSwords = 12;
+    private static final float cooldownForNewSword = 10;
     private static final float damageForLeftClick = 12;
     private static final float damageForRightCLick = 8;
-    private static final float rangeForSword = 24;
+    private static final float rangeForSword = 64;
 
     private static final HashMap<UUID,Float> amountOfArmorStands = new HashMap<>();
     private static final HashMap<UUID,Float> newSwordCooldown = new HashMap<>();
@@ -45,7 +46,7 @@ public class JadeSword implements Listener {
     NamespacedKey key = new NamespacedKey(JavaPlugin.getProvidingPlugin(getClass()), "ToBeRemoved");
 
 
-    public JadeSword(Plugin plugin) {
+    public RubySword(Plugin plugin) {
         this.plugin = plugin;
         cooldownManagement();
         runEveryTickForPlayers();
@@ -103,7 +104,7 @@ public class JadeSword implements Listener {
                                 stand.setVisible(false);
                                 stand.setMarker(true);
                                 stand.setGravity(false);
-                                stand.setSmall(false);
+                                stand.setSmall(true);
                                 stand.getPersistentDataContainer().set(key, PersistentDataType.BYTE, (byte)1);
 
                                 playerArmorStands.computeIfAbsent(player.getUniqueId(), k -> new ArrayList<>()).add(stand);
@@ -176,7 +177,7 @@ public class JadeSword implements Listener {
 
         Location location = player.getEyeLocation();
         location.setYaw(location.getYaw()+degree);
-        Vector direction = location.getDirection().normalize();
+        org.bukkit.util.Vector direction = location.getDirection().normalize();
         UUID uuid = player.getUniqueId();
 
         for (float i = 0; i<=6f; i+=0.5f){
@@ -216,7 +217,7 @@ public class JadeSword implements Listener {
 
 
         Location location = player.getEyeLocation();
-        Vector direction = location.getDirection().normalize();
+        org.bukkit.util.Vector direction = location.getDirection().normalize();
 
         for (float i = 0; i <= rangeForSword; i +=0.5f){
             Location current = location.clone().add(direction.clone().multiply(i));
@@ -394,4 +395,5 @@ public class JadeSword implements Listener {
         }
         return false;
     }
+
 }
