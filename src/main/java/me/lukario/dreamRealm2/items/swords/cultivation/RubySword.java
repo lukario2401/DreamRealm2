@@ -35,7 +35,8 @@ public class RubySword implements Listener {
     private static final float cooldownForNewSword = 10;
     private static final float damageForLeftClick = 12;
     private static final float damageForRightCLick = 8;
-    private static final float rangeForSword = 64;
+    private static final float rangeForRightClick = 64;
+    private static final float rangeForLeftClick = 8;
 
     private static final HashMap<UUID,Float> amountOfArmorStands = new HashMap<>();
     private static final HashMap<UUID,Float> newSwordCooldown = new HashMap<>();
@@ -180,7 +181,7 @@ public class RubySword implements Listener {
         org.bukkit.util.Vector direction = location.getDirection().normalize();
         UUID uuid = player.getUniqueId();
 
-        for (float i = 0; i<=6f; i+=0.5f){
+        for (float i = 0; i<=rangeForLeftClick; i+=0.5f){
 
             Location current = location.clone().add(direction.clone().multiply(i));
             current.getWorld().spawnParticle(Particle.SOUL,current,1,0,0,0,0);
@@ -219,7 +220,7 @@ public class RubySword implements Listener {
         Location location = player.getEyeLocation();
         org.bukkit.util.Vector direction = location.getDirection().normalize();
 
-        for (float i = 0; i <= rangeForSword; i +=0.5f){
+        for (float i = 0; i <= rangeForRightClick; i +=0.5f){
             Location current = location.clone().add(direction.clone().multiply(i));
 
             if (current.getBlock().isSolid()){

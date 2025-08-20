@@ -40,6 +40,7 @@ me\lukario\dreamRealm2\items\special\ranged\misc\Pyromancer$6.class
 me\lukario\dreamRealm2\items\special\ranged\bow\Freja$5.class
 me\lukario\dreamRealm2\items\guns_and_crates\guns\Glock.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Meteor$1.class
+me\lukario\dreamRealm2\items\swords\cultivation\RubySword.class
 me\lukario\dreamRealm2\items\special\Clock$1.class
 me\lukario\dreamRealm2\EntityListener.class
 me\lukario\dreamRealm2\items\special\magic\WizardWand.class
@@ -116,6 +117,7 @@ me\lukario\dreamRealm2\items\special\builder\Mech.class
 me\lukario\dreamRealm2\DreamRealm2.class
 me\lukario\dreamRealm2\items\guns_and_crates\Medkit$1.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Meteor$2.class
+me\lukario\dreamRealm2\items\swords\cultivation\RubySword$1.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Link$1.class
 me\lukario\dreamRealm2\items\swords\DualWield$2.class
 me\lukario\dreamRealm2\items\swords\Style$1.class
@@ -137,6 +139,7 @@ me\lukario\dreamRealm2\items\guns_and_crates\guns\M24$1.class
 me\lukario\dreamRealm2\items\swords\Scythe$1.class
 me\lukario\dreamRealm2\items\special\ranged\misc\FireCracker$2.class
 me\lukario\dreamRealm2\items\special\builder\Mech$1.class
+me\lukario\dreamRealm2\items\swords\cultivation\RubySword$3.class
 me\lukario\dreamRealm2\items\guns_and_crates\guns\Lmg$1.class
 me\lukario\dreamRealm2\items\swords\Dagger.class
 me\lukario\dreamRealm2\items\swords\ShadowDance$4.class
@@ -181,6 +184,7 @@ me\lukario\dreamRealm2\items\special\magic\ChainedBuff$3.class
 me\lukario\dreamRealm2\items\guns_and_crates\Medkit.class
 me\lukario\dreamRealm2\items\special\ranged\bow\Terminator$3.class
 me\lukario\dreamRealm2\items\swords\SinOfSolace$1.class
+me\lukario\dreamRealm2\items\swords\cultivation\RubySword$2.class
 me\lukario\dreamRealm2\items\guns_and_crates\guns\Remington.class
 me\lukario\dreamRealm2\items\special\ranged\misc\Missile$2.class
 me\lukario\dreamRealm2\items\guns_and_crates\guns\Lmg$2.class

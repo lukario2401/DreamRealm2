@@ -10,7 +10,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -34,7 +33,8 @@ public class JadeSword implements Listener {
     private static final float cooldownForNewSword = 20;
     private static final float damageForLeftClick = 12;
     private static final float damageForRightCLick = 8;
-    private static final float rangeForSword = 24;
+    private static final float rangeForRightClick = 24;
+    private static final float rangeForLeftClick = 6;
 
     private static final HashMap<UUID,Float> amountOfArmorStands = new HashMap<>();
     private static final HashMap<UUID,Float> newSwordCooldown = new HashMap<>();
@@ -179,7 +179,7 @@ public class JadeSword implements Listener {
         Vector direction = location.getDirection().normalize();
         UUID uuid = player.getUniqueId();
 
-        for (float i = 0; i<=6f; i+=0.5f){
+        for (float i = 0; i<=rangeForLeftClick; i+=0.5f){
 
             Location current = location.clone().add(direction.clone().multiply(i));
             current.getWorld().spawnParticle(Particle.SOUL,current,1,0,0,0,0);
@@ -218,7 +218,7 @@ public class JadeSword implements Listener {
         Location location = player.getEyeLocation();
         Vector direction = location.getDirection().normalize();
 
-        for (float i = 0; i <= rangeForSword; i +=0.5f){
+        for (float i = 0; i <= rangeForRightClick; i +=0.5f){
             Location current = location.clone().add(direction.clone().multiply(i));
 
             if (current.getBlock().isSolid()){
