@@ -32,7 +32,7 @@ public class RubySword implements Listener {
     private static final Material ITEM_MATERIAL = Material.IRON_SWORD;
 
     private static final int amountOfSwords = 12;
-    private static final float cooldownForNewSword = 10;
+    private static final float cooldownForNewSword = 5;
     private static final float damageForLeftClick = 12;
     private static final float damageForRightCLick = 8;
     private static final float rangeForRightClick = 64;
@@ -216,27 +216,93 @@ public class RubySword implements Listener {
             armorStand = armorStandFromList;
         }
 
-
         Location location = player.getEyeLocation();
         org.bukkit.util.Vector direction = location.getDirection().normalize();
 
         for (float i = 0; i <= rangeForRightClick; i +=0.5f){
             Location current = location.clone().add(direction.clone().multiply(i));
 
+            for (LivingEntity livingEntity : current.getNearbyLivingEntities(2)){
+                if (livingEntity instanceof ArmorStand){
+                }else {
+                    if (!livingEntity.equals(player)){
+
+                        Location armorStandLocationForChange = armorStand.getLocation().add(0, 1, 0);
+                        armorStand.teleport(armorStandLocationForChange);
+
+                        beamBetweenTwoEntity(armorStand, livingEntity, player);
+                        return;
+                    }
+                }
+            }
+
             if (current.getBlock().isSolid()){
                 finalLocation=current;
                 i+=256;
             }
 
-            if (i==16){
+            if (i==rangeForRightClick){
                 finalLocation=current;
             }
         }
 
         if (armorStand != null && finalLocation != null) {
+
+            Location armorStandLocationForChange = armorStand.getLocation().add(0, 1, 0);
+            armorStand.teleport(armorStandLocationForChange);
+
             beamBetweenTwoEntity(armorStand, finalLocation, player);
+            return;
         }
 
+    }
+
+    private void beamBetweenTwoEntity(ArmorStand armorStand, LivingEntity livingEntity, Player player){
+        new BukkitRunnable(){
+            int timeAlive = 0;
+            @Override
+            public void run(){
+                if (armorStand.isDead()){
+                    timeAlive+=200;
+                }
+
+                Location startLocation = armorStand.getLocation();
+                Location endLocation = livingEntity.getLocation();
+                Vector direction = endLocation.clone().toVector().subtract(startLocation.clone().toVector()).normalize();
+                Location current = startLocation;
+
+                if (timeAlive>=200){
+
+                    for (LivingEntity livingEntity : current.getNearbyLivingEntities(3)){
+                        if (!livingEntity.equals(armorStand)){
+                            UUID uuid = player.getUniqueId();
+                            Misc.damageNoTicks(livingEntity,(amountOfArmorStands.get(uuid)+1)*damageForRightCLick,player);
+                        }
+                    }
+
+                    current.getWorld().playSound(current,Sound.ENTITY_GENERIC_EXPLODE,3,1);
+                    current.getWorld().spawnParticle(Particle.EXPLOSION,current,2,0,0,0,0);
+                    current.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER,current,2,0,0,0,0);
+
+                    List<ArmorStand> stands = playerArmorStands.get(player.getUniqueId());
+                    if (stands != null && !stands.isEmpty()) {
+                        stands.remove(armorStand);
+                    }
+                    armorStand.remove();
+                    this.cancel();
+                }
+
+                if (current.distance(endLocation)>0.6){
+
+                    current = startLocation.clone().add(direction.clone().multiply(0.9));
+                    armorStand.teleport(current);
+
+                }else{
+                    timeAlive+=256;
+                }
+                timeAlive+=1;
+            }
+        }.runTaskTimer(plugin,0,1);
     }
 
      private void beamBetweenTwoEntity(ArmorStand armorStand, Location finalLocation, Player player){

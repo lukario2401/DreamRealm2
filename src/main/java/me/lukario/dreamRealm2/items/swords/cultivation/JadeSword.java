@@ -226,7 +226,7 @@ public class JadeSword implements Listener {
                 i+=256;
             }
 
-            if (i==16){
+            if (i==rangeForRightClick){
                 finalLocation=current;
             }
         }
