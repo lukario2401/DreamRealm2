@@ -153,7 +153,7 @@ public class GraveYard implements Listener {
         Location startLocation = location;
 
         new BukkitRunnable(){
-            float i =0;
+            float i = 0;
             @Override
             public void run(){
                 Location endLocation = livingEntity.getLocation();

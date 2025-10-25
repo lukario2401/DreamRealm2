@@ -146,6 +146,11 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Rapier");
             return true;
         }
+        if (args.length == 1 && args[0].equalsIgnoreCase("PartcileAcc")) {
+            player.getInventory().addItem(ParticleAccelerator.createItem());
+            player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Particle Accelerator");
+            return true;
+        }
         if (args.length == 1 && args[0].equalsIgnoreCase("Scythe")) {
             player.getInventory().addItem(me.lukario.dreamRealm2.items.swords.Scythe.createItem());
             player.sendMessage(ChatColor.GREEN + "You have received the " + ChatColor.GOLD + "Scythe");
@@ -468,7 +473,7 @@ public class GetCommand implements CommandExecutor, TabExecutor {
             "Flame", "Ferocity", "Katana", "Wrench", "Flash", "FireWand", "Portal", "Meteor", "Termination", "Claws",
             "Missile", "GraveYard", "SphereCage", "FireCracker", "Stack", "Freja","AirStrike", "CAS", "LaserEye", "Mech","Medkit",
             "Glock", "ammo", "Ak47", "Aug", "Remington", "ammo_5.56", "ammo_7.62", "ammo_12G", "ammo_9x19mm","Mp5","ammo_glock",
-            "M249", "M24", "JadeBlade", "RubyBlade"
+            "M249", "M24", "JadeBlade", "RubyBlade", "PartcileAcc"
         );
 
         // First argument suggestions
