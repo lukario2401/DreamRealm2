@@ -32,6 +32,8 @@ public class CommandGUI implements Listener {
           Inventory inventory = Bukkit.createInventory(null,54,"Command Center");
 
           Misc.createInventoryItem(inventory, Material.REDSTONE_TORCH,13,101401,"Air Strike");
+          Misc.createInventoryItem(inventory, Material.OAK_BUTTON,21,101402,"Warden Heal");
+          Misc.createInventoryItem(inventory, Material.OAK_BUTTON,22,101403,"Activate");
 
           player.openInventory(inventory);
           player.playSound(player.getLocation(), Sound.BLOCK_CHEST_OPEN, 1, 1);
@@ -52,6 +54,20 @@ public class CommandGUI implements Listener {
                  if (airStrikeLocation!=null){
                       airStrikeAtLocation(airStrikeLocation);
                  }
+            }
+
+            if (item.getItemMeta().getCustomModelData()==101402){
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "effect give @e[type=warden] 1 200 true");
+            }
+
+            if (item.getItemMeta().getCustomModelData()==101403){
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "setblock 10748 59 -650 redstone_block");
+                new BukkitRunnable(){
+                    public void run(){
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "setblock 10748 59 -650 air");
+                        this.cancel();
+                    }
+                }.runTaskLater(plugin,10);
             }
         }
     }

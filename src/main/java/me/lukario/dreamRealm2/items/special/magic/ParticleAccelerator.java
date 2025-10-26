@@ -4,7 +4,6 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -49,7 +48,9 @@ public class ParticleAccelerator implements Listener {
 
         if (event.getAction() == Action.LEFT_CLICK_AIR||event.getAction() == Action.LEFT_CLICK_BLOCK){
 
-            spawnSineWaveTrail(player,1f, 0.6f, 2, true);
+//            spawnSineWaveTrail(player,1f, 0.6f, 2, true);
+            circularSinTrail(player,0.3f,0.3f,1);
+
         }
         if (event.getAction() == Action.RIGHT_CLICK_AIR||event.getAction() == Action.RIGHT_CLICK_BLOCK){
 
@@ -57,6 +58,31 @@ public class ParticleAccelerator implements Listener {
         }
 
     }
+
+    private static void circularSinTrail(Player player, float frequency, float amplitude, float particlePerBlock) {
+        Location center = player.getLocation().add(0, 1.0, 0); // center point (around chest height)
+        double radius = 3.0; // distance from center
+        double step = 360.0 / (particlePerBlock * 180); // controls smoothness
+
+        for (double angle = 0; angle < 360; angle += step) {
+            // Convert angle to radians
+            double radians = Math.toRadians(angle);
+
+            // Circular coordinates (XZ-plane)
+            double x = Math.cos(radians) * radius;
+            double z = Math.sin(radians) * radius;
+
+            // Vertical oscillation
+            double y = Math.sin(angle * frequency) * amplitude;
+
+            // Build final particle location
+            Location particleLoc = center.clone().add(x, y, z);
+
+            // Spawn particle
+            particleLoc.getWorld().spawnParticle(Particle.FLAME, particleLoc, 1, 0, 0, 0, 0, null, true);
+        }
+    }
+
 
     private static void spawnSineWaveTrail(Player player, float frequency, float strength, float particlePerBlock, boolean isSine){
         Location location = player.getEyeLocation();
